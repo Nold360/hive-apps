@@ -1,0 +1,7 @@
+---
+heqet:
+  repo: https://github.com/nold360/heqet.git
+  revision: f/v3
+  path: charts/heqet
+
+  userdata: https://github.com/nold360/hive-apps.git

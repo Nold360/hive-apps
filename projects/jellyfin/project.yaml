@@ -1,0 +1,8 @@
+config:
+  description: Stream stuff
+  syncWave: 100
+  repo: k8s-at-home
+apps:
+- name: jellyfin
+  chart: jellyfin
+  targetRevision: 9.1.0

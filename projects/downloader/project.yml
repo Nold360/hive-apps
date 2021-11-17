@@ -1,0 +1,32 @@
+config:
+  description: Tools for downloading linux isos
+apps:
+- name: deluge
+  repoURL: https://k8s-at-home.com/charts/
+  chart: deluge
+  targetRevision: 5.0.1
+  secrets:
+  - name: openvpn
+    keys:
+    - VPN_AUTH
+    - vpnConfigfile
+- name: rtorrent
+  repoURL: https://k8s-at-home.com/charts/
+  chart: rtorrent-flood
+  targetRevision: 9.0.1
+  secrets:
+  - name: openvpn
+    fromApp: deluge
+    keys:
+    - VPN_AUTH
+    - vpnConfigfile
+
+- name: youtubedl
+  repoURL: https://k8s-at-home.com/charts/
+  chart: youtubedl-material
+  targetRevision: 4.0.1
+
+- name: pyload
+  repoURL: https://k8s-at-home.com/charts/
+  chart: pyload
+  targetRevision: 6.0.1

@@ -1,0 +1,16 @@
+defaultBuckets: "public, drone, temp"
+auth:
+  existingSecret: minio-auth
+
+ingress:
+  enabled: true
+  hostname: minio.dc
+  tls: true
+  annotations:
+    cert-manager.io/cluster-issuer: vault-issuer
+
+networkPolicy:
+  enabled: true
+
+persistence:
+  enabled: true

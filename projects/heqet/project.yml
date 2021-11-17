@@ -1,0 +1,11 @@
+config:
+  name: heqet2
+  syncWave: -5
+
+apps:
+  # Heqet
+  - name: heqet2
+    path: charts/heqet
+    repoURL: https://github.com/nold360/heqet
+    targetRevision: f/v2
+    syncWave: "-1"

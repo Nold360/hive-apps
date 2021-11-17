@@ -1,0 +1,36 @@
+config:
+  description: Drone-CI
+
+  networkPolicy:
+    groups:
+    - internet
+    rules:
+    - allow-runner
+    - allow-minio
+
+apps:
+  - name: drone
+    repoURL: https://github.com/nold360/drone-charts.git
+    path: charts/drone
+    targetRevision: master
+    secrets:
+      - name: drone-env
+        keys:
+          - DRONE_GITEA_SERVER
+          - DRONE_GITEA_CLIENT_ID
+          - DRONE_GITEA_CLIENT_SECRET
+          - DRONE_GITHUB_CLIENT_ID
+          - DRONE_GITHUB_CLIENT_SECRET
+          - DRONE_RPC_SECRET
+
+  - name: drone-runner
+    namespace: drone-runner
+    repoURL: https://charts.drone.io
+    chart: drone-runner-kube
+    targetRevision: 0.1.5
+    secrets:
+      - name: drone-env
+        fromApp: drone
+        keys:
+        - DRONE_RPC_SECRET
+        - DRONE_SECRET_PLUGIN_TOKEN

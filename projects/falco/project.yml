@@ -1,0 +1,8 @@
+config:
+  description: Falco Security
+apps:
+- name: falco
+  disabled: true
+  repoURL: https://falcosecurity.github.io/charts
+  chart: falco
+  targetRevision: 1.16.0

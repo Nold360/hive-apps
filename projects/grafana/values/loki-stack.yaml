@@ -1,0 +1,124 @@
+loki:
+  image:
+    tag: 2.3.0
+  enabled: true
+
+promtail:
+  enabled: true
+
+fluent-bit:
+  enabled: true
+
+grafana:
+  enabled: true
+
+  image:
+    tag: 8.1.2
+
+  admin:
+    existingSecret: "loki-stack-grafana"
+
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - grafana.dc
+    tls:
+     - secretName: grafana-tls
+       hosts:
+         - grafana.dc
+
+  sidecar:
+    datasources:
+      enabled: true
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+
+  persistence:
+    enabled: true
+
+  plugins:
+    - grafana-piechart-panel
+
+  dashboards:
+    default:
+      traefik:
+        gnetId: 11462
+        revision: 1
+
+  # For OAUTH Secret Token
+  envFromSecret: grafana-env
+
+  grafana.ini:
+    paths:
+      data: /var/lib/grafana/data
+      logs: /var/log/grafana
+      plugins: /var/lib/grafana/plugins
+      provisioning: /etc/grafana/provisioning
+    analytics:
+      check_for_updates: false
+    log:
+      mode: console
+    grafana_net:
+      url: https://grafana.net
+    server:
+      root_url: https://grafana.dc
+
+    #auth.generic_oauth:
+     #name: Login Keycloak
+     #enabled: true
+     #allow_sign_up: true
+     #client_id: grafana.dc
+     #client_secret = <replace-with-your-client-secret>
+     #scopes: profile
+     #email_attribute_name: email:primary
+     #role_attribute_path: "contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'"
+     #auth_url: https://keycloak.dc/auth/realms/LAN/protocol/openid-connect/auth
+     #token_url: https://keycloak.dc/auth/realms/LAN/protocol/openid-connect/token
+     #api_url: https://keycloak.dc/auth/realms/LAN/protocol/openid-connect/userinfo
+     # meh.. but for now...
+     #tls_skip_verify_insecure: true
+ 
+
+prometheus:
+  enabled: false
+  image:
+    tag: v2.26.0
+
+  extraScrapeConfigs: |
+    - job_name: 'openwrt'
+      scrape_interval: 10s
+      static_configs:
+        - targets: ['192.168.1.1:9100']
+    - job_name: 'borg'
+      scrape_interval: 10s
+      static_configs:
+        - targets: ['192.168.1.111:9942']
+
+  podSecurityPolicy:
+    enabled: true
+
+  server:
+    extraArgs:
+      #storage.local.retention: 720h
+
+  nodeexporter:
+#    image:
+#      repository: quay.io/prometheus/node-exporter
+#      tag: v1.1.2
+    
+    extraHostPathMounts:
+     - name: textfile-dir
+       mountPath: /srv/txt_collector
+       hostPath: /var/lib/node-exporter
+       readOnly: true
+       mountPropagation: HostToContainer
+   
+    securityContext:
+      fsGroup: 65534
+      runAsGroup: 65534
+      runAsNonRoot: false
+      runAsUser: 0

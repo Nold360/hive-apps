@@ -1,0 +1,27 @@
+controller:
+  name: external
+  ingressClassResource:
+    name: external
+    enabled: true
+    controllerValue: 'k8s.io/external'
+  extraArgs:
+    ingress-class: external
+
+  kind: DaemonSet
+  updateStrategy:
+  #  rollingUpdate:
+  #    maxUnavailable: 1
+    type: RollingUpdate
+
+  service:
+    annotations:
+      metallb.universe.tf/address-pool: external
+  metrics:
+    enabled: true
+    service:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "10254"
+
+podSecurityPolicy:
+  enabled: true

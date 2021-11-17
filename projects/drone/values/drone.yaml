@@ -1,0 +1,147 @@
+image:
+#  repository: drone/drone
+  tag: 2.0.4
+#  pullPolicy: IfNotPresent
+
+containerPort: 8000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "80"
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    kubernetes.io/ingress.class: external
+    kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: drone.nold.in
+      paths:
+        - "/"
+  tls:
+  - secretName: drone-tls
+    hosts:
+      - drone.nold.in
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 124Mi
+
+persistentVolume:
+  enabled: true
+  size: 8Gi
+
+  storageClass: ""
+
+extraSecretNamesForEnvFrom:
+ - drone-env
+
+env:
+  DRONE_USER_FILTER: nold360
+  DRONE_USER_CREATE: username:nold360,admin:true
+  DRONE_SERVER_PORT: ":8000"
+ 
+  HTTP_PROXY: http://proxy-squid.proxy.svc.cluster.local
+  HTTPS_PROXY: http://proxy-squid.proxy.svc.cluster.local
+  NO_PROXY: localhost,.cluster.local
+
+  DRONE_DATADOG_ENABLED: "false"
+
+  ## REQUIRED: Set the user-visible Drone hostname, sans protocol.
+  ## Ref: https://docs.drone.io/installation/reference/drone-server-host/
+  ##
+  DRONE_SERVER_HOST: "drone.nold.in"
+
+  ## The protocol to pair with the value in DRONE_SERVER_HOST (http or https).
+  ## Ref: https://docs.drone.io/installation/reference/drone-server-proto/
+  ##
+  DRONE_SERVER_PROTO: https
+  DRONE_WEBHOOK_ENDPOINT: "https://drone.nold.in/hook"
+
+  DRONE_STARLARK_ENABLED: "true"
+  ## REQUIRED: Set the secret secret token that the Drone server and its Runners will use
+  ## to authenticate. This is commented out in order to leave you the ability to set the
+  ## key via a separately provisioned secret (see existingSecretName above).
+  ## Ref: https://docs.drone.io/installation/reference/drone-rpc-secret/
+  ##
+  # DRONE_RPC_SECRET:
+
+  ## If you'd like to use a DB other than SQLite (the default), set a driver + DSN here.
+  ## Ref: https://docs.drone.io/installation/storage/database/
+  ##
+  # DRONE_DATABASE_DRIVER:
+  # DRONE_DATABASE_DATASOURCE:
+
+  ## If you are going to store build secrets in the Drone database, it is suggested that
+  ## you set a database encryption secret. This must be set before any secrets are stored
+  ## in the database.
+  ## Ref: https://docs.drone.io/installation/storage/encryption/
+  ##
+  # DRONE_DATABASE_SECRET:
+
+  ## If you are using self-hosted GitHub or GitLab, you'll need to set this to true.
+  ## Ref: https://docs.drone.io/installation/reference/drone-git-always-auth/
+  ##
+  # DRONE_GIT_ALWAYS_AUTH: false
+
+  ## ===================================================================================
+  ##                         Provider Directives (select ONE)
+  ## -----------------------------------------------------------------------------------
+  ## Select one provider (and only one). Refer to the corresponding documentation link
+  ## before filling the values in. Also note that you can use the 'secretMounts' value
+  ## if you'd rather not have secrets in Kubernetes Secret instead of a ConfigMap.
+  ## ===================================================================================
+
+  ## GitHub-specific variables. See the provider docs here:
+  ## Ref: https://docs.drone.io/installation/providers/github/
+  ##
+  # DRONE_GITHUB_CLIENT_ID:
+  # DRONE_GITHUB_CLIENT_SECRET:
+
+  ## GitLab-specific variables. See the provider docs here:
+  ## Ref: https://docs.drone.io/installation/providers/gitlab/
+  ##
+  # DRONE_GITLAB_CLIENT_ID:
+  # DRONE_GITLAB_CLIENT_SECRET:
+  # DRONE_GITLAB_SERVER:
+
+  ## Bitbucket Cloud-specific variables. See the provider docs here:
+  ## Ref: https://docs.drone.io/installation/providers/bitbucket-cloud/
+  ##
+  # DRONE_BITBUCKET_CLIENT_ID:
+  # DRONE_BITBUCKET_CLIENT_SECRET:
+
+  ## Bitbucket-specific variables. See the provider docs here:
+  ## Ref: https://docs.drone.io/installation/providers/bitbucket-server/
+  ##
+  # DRONE_GIT_USERNAME:
+  # DRONE_GIT_PASSWORD:
+  # DRONE_STASH_CONSUMER_KEY:
+  # DRONE_STASH_PRIVATE_KEY:
+  # DRONE_STASH_SERVER:
+
+  ## Gitea-specific variables. See the provider docs here:
+  ## Ref: https://docs.drone.io/installation/providers/gitea/
+  ##
+  # DRONE_GITEA_CLIENT_ID:
+  # DRONE_GITEA_CLIENT_SECRET:
+  # DRONE_GITEA_SERVER:
+
+  ## Gogs-specific variables. See the provider docs here:
+  ## Ref: https://docs.drone.io/installation/providers/gogs/
+  ##
+  # DRONE_GOGS_SERVER:

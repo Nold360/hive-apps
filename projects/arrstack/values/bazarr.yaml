@@ -1,0 +1,30 @@
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    hosts:
+    - host: bazarr.dc
+      paths:
+      - path: /
+        pathType: Prefix
+    tls:
+    - secretName: bazarr-tls
+      hosts:
+      - bazarr.dc
+
+securityContext:
+  privileged: false
+
+persistence:
+  config:
+    enabled: true
+    #mountPath: /downloads
+    storageClass: local-path
+    accessMode: ReadWriteOnce
+    size: 1Gi
+  media:
+    enabled: true
+    type: hostPath
+    mountPath: /media/
+    hostPath: /data/media/

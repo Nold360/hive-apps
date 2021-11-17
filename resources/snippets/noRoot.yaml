@@ -1,0 +1,13 @@
+podSecurityContext:
+  runAsUser: 1420
+  runAsGroup: 2420
+  fsGroup: 2420
+
+securityContext:
+  runAsNonRoot: true
+  privileged: false
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL

@@ -1,0 +1,21 @@
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "vault-issuer"
+      kubernetes.io/ingress.class: "nginx"
+    hosts:
+      - host: youtubedl.dc
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: youtubedl.dc-tls
+        hosts:
+          - youtubedl.dc
+
+hostPathMounts:
+  - name: downloads
+    enabled: true
+    mountPath: /downloads
+    hostPath: /data/downloads

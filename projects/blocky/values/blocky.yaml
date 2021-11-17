@@ -1,0 +1,196 @@
+env:
+  TZ: Europe/Amsterdam
+
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "4000"
+
+image:
+  tag: v0.15
+
+service:
+  main:
+    ports:
+      http:
+        port: 4000
+  dns-tcp:
+    enabled: false
+  dns-udp:
+    enabled: true
+    type: LoadBalancer
+    externalTrafficPolicy: Local
+    ports:
+      dns-udp:
+        enabled: true
+        port: 53
+        protocol: UDP
+        targetPort: 53
+
+persistence:
+  logs:
+    enabled: true
+    mountPath: /logs
+    accessMode: ReadWriteOnce
+    size: 1Gi
+    storageClass: local-path
+
+prometheus:
+  serviceMonitor:
+    enabled: false
+
+# -- Full list of options https://github.com/0xERR0R/blocky/blob/master/docs/config.yml
+config: |
+  upstream:
+    externalResolvers:
+      - 192.168.1.1
+
+  #customDNS:
+  #  mapping:
+  #    printer.lan: 192.168.178.3
+
+  conditional:
+    mapping:
+      lan: udp:192.168.1.1
+      dc: udp:192.168.1.1
+
+  blocking:
+    blackLists:
+      ads:
+        - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt
+        - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/extra.txt
+        - https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/android-tracking.txt
+        - https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV.txt
+        - https://raw.githubusercontent.com/notracking/hosts-blocklists/master/hostnames.txt
+        - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+        - http://sysctl.org/cameleon/hosts
+        - https://adaway.org/hosts.txt
+        - https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-malware.txt
+        - https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt
+        - https://phishing.army/download/phishing_army_blocklist_extended.txt
+        - https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt
+        - https://raw.githubusercontent.com/anudeepND/youtubeadsblacklist/master/domainlist.txt
+        - https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts
+        - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt
+        - https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt
+        - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts
+        - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts
+        - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
+        - https://raw.githubusercontent.com/Kees1958/W3C_annual_most_used_survey_blocklist/master/TOP_EU_US_Ads_Trackers_HOST
+        - https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt
+        - https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt
+        - https://urlhaus.abuse.ch/downloads/hostfile/
+        - https://zerodot1.gitlab.io/CoinBlockerLists/hosts_browser
+      
+        # All firebog lists:
+        - https://v.firebog.net/hosts/Cameleon.txt
+        - https://v.firebog.net/hosts/HostsFileOrg.txt
+        - https://v.firebog.net/hosts/JoeWein.txt
+        - https://v.firebog.net/hosts/Mahakala.txt
+        - https://v.firebog.net/hosts/JoeyLane.txt
+        - https://v.firebog.net/hosts/PeterLowe.txt
+        - https://v.firebog.net/hosts/PiwikSpam.txt
+        - https://v.firebog.net/hosts/ReddestDream.txt
+        - https://v.firebog.net/hosts/SBDead.txt
+        - https://v.firebog.net/hosts/SBKAD.txt
+        - https://v.firebog.net/hosts/SBSpam.txt
+        - https://v.firebog.net/hosts/SomeoneWC.txt
+        - https://v.firebog.net/hosts/Spam404.txt
+        - https://v.firebog.net/hosts/Vokins.txt
+        - https://v.firebog.net/hosts/Winhelp2002.txt
+        - https://v.firebog.net/hosts/AdAway.txt
+        - https://v.firebog.net/hosts/Disconnect-ads.txt
+        - https://v.firebog.net/hosts/Easylist.txt
+        - https://v.firebog.net/hosts/Easylist-Dutch.txt
+        - https://v.firebog.net/hosts/SBUnchecky.txt
+        - https://v.firebog.net/hosts/AdguardDNS.txt
+        - https://v.firebog.net/hosts/Prigent-Ads.txt
+        - https://v.firebog.net/hosts/Airelle-trc.txt
+        - https://v.firebog.net/hosts/Disconnect-trc.txt
+        - https://v.firebog.net/hosts/Disconnect-mal.txt
+        - https://v.firebog.net/hosts/Easyprivacy.txt
+        - https://v.firebog.net/hosts/SB2o7Net.txt
+        - https://v.firebog.net/hosts/APT1Rep.txt
+        - https://v.firebog.net/hosts/Airelle-hrsk.txt
+        - https://v.firebog.net/hosts/Openphish.txt
+        - https://v.firebog.net/hosts/SBRisk.txt
+        - https://v.firebog.net/hosts/Shalla-mal.txt
+        - https://v.firebog.net/hosts/Prigent-Malware.txt
+      ms: []
+      untrusted:
+        - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/update.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/blacklists/ms.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/blacklists/fbook.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/blacklists/google.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/blacklists/nintendont.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/blacklists/ps.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/blacklists/xbox.txt
+    whiteLists:
+      ads:
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/whitelists/common.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/whitelists/ms.txt
+      ms:
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/whitelists/ms.txt
+    clientGroupsBlock:
+      default:
+        - ads
+      LAPTOP-G35N0AS1.lan:
+        - ads
+        - ms
+      # use client name (with wildcard support: * - sequence of any characters, [0-9] - range)
+      # or single ip address / client subnet as CIDR notation
+      #laptop*:
+      #  - ads
+      #192.168.178.1/24:
+      #  - special
+
+    # which response will be sent, if query is blocked:
+    blockType: zeroIp
+    # optional: automatically list refresh period in minutes. Default: 4h.
+    # Negative value -> deactivate automatically refresh.
+    # 0 value -> use default
+    refreshPeriod: 0
+
+  # optional: configuration for caching of DNS responses
+  #caching:
+    # amount in minutes, how long a response must be cached (min value).
+    # If <=0, use response's TTL, if >0 use this value, if TTL is smaller
+    # Default: 0
+  #  minTime: 5
+    # amount in minutes, how long a response must be cached (max value).
+    # If <0, do not cache responses
+    # If 0, use TTL
+    # If > 0, use this value, if TTL is greater
+    # Default: 0
+  #  maxTime: -1
+    # if true, will preload DNS results for often used queries (names queried more than 5 times in a 2 hour time window)
+    # this improves the response time for often used queries, but significantly increases external traffic
+    # default: false
+  #  prefetching: true
+
+  # optional: configuration of client name resolution
+  clientLookup:
+    # optional: this DNS resolver will be used to perform reverse DNS lookup (typically local router)
+    upstream: udp:192.168.1.1
+    # optional: custom mapping of client name to IP addresses. Useful if reverse DNS does not work properly or just to have custom client names.
+    #clients:
+    #  laptop:
+    #    - 192.168.178.29
+
+  prometheus:
+     enable: true
+     path: /metrics
+
+  # optional: write query information (question, answer, client, duration etc) to daily csv file
+  queryLog:
+  #   # directory (should be mounted as volume in docker)
+    dir: /logs
+  #   # if true, write one file per client. Writes all queries to single file otherwise
+  #   perClient: true
+  #   # if > 0, deletes log files which are older than ... days
+    logRetentionDays: 1
+
+  port: 53
+  httpPort: 4000
+  bootstrapDns: udp:192.168.1.1
+  logLevel: info
+  logFormat: text

@@ -1,0 +1,25 @@
+persistence:
+  run:
+    enabled: true
+    mountPath: /run
+    type: emptyDir
+    accessMode: ReadWriteOnce
+    size: 100Mi
+  varrun:
+    enabled: true
+    mountPath: /var/run
+    type: emptyDir
+    accessMode: ReadWriteOnce
+    size: 100Mi
+  vartmp:
+    enabled: true
+    mountPath: /var/tmp
+    type: emptyDir
+    accessMode: ReadWriteOnce
+    size: 100Mi
+  tmp:
+    enabled: true
+    mountPath: /tmp
+    type: emptyDir
+    accessMode: ReadWriteOnce
+    size: 100Mi

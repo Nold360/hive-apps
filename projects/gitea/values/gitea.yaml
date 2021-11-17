@@ -1,0 +1,137 @@
+# Gitea
+image:
+  rootless: true
+
+statefulset:
+  env:
+    - name: HTTP_PROXY
+      value: http://proxy-squid.proxy.svc.cluster.local:80
+    - name: HTTPS_PROXY
+      value: http://proxy-squid.proxy.svc.cluster.local:80
+    - name: http_proxy
+      value: http://proxy-squid.proxy.svc.cluster.local:80
+    - name: https_proxy
+      value: http://proxy-squid.proxy.svc.cluster.local:80
+
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+#   # https://gitea.com/gitea/helm-chart/issues/161
+#     add:
+#       - SYS_CHROOT
+  privileged: false
+  readOnlyRootFilesystem: true
+  runAsGroup: 1000
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  http:
+    type: ClusterIP
+    port: 3000
+  ssh:
+    type: LoadBalancer
+    port: 2222
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: external
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt
+  hosts:
+    - host: git.nold.in
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: gitea-tls
+      hosts:
+        - git.nold.in
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+persistence:
+  enabled: true
+  size: 10Gi
+  #storageClass: slow
+
+gitea:
+  admin:
+    existingSecret: admin
+
+  metrics:
+    enabled: false
+    serviceMonitor:
+      enabled: false
+      #  additionalLabels:
+      #    prometheus-release: prom1
+
+  oauth:
+    enabled: false
+    #name:
+    #provider:
+    #key:
+    #secret:
+    #autoDiscoverUrl:
+    #useCustomUrls:
+    #customAuthUrl:
+    #customTokenUrl:
+    #customProfileUrl:
+    #customEmailUrl:
+
+  config:
+    APP_NAME: "Git with a lot of coffee"
+    ui:
+      DEFAULT_THEME: arc-green
+    repository:
+      DEFAULT_BRANCH: main
+    server:
+      LFS_START_SERVER: true
+      PROTOCOL: http
+    database:
+      HOST: gitea-postgresql.gitea.svc.cluster.local:5432
+    service:
+      DISABLE_REGISTRATION: true
+    lfs:
+      STORAGE_TYPE: local
+    picture:
+      DISABLE_GRAVATAR: true
+    metrics:
+      ENABLED: false
+    api:
+      ENABLE_SWAGGER: false
+    oauth:
+      ENABLE: false
+
+  database:
+    builtIn:
+      postgresql:
+        enabled: true
+  cache:
+    builtIn:
+      enabled: false
+
+postgresql:
+  global:
+    #storageClass: slow
+    postgresql:
+      existingSecret: postgres
+  persistence:
+    size: 10Gi
+  psp:
+    create: true
+  rbac:
+    create: true

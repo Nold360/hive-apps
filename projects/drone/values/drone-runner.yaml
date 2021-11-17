@@ -1,0 +1,34 @@
+podSecurityContext:
+  fsGroup: 2000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+resources:
+  limits:
+    cpu: 4000m
+    memory: 2048Mi
+
+rbac:
+  buildNamespaces:
+  - drone-runner
+
+extraSecretNamesForEnvFrom:
+  - drone-env
+
+env:
+  DRONE_RPC_HOST: drone.drone.svc.cluster.local
+
+  DRONE_SECRET_PLUGIN_ENDPOINT: http://drone-secrets-drone-kubernetes-secrets.drone-runner.svc.cluster.local:3000
+  DRONE_NAMESPACE_DEFAULT: drone-runner
+  DRONE_DEBUG: "true"
+  DRONE_TRACE: "true"
+
+  HTTP_PROXY: http://proxy-squid.proxy.svc.cluster.local:80
+  HTTPS_PROXY: http://proxy-squid.proxy.svc.cluster.local:80
+  NO_PROXY: localhost,.cluster.local,drone,drone.drone.svc.cluster.local,10.0.0.0/8,10.42.0.1,10.43.0.1
