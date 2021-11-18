@@ -1,8 +1,0 @@
-config:
-  description: BorgBackup SSH-Server
-
-apps:
-- name: backup-lan
-  repoURL: https://github.com/lib42/charts.git
-  path: charts/borgserver
-  targetRevision: dev

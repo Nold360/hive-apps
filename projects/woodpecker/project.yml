@@ -1,13 +1,6 @@
 config:
   description: Woodpecker-CI
 
-  networkPolicy:
-    groups:
-    - internet
-    rules:
-    - allow-agent
-    - allow-minio
-
 apps:
   - name: woodpecker-server
     repoURL: https://github.com/nold360/woodpecker/

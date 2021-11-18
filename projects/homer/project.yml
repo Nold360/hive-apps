@@ -1,7 +1,0 @@
-config:
-  description: Homer Hive Dashboard
-apps:
-- name: homer
-  repoURL: https://k8s-at-home.com/charts/
-  chart: homer
-  targetRevision: 6.0.1
