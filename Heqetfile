@@ -2,3 +2,4 @@
 heqet_repo=https://github.com/nold360/heqet.git
 heqet_revision=v3
 heqet_path=charts/heqet
+heqet_values=values.yaml
