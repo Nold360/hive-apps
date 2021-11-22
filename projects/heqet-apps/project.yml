@@ -1,0 +1,10 @@
+config:
+  description: Heqet-Apps
+  existingNamespace: argocd
+
+apps:
+  - name: heqet-apps
+    existingNamespace: argocd
+    repoURL: https://github.com/nold360/hive-apps
+    path: .
+    targetRevision: main
