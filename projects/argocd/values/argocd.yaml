@@ -1,0 +1,213 @@
+## ArgoCD configuration
+## Ref: https://github.com/argoproj/argo-cd
+##
+
+# Optional CRD installation for those without Helm hooks
+installCRDs: true
+
+global:
+  image:
+    repository: quay.io/argoproj/argocd
+    tag: latest
+#    imagePullPolicy: IfNotPresent
+  securityContext:
+    runAsUser: 999
+    runAsGroup: 999
+    fsGroup: 999
+## Controller
+controller:
+  ## Labels to set container specific security contexts
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - all
+    readOnlyRootFilesystem: true
+
+  ## Server metrics controller configuration
+  metrics:
+    enabled: true
+    service:
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8082'
+
+  clusterAdminAccess:
+    enabled: true
+
+## Dex
+dex:
+  enabled: true
+
+  ## Labels to set container specific security contexts
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - all
+    readOnlyRootFilesystem: true
+
+## Redis
+redis:
+  enabled: true
+
+  ## Labels to set container specific security contexts
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - all
+    readOnlyRootFilesystem: true
+
+  ## Redis Pod specific security context
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    runAsNonRoot: true
+
+## Server
+server:
+  extraArgs:
+    - --insecure
+
+  ## Labels to set container specific security contexts
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - all
+    readOnlyRootFilesystem: true
+
+  ## Server metrics service configuration
+  metrics:
+    enabled: true
+    service:
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8083'
+      servicePort: 8083
+
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - argocd.dc
+    paths:
+      - /
+    tls:
+      - secretName: argocd-tls
+        hosts:
+          - argocd.dc
+    https: false
+  # dedicated ingess for gRPC as documented at
+  # https://argoproj.github.io/argo-cd/operator-manual/ingress/
+
+  ## ArgoCD config
+  ## reference https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
+  configEnabled: true
+  config:
+    # Argo CD's externally facing base URL (optional). Required when configuring SSO
+    url: https://argocd.dc
+    accounts.webhook: apiKey, login
+
+    oidc.config: |
+      name: Authentik
+      issuer: https://auth.dc/application/o/argocd/
+      clientID: 0c149045b7b87eb80e41fcdd3e788476472d7316
+      clientSecret: $oidc.auth0.clientSecret
+      requestedScopes: ["openid", "profile", "email", "groups"]
+ 
+  rbacConfig:
+    policy.csv: |
+      g, ArgoCDAdmins, role:admin
+
+  # Mount public CA cert
+  volumeMounts:
+  - name: certificate
+    mountPath: /etc/ssl/certs/ca.crt
+    subPath: ca
+
+  volumes:
+  - name: certificate
+    secret:
+      secretName: ca-cert
+      defaultMode: 420
+
+  additionalApplications: []
+
+  ## Projects
+  ## reference: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/
+  additionalProjects: []
+
+  ## Enable Admin ClusterRole resources.
+  ## Enable if you would like to grant rights to ArgoCD to deploy to the local Kubernetes cluster.
+  clusterAdminAccess:
+    enabled: true
+
+## Repo Server
+repoServer:
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - all
+    readOnlyRootFilesystem: true
+
+  ## Repo server metrics service configuration
+  metrics:
+    enabled: true
+    service:
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8084'
+      servicePort: 8084
+
+  volumes:
+  - name: var-files
+    emptyDir: {}
+  - name: plugins
+    emptyDir: {}
+
+  volumeMounts:
+  - mountPath: /home/argocd/cmp-server/plugins
+    name: plugins
+
+  initContainers:
+  - name: copy-cmp-server
+    image: quay.io/argoproj/argocd:latest
+    command:
+    - cp
+    - -n
+    - /usr/local/bin/argocd
+    - /var/run/argocd/argocd-cmp-server
+    volumeMounts:
+      - mountPath: /var/run/argocd
+        name: var-files
+
+  extraContainers:
+  - name: cmp-heqet
+    command: [/var/run/argocd/argocd-cmp-server]
+    image: lib42/heqet-cli:latest
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 999
+    volumeMounts:
+      - mountPath: /var/run/argocd
+        name: var-files
+      - mountPath: /home/argocd/cmp-server/plugins
+        name: plugins
+      - mountPath: /tmp
+        name: tmp-dir
+
+  ## Repo server rbac rules
+  # rbac:
+  #   - apiGroups:
+  #     - argoproj.io
+  #     resources:
+  #     - applications
+  #     verbs:
+  #     - get
+  #     - list
+  #     - watch
+
+configs:
+  secret:
+    createSecret: false

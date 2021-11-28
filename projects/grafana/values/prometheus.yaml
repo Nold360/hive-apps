@@ -1,0 +1,44 @@
+podSecurityPolicy:
+  enabled: true
+
+kubeStateMetrics:
+  enabled: false
+
+nodeExporter:
+  enabled: true
+  hostNetwork: true
+  hostPID: true
+  hostRootfs: true
+  
+  extraHostPathMounts:
+    - name: textfile-dir
+      mountPath: /srv/txt_collector
+      hostPath: /var/lib/node-exporter
+      readOnly: true
+      mountPropagation: HostToContainer
+
+server:
+  enabled: true
+
+  persistentVolume:
+    enabled: true
+
+pushgateway:
+  enabled: true
+
+extraScrapeConfigs: |
+ - job_name: 'openwrt'
+   scrape_interval: 10s
+   static_configs:
+    - targets: ['192.168.1.1:9100']
+ - job_name: 'borg'
+   scrape_interval: 120s
+   static_configs:
+    - targets: ['192.168.1.111:9942']
+# - job_name: 'octoprint'
+#    scrape_interval: 5s
+#    metrics_path: '/plugin/prometheus_exporter/metrics'
+#    params:
+#      apikey: ['__OCTOPRINT_APIKEY__']
+#    static_configs:
+#      - targets: ['octoprint:80']

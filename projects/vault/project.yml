@@ -1,0 +1,22 @@
+config:
+  description: Vault Secret Managemet
+
+apps:
+  - name: vault
+    repoURL: https://helm.releases.hashicorp.com
+    chart: vault
+    targetRevision: 0.15.0
+    syncWave: "-3"
+    parameters:
+      - name: global.psp.enabled
+        value: "true"
+      - name: server.dev.enabled
+        value: "false"
+
+  # Vault Secret Operator for automatic Secret injection
+  - name: vault-secrets-operator
+    namespace: vault-secrets-operator
+    repoURL: https://ricoberger.github.io/helm-charts
+    chart: vault-secrets-operator
+    targetRevision: 1.15.1
+    syncWave: "-2"

@@ -1,0 +1,61 @@
+global:
+  enabled: true 
+  tlsDisable: true
+  psp:
+    enable: true
+injector:
+  enabled: false
+server:
+  enabled: true
+  auditStorage:
+    accessMode: ReadWriteOnce
+    annotations: {}
+    enabled: false
+    mountPath: /vault/audit
+    size: 10Gi
+    storageClass: null
+  authDelegator:
+    enabled: true
+  dataStorage:
+    accessMode: ReadWriteOnce
+    annotations: {}
+    enabled: true
+    mountPath: /vault/data
+    size: 10Gi
+    storageClass: local-path
+  dev:
+    enabled: false
+  ha:  
+    enabled: false
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+      kubernetes.io/ingress.class: nginx
+    enabled: true
+    extraPaths: []
+    hosts:
+    - host: vault.dc
+      paths: []
+    labels: {}
+    tls:
+    - hosts:
+      - vault.dc
+      secretName: vault-tls
+  networkPolicy:
+    egress: []
+    enabled: true
+  standalone:
+    enabled: true
+    config: |
+      ui = true
+
+      listener "tcp" {
+        tls_disable = 1
+        address = "[::]:8200"
+        cluster_address = "[::]:8201"
+      }
+      storage "file" {
+        path = "/vault/data"
+      }
+ui:
+  enabled: true
