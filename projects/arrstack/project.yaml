@@ -1,0 +1,57 @@
+config:
+  description: Arrr I'm a pirate!
+  syncWave: 100
+  repo: k8s-at-home
+
+apps:
+- name: ombi
+  namespace: ombi
+  chart: ombi
+  targetRevision: 11.0.1
+
+- name: jackett
+  namespace: jackett
+  chart: jackett
+  targetRevision: 11.1.1
+  include:
+  - noRoot
+  - tmpdirs
+
+- name: sonarr
+  namespace: sonarr
+  chart: sonarr
+  targetRevision: 15.1.0
+  include:
+  - noRoot
+  - tmpdirs
+
+- name: radarr
+  namespace: radarr
+  chart: radarr
+  targetRevision: 15.0.3
+  include:
+  - noRoot
+  - tmpdirs
+
+- name: lidarr
+  namespace: lidarr
+  chart: lidarr
+  targetRevision: 13.0.3
+  include:
+  - noRoot
+  - tmpdirs
+
+- name: bazarr
+  chart: bazarr
+  targetRevision: 10.1.0
+  include:
+  - noRoot
+  - tmpdirs
+
+- name: unpackerr
+  chart: unpackerr
+  targetRevision: 5.0.1
+  include:
+  - noRoot
+  - tmpdirs
+

@@ -1,0 +1,18 @@
+env:
+  UN_FOLDER_0_PATH: /downloads
+  UN_FOLDER_0_DELETE_AFTER: "0"
+  UN_FOLDER_0_MOVE_BACK: "true"
+
+ingress:
+  main:
+    enabled: false
+
+securityContext:
+  privileged: false
+
+persistence:
+  downloads:
+    enabled: true
+    type: hostPath
+    mountPath: /downloads
+    hostPath: /data/torrent/complete

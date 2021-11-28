@@ -1,0 +1,22 @@
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    hosts:
+    - host: ombi.dc
+      paths:
+      - path: /
+        pathType: Prefix
+    tls:
+    - secretName: ombi-tls
+      hosts:
+      - ombi.dc
+
+persistence:
+  config:
+    enabled: true
+    #mountPath: /downloads
+    storageClass: local-path
+    accessMode: ReadWriteOnce
+    size: 1Gi

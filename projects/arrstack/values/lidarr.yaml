@@ -1,0 +1,36 @@
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    hosts:
+    - host: lidarr.dc
+      paths:
+      - path: /
+        pathType: Prefix
+    tls:
+    - secretName: lidarr-tls
+      hosts:
+      - lidarr.dc
+
+securityContext:
+  privileged: false
+
+persistence:
+  config:
+    enabled: true
+    #mountPath: /downloads
+    storageClass: local-path
+    accessMode: ReadWriteOnce
+    size: 1Gi
+  media:
+    enabled: true
+    type: hostPath
+    mountPath: /music
+    hostPath: /data/media/music
+  downloads:
+    enabled: true
+    type: hostPath
+    mountPath: /downloads
+    hostPath: /data/torrent
+    
