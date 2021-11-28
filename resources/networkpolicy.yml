@@ -1,0 +1,136 @@
+# NetworkPolicies predefinition
+# rules can be added to groups. Groups or rules can be applied to projects.
+#
+networkPolicy:
+  config:
+    # Generate NetworkPolicy to allow communication inside of the project namespace?
+    # Only gets applied when other networkpolices are active on the project
+    allowNamespace: true
+
+    default:
+      groups: []
+      rules: []
+
+  groups:
+    internet:
+      - allow-dns
+      - allow-proxy
+      - allow-ingress
+
+  rules:
+  # Allow DNS to all Namespaces, deny everything else
+    allow-dns:
+      podSelector: {}
+      policyTypes:
+      - Egress
+      egress:
+      - ports:
+        - port: 53
+          protocol: UDP
+        to:
+        - namespaceSelector: {}
+
+    allow-kubeapi:
+      podSelector: {}
+      policyTypes:
+      - Egress
+      egress:
+      - ports:
+        - port: 443
+          protocol: TCP
+        to:
+        - namespaceSelector:
+            matchLabels:
+              name: kube-system
+
+    # Allow access to internet proxy
+    allow-proxy:
+      podSelector: {}
+      policyTypes:
+      - Egress
+      egress:
+      - ports:
+        - port: 80
+          protocol: TCP
+        - port: 3128
+          protocol: TCP
+        to:
+        - namespaceSelector:
+            matchLabels:
+              app.heqet.gnu.one/name: proxy
+
+    # Allow access from ingress-external
+    allow-ingress:
+      podSelector: {}
+      policyTypes:
+      - Ingress
+      ingress:
+      - from:
+        - namespaceSelector:
+            matchLabels:
+              app.heqet.gnu.one/name: ingress-external
+
+    # Allow SSH for Gitea
+    allow-ssh:
+      podSelector: {}
+      policyTypes:
+      - Ingress
+      ingress:
+      - from:
+        - ipBlock:
+            cidr: 192.168.1.0/24
+        - namespaceSelector:
+            matchLabels:
+              app.heqet.gnu.one/name: wiki
+        ports:
+        - port: 2222
+          protocol: TCP
+
+    # Allow direct access to gitea
+    allow-gitea:
+      podSelector: {}
+      policyTypes:
+      - Egress
+      egress:
+      - to:
+        - namespaceSelector:
+            matchLabels:
+              app.heqet.gnu.one/name: gitea
+        ports:
+        - port: 2222
+          protocol: TCP
+
+    # Allow Drone-Runner to access Drone
+    allow-runner:
+      podSelector: {}
+      policyTypes:
+      - Ingress
+      ingress:
+      - from:
+        - namespaceSelector:
+            matchLabels:
+              app.heqet.gnu.one/name: drone-runner
+
+    # Allow Woodpacker-Agent to access Woodpacker Server
+    allow-agent:
+      podSelector: {}
+      policyTypes:
+      - Ingress
+      ingress:
+      - from:
+        - namespaceSelector:
+            matchLabels:
+              app.heqet.gnu.one/name: woodpacker-agent
+
+    allow-minio:
+      podSelector: {}
+      policyTypes:
+      - Egress
+      egress:
+      - ports:
+        - port: 9000
+          protocol: TCP
+        to:
+        - namespaceSelector:
+            matchLabels:
+              name: minio
