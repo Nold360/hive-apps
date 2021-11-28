@@ -107,7 +107,7 @@ server:
   config:
     # Argo CD's externally facing base URL (optional). Required when configuring SSO
     url: https://argocd.dc
-    accounts.webhook: apiKey, login
+    application.resourceTrackingMethod: annotation+label
 
     oidc.config: |
       name: Authentik
