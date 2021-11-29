@@ -1,13 +1,13 @@
-#podSecurityContext:
-#  fsGroup: 2000
+podSecurityContext:
+  fsGroup: 2000
 
-#securityContext:
-  #capabilities:
-  #  drop:
-  #  - ALL
-  #readOnlyRootFilesystem: true
-  #runAsNonRoot: false
-  #runAsUser: 1000
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: false
+  runAsUser: 1000
 
 resources:
   limits:
