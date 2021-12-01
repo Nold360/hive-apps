@@ -5,7 +5,7 @@ apps:
   - name: vault
     repoURL: https://helm.releases.hashicorp.com
     chart: vault
-    targetRevision: 0.15.0
+    targetRevision: 0.18.0
     syncWave: "-3"
     parameters:
       - name: global.psp.enabled
@@ -18,5 +18,5 @@ apps:
     namespace: vault-secrets-operator
     repoURL: https://ricoberger.github.io/helm-charts
     chart: vault-secrets-operator
-    targetRevision: 1.15.1
+    targetRevision: 1.16.1
     syncWave: "-2"
