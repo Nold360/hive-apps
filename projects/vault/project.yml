@@ -7,11 +7,6 @@ apps:
     chart: vault
     targetRevision: 0.18.0
     syncWave: "-3"
-    parameters:
-      - name: global.psp.enabled
-        value: "true"
-      - name: server.dev.enabled
-        value: "false"
 
   # Vault Secret Operator for automatic Secret injection
   - name: vault-secrets-operator

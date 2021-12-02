@@ -1,5 +1,5 @@
 global:
-  enabled: true 
+  enabled: true
   tlsDisable: true
   psp:
     enable: true
@@ -25,7 +25,7 @@ server:
     storageClass: local-path
   dev:
     enabled: false
-  ha:  
+  ha:
     enabled: false
   ingress:
     annotations:
