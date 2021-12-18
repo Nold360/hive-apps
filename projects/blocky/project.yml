@@ -4,4 +4,4 @@ apps:
 - name: blocky
   repoURL: https://k8s-at-home.com/charts
   chart: blocky
-  targetRevision: 9.0.3
+  targetRevision: 9.1.0
