@@ -1,6 +1,4 @@
 loki:
-  image:
-    tag: 2.3.0
   enabled: true
 
 promtail:
@@ -11,9 +9,6 @@ fluent-bit:
 
 grafana:
   enabled: true
-
-  image:
-    tag: 8.1.2
 
   admin:
     existingSecret: "loki-stack-grafana"
@@ -82,43 +77,5 @@ grafana:
      # meh.. but for now...
      tls_skip_verify_insecure: true
  
-
 prometheus:
   enabled: false
-  image:
-    tag: v2.26.0
-
-  extraScrapeConfigs: |
-    - job_name: 'openwrt'
-      scrape_interval: 10s
-      static_configs:
-        - targets: ['192.168.1.1:9100']
-    - job_name: 'borg'
-      scrape_interval: 10s
-      static_configs:
-        - targets: ['192.168.1.111:9942']
-
-  podSecurityPolicy:
-    enabled: true
-
-  server:
-    extraArgs:
-      #storage.local.retention: 720h
-
-  nodeexporter:
-#    image:
-#      repository: quay.io/prometheus/node-exporter
-#      tag: v1.1.2
-    
-    extraHostPathMounts:
-     - name: textfile-dir
-       mountPath: /srv/txt_collector
-       hostPath: /var/lib/node-exporter
-       readOnly: true
-       mountPropagation: HostToContainer
-   
-    securityContext:
-      fsGroup: 65534
-      runAsGroup: 65534
-      runAsNonRoot: false
-      runAsUser: 0
