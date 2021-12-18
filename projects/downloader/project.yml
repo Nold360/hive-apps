@@ -10,16 +10,6 @@ apps:
     keys:
     - VPN_AUTH
     - vpnConfigfile
-- name: rtorrent
-  repoURL: https://k8s-at-home.com/charts/
-  chart: rtorrent-flood
-  targetRevision: 9.0.1
-  secrets:
-  - name: openvpn
-    fromApp: deluge
-    keys:
-    - VPN_AUTH
-    - vpnConfigfile
 
 - name: youtubedl
   repoURL: https://k8s-at-home.com/charts/

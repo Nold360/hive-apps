@@ -168,10 +168,6 @@ configmap:
           name: Deluge
           url: https://torrent.dc
           target: "_blank"
-        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/flood.png
-          name: Flood
-          url: https://flood.dc
-          target: "_blank"
         - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/pyload.png
           name: pyLoad
           url: https://pyload.dc
