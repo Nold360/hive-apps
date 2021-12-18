@@ -24,7 +24,7 @@ apps:
 - name: radarr
   namespace: radarr
   chart: radarr
-  targetRevision: 15.0.3
+  targetRevision: 15.1.1
   include:
   - noRoot
   - tmpdirs
