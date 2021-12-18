@@ -5,7 +5,7 @@ config:
 apps:
 - name: homeassistant
   chart: home-assistant
-  targetRevision: 11.0.5
+  targetRevision: 11.2.1
   secrets:
   - name: hass-postgres
     keys:
