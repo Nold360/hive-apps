@@ -1,17 +1,14 @@
 config:
   description: Vault Secret Managemet
-
 apps:
-  - name: vault
-    repoURL: https://helm.releases.hashicorp.com
-    chart: vault
-    targetRevision: 0.18.0
-    syncWave: "-3"
-
-  # Vault Secret Operator for automatic Secret injection
-  - name: vault-secrets-operator
-    namespace: vault-secrets-operator
-    repoURL: https://ricoberger.github.io/helm-charts
-    chart: vault-secrets-operator
-    targetRevision: 1.16.1
-    syncWave: "-2"
+- name: vault
+  repoURL: https://helm.releases.hashicorp.com
+  chart: vault
+  targetRevision: 0.18.0
+  syncWave: '-3'
+- name: vault-secrets-operator
+  namespace: vault-secrets-operator
+  repoURL: https://ricoberger.github.io/helm-charts
+  chart: vault-secrets-operator
+  targetRevision: 1.16.3
+  syncWave: '-2'
