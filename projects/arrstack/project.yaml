@@ -37,7 +37,7 @@ apps:
   - tmpdirs
 - name: bazarr
   chart: bazarr
-  targetRevision: 10.1.0
+  targetRevision: 10.2.0
   include:
   - noRoot
   - tmpdirs
