@@ -17,4 +17,4 @@ apps:
 - name: pyload
   repoURL: https://k8s-at-home.com/charts/
   chart: pyload
-  targetRevision: 6.0.1
+  targetRevision: 6.1.0
