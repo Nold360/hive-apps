@@ -2,8 +2,7 @@ config:
   description: Stream Music
   syncWave: 100
   repo: k8s-at-home
-
 apps:
 - name: navidrome
   chart: navidrome
-  targetRevision: 6.0.1
+  targetRevision: 6.1.0
