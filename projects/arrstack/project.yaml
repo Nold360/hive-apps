@@ -43,7 +43,7 @@ apps:
   - tmpdirs
 - name: unpackerr
   chart: unpackerr
-  targetRevision: 5.0.1
+  targetRevision: 5.1.0
   include:
   - noRoot
   - tmpdirs
