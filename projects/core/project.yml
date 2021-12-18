@@ -55,3 +55,9 @@ apps:
   chart: ingress-nginx
   targetRevision: 4.0.13
   syncWave: '0'
+
+- name: cilium
+  existingNamespace: kube-system
+  repoURL: https://helm.cilium.io
+  chart: cilium
+  targetRevision: 1.11.0

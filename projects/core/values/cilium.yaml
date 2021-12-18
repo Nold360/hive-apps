@@ -1,0 +1,38 @@
+---
+hubble:
+  relay:
+    enabled: true
+
+  ui:
+    enabled: true
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+      hosts:
+        - cilium.dc
+      tls:
+      - secretName: cilium-dc-tls
+        hosts:
+        - cilium.dc
+
+  metrics:
+    enabled:
+    - dns:query;ignoreAAAA
+    - drop
+    - tcp
+    - flow
+    - icmp
+    - http
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "9091"
+
+prometheus:
+  enabled: true
+
+operator:
+  replicas: 1
+
+hostServices:
+  enabled: true
