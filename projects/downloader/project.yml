@@ -4,18 +4,16 @@ apps:
 - name: deluge
   repoURL: https://k8s-at-home.com/charts/
   chart: deluge
-  targetRevision: 5.0.1
+  targetRevision: 5.1.0
   secrets:
   - name: openvpn
     keys:
     - VPN_AUTH
     - vpnConfigfile
-
 - name: youtubedl
   repoURL: https://k8s-at-home.com/charts/
   chart: youtubedl-material
   targetRevision: 4.0.1
-
 - name: pyload
   repoURL: https://k8s-at-home.com/charts/
   chart: pyload
