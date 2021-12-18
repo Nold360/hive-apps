@@ -1,14 +1,11 @@
 config:
   description: Shared Network Services
-
 apps:
-# Squid Internet Proxy
 - name: proxy
   namespace: proxy
   repoURL: http://honestica.github.io/lifen-charts
   chart: squid
-  targetRevision: 0.3.0
-
+  targetRevision: 0.4.1
 - name: minio
   namespace: minio
   repoURL: https://charts.bitnami.com/bitnami
