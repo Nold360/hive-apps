@@ -31,7 +31,7 @@ apps:
 - name: lidarr
   namespace: lidarr
   chart: lidarr
-  targetRevision: 13.0.3
+  targetRevision: 13.1.1
   include:
   - noRoot
   - tmpdirs
