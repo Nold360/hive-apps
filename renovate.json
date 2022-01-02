@@ -9,7 +9,7 @@
     "rebaseWhen": "conflicted",
     "assignees": ["@nold360"],
     "helm-values": {
-      "fileMatch": ["./projects/.*/values/.+\\.ya?ml$"]
+      "fileMatch": ["projects/.*/values/.+\\.ya?ml$"]
     },
     "kubernetes": {
       "fileMatch": ["\\.ya?ml$"],
