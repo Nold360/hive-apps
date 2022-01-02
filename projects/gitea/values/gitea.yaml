@@ -79,8 +79,7 @@ gitea:
       #  additionalLabels:
       #    prometheus-release: prom1
 
-  oauth:
-    enabled: false
+  oauth: []
     #name:
     #provider:
     #key:
@@ -116,15 +115,13 @@ gitea:
     oauth:
       ENABLE: false
 
-  database:
-    builtIn:
-      postgresql:
-        enabled: true
-  cache:
-    builtIn:
-      enabled: false
+memcached:
+  enabled: true
+  service:
+    port: 11211
 
 postgresql:
+  enabled: true
   global:
     #storageClass: slow
     postgresql:
