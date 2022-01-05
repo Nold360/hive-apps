@@ -2,11 +2,15 @@ config:
   description: Arrr I'm a pirate!
   syncWave: 100
   repo: k8s-at-home
+
 apps:
 - name: ombi
   namespace: ombi
   chart: ombi
   targetRevision: 11.1.0
+  include:
+  - ingress-internal
+
 - name: jackett
   namespace: jackett
   chart: jackett
@@ -14,6 +18,8 @@ apps:
   include:
   - noRoot
   - tmpdirs
+  - ingress-internal
+
 - name: sonarr
   namespace: sonarr
   chart: sonarr
@@ -21,6 +27,8 @@ apps:
   include:
   - noRoot
   - tmpdirs
+  - ingress-internal
+
 - name: radarr
   namespace: radarr
   chart: radarr
@@ -28,6 +36,8 @@ apps:
   include:
   - noRoot
   - tmpdirs
+  - ingress-internal
+
 - name: lidarr
   namespace: lidarr
   chart: lidarr
@@ -35,15 +45,20 @@ apps:
   include:
   - noRoot
   - tmpdirs
+  - ingress-internal
+
 - name: bazarr
   chart: bazarr
   targetRevision: 10.2.0
   include:
   - noRoot
   - tmpdirs
+  - ingress-internal
+
 - name: unpackerr
   chart: unpackerr
   targetRevision: 5.1.0
   include:
   - noRoot
   - tmpdirs
+  - ingress-internal

@@ -2,6 +2,7 @@ config:
   description: Home Automation
   syncWave: 100
   repo: k8s-at-home
+
 apps:
 - name: homeassistant
   chart: home-assistant
@@ -12,3 +13,5 @@ apps:
     - postgresql-username
     - postgresql-password
     - postgresql-postgres-password
+  include:
+  - ingress-internal

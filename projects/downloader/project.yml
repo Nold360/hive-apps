@@ -10,11 +10,20 @@ apps:
     keys:
     - VPN_AUTH
     - vpnConfigfile
+  include:
+  - ingress-internal
+
+
 - name: youtubedl
   repoURL: https://k8s-at-home.com/charts/
   chart: youtubedl-material
   targetRevision: 4.1.0
+  include:
+  - ingress-internal
+
 - name: pyload
   repoURL: https://k8s-at-home.com/charts/
   chart: pyload
   targetRevision: 6.1.0
+  include:
+  - ingress-internal

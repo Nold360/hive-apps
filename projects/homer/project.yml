@@ -5,3 +5,5 @@ apps:
   repoURL: https://k8s-at-home.com/charts/
   chart: homer
   targetRevision: 7.0.0
+  include:
+  - ingress-internal
