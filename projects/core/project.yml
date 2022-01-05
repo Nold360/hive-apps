@@ -52,9 +52,9 @@ apps:
 
 - name: ingress-external
   namespace: ingress-external
-  repoURL: https://kubernetes.github.io/ingress-nginx
-  chart: ingress-nginx
-  targetRevision: 4.0.13
+  repoURL: https://helm.traefik.io/traefik
+  chart: traefik
+  targetRevision: 10.9.1
   syncWave: '0'
 
 - name: cilium
