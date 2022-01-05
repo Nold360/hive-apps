@@ -1,25 +1,25 @@
-controller:
-  name: controller-internal
-  electionID: ingress-controller-internal-leader
-  watchIngressWithoutClass: true
-  ingressClassResource:
-    name: nginx
-    enabled: true
-    default: true
-
-  kind: Deployment
-  service:
-    annotations:
-      metallb.universe.tf/address-pool: internal
-  metrics:
-    enabled: true
-    service:
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "10254"
-
-defaultBackend:
+ingressClass:
   enabled: true
+  isDefaultClass: true
 
-podSecurityPolicy:
+providers:
+  kubernetesCRD:
+    ingressClass: internal
+
+globalArguments: []
+
+ports:
+  web:
+    redirectTo: websecure
+  websecure:
+    tls:
+      enabled: true
+
+service:
   enabled: true
+  type: LoadBalancer
+  annotations:
+    metallb.universe.tf/address-pool: internal
+
+  externalIPs:
+  - 192.168.1.11
