@@ -41,6 +41,7 @@ ingress:
     kubernetes.io/ingress.class: external
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt
+    traefik.ingress.kubernetes.io/router.tls: 'true'
   hosts:
     - host: git.nold.in
       paths:

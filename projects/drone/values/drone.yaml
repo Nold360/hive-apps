@@ -24,8 +24,9 @@ service:
 ingress:
   enabled: true
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt
     kubernetes.io/ingress.class: external
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+    cert-manager.io/cluster-issuer: letsencrypt
     kubernetes.io/tls-acme: "true"
   hosts:
     - host: drone.nold.in
