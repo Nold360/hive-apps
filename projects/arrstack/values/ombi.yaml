@@ -3,6 +3,7 @@ ingress:
     enabled: true
     annotations:
       cert-manager.io/cluster-issuer: vault-issuer
+      traefik.ingress.kubernetes.io/router.tls: 'true'
     hosts:
     - host: ombi.dc
       paths:

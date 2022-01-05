@@ -8,6 +8,7 @@ ingress:
   tls: true
   annotations:
     cert-manager.io/cluster-issuer: vault-issuer
+    traefik.ingress.kubernetes.io/router.tls: 'true'
 
 networkPolicy:
   enabled: true

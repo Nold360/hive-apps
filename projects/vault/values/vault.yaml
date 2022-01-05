@@ -30,7 +30,7 @@ server:
   ingress:
     annotations:
       cert-manager.io/cluster-issuer: vault-issuer
-      kubernetes.io/ingress.class: nginx
+      traefik.ingress.kubernetes.io/router.tls: 'true'
     enabled: true
     extraPaths: []
     hosts:
