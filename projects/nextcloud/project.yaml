@@ -3,6 +3,10 @@ config:
   networkPolicy:
     groups:
     - internet
+ 
+  labels:
+    environment: external
+
 apps:
 - name: nextcloud
   repoURL: https://nextcloud.github.io/helm

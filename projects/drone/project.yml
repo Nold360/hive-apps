@@ -8,6 +8,9 @@ config:
     - allow-runner
     - allow-minio
 
+  labels:
+    environment: external
+
 apps:
   - name: drone
     repoURL: https://github.com/nold360/drone-charts.git

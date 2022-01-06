@@ -5,6 +5,10 @@ config:
     - internet
     rules:
     - allow-ssh
+
+  labels:
+    environment: external
+
 apps:
 - name: gitea
   repoURL: https://dl.gitea.io/charts/

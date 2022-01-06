@@ -3,6 +3,8 @@ config:
   networkPolicy:
     rules:
     - allow-dns
+    - allow-ingress-traffic
+    - allow-external-services
 
 apps:
 - name: ingress-external

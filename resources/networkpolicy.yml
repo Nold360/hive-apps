@@ -68,7 +68,7 @@ networkPolicy:
       - from:
         - namespaceSelector:
             matchLabels:
-              app.heqet.gnu.one/name: ingress-external
+              project.heqet.gnu.one/name: ingress-external
 
     # Allow SSH for Gitea
     allow-ssh:
@@ -134,3 +134,22 @@ networkPolicy:
         - namespaceSelector:
             matchLabels:
               name: minio
+
+    allow-ingress-traffic:
+      podSelector: {}
+      policyTypes:
+      - Ingress
+      ingress:
+      - {}
+
+    allow-external-services:
+      podSelector: {}
+      policyTypes:
+      - Egress
+      egress:
+      - to:
+        - namespaceSelector:
+            matchLabels:
+              environment: external
+
+    
