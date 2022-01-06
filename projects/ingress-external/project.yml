@@ -1,0 +1,12 @@
+config:
+  description: External Ingress Controller
+  networkPolicy:
+    rules:
+    - allow-dns
+
+apps:
+- name: ingress-external
+  repoURL: https://helm.traefik.io/traefik
+  chart: traefik
+  targetRevision: 10.9.1
+  syncWave: '0'

@@ -1,5 +1,6 @@
 config:
   description: Core Components for Kubernetes
+
 apps:
 - name: fast-storage
   namespace: fast-storage
@@ -13,6 +14,7 @@ apps:
     value: DEFAULT_PATH_FOR_NON_LISTED_NODES
   - name: nodePathMap[0].paths[0]
     value: /var/lib/rancher/k3s/storage
+
 - name: ssd-storage
   namespace: ssd-storage
   repoURL: https://github.com/rancher/local-path-provisioner
@@ -25,12 +27,14 @@ apps:
     value: DEFAULT_PATH_FOR_NON_LISTED_NODES
   - name: nodePathMap[0].paths[0]
     value: /data/kubernetes/ssd
+
 - name: metallb
   repoURL: https://charts.bitnami.com/bitnami
   chart: metallb
   namespace: metallb
   targetRevision: 2.5.16
   syncWave: '0'
+
 - name: cert-manager
   namespace: cert-manager
   repoURL: https://charts.jetstack.io
@@ -43,15 +47,9 @@ apps:
   - name: cert-manager-vault-approle
     keys:
     - secretId
+
 - name: ingress-internal
   namespace: ingress-internal
-  repoURL: https://helm.traefik.io/traefik
-  chart: traefik
-  targetRevision: 10.9.1
-  syncWave: '0'
-
-- name: ingress-external
-  namespace: ingress-external
   repoURL: https://helm.traefik.io/traefik
   chart: traefik
   targetRevision: 10.9.1
