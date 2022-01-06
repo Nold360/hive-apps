@@ -1,5 +1,5 @@
 image:
-#  repository: drone/drone
+  repository: drone/drone
   tag: 2.0.4
 #  pullPolicy: IfNotPresent
 
@@ -24,7 +24,7 @@ service:
 ingress:
   enabled: true
   annotations:
-    kubernetes.io/ingress.class: external
+#    kubernetes.io/ingress.class: ingress-external-traefik
     traefik.ingress.kubernetes.io/router.tls: 'true'
     cert-manager.io/cluster-issuer: letsencrypt
     kubernetes.io/tls-acme: "true"

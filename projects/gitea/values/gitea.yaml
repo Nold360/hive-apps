@@ -38,7 +38,7 @@ service:
 ingress:
   enabled: true
   annotations:
-    kubernetes.io/ingress.class: external
+#    kubernetes.io/ingress.class: ingress-external-traefik
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt
     traefik.ingress.kubernetes.io/router.tls: 'true'
