@@ -23,6 +23,8 @@ service:
 
 ingress:
   enabled: true
+  labels:
+    environment: external
   annotations:
 #    kubernetes.io/ingress.class: ingress-external-traefik
     traefik.ingress.kubernetes.io/router.tls: 'true'

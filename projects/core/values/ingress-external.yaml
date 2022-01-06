@@ -5,6 +5,8 @@ ingressClass:
 providers:
   kubernetesCRD:
     ingressClass: external
+  kubernetesIngress:
+    labelSelector: environment=external
 
 globalArguments: []
 

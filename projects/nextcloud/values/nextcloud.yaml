@@ -49,6 +49,8 @@ nextcloud:
              
 ingress:
   enabled: true
+  labels:
+    environment: external
   annotations:
     #nginx.ingress.kubernetes.io/proxy-body-size: 4G
     kubernetes.io/tls-acme: "true"
