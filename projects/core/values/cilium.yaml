@@ -8,6 +8,7 @@ hubble:
     ingress:
       enabled: true
       annotations:
+        kubernetes.io/ingress.class: ingress-internal-traefik
         cert-manager.io/cluster-issuer: vault-issuer
         traefik.ingress.kubernetes.io/router.tls: 'true'
       hosts:
