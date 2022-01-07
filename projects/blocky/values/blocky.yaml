@@ -136,6 +136,8 @@ config: |
       LAPTOP-G35N0AS1.lan:
         - ads
         - ms
+      ps4.lan:
+        - untrusted
       # use client name (with wildcard support: * - sequence of any characters, [0-9] - range)
       # or single ip address / client subnet as CIDR notation
       #laptop*:
