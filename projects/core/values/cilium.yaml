@@ -7,6 +7,7 @@ hubble:
     enabled: true
     ingress:
       enabled: true
+      className: ingress-internal-traefik
       annotations:
         kubernetes.io/ingress.class: ingress-internal-traefik
         cert-manager.io/cluster-issuer: vault-issuer
