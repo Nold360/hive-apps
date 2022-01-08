@@ -25,7 +25,7 @@ server:
   enabled: true
   image:
     repository: quay.io/prometheus/prometheus
-    tag: v2.31.1
+    tag: v2.31.2
 
   persistentVolume:
     enabled: true
