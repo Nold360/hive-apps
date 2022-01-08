@@ -1,5 +1,7 @@
 # Gitea
 image:
+  repository: gitea/gitea
+  tag: 1.15.8
   rootless: true
 
 statefulset:

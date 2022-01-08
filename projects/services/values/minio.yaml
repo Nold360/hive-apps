@@ -1,3 +1,8 @@
+image:
+  registry: docker.io
+  repository: bitnami/minio
+  tag: 2021.12.29-debian-10-r0
+
 defaultBuckets: "public, drone, temp"
 auth:
   existingSecret: minio-auth

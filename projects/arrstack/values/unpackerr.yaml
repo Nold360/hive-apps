@@ -1,3 +1,7 @@
+image:
+  repository: golift/unpackerr
+  tag: 0.9.7
+
 env:
   UN_FOLDER_0_PATH: /downloads
   UN_FOLDER_0_DELETE_AFTER: "0"

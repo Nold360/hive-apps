@@ -3,10 +3,15 @@ global:
   tlsDisable: true
   psp:
     enable: true
+
 injector:
   enabled: false
+
 server:
   enabled: true
+  image:
+    repository: "hashicorp/vault"
+    tag: "1.9.0"
   auditStorage:
     accessMode: ReadWriteOnce
     annotations: {}
@@ -27,6 +32,7 @@ server:
     enabled: false
   ha:
     enabled: false
+
   ingress:
     annotations:
       cert-manager.io/cluster-issuer: vault-issuer
@@ -41,9 +47,11 @@ server:
     - hosts:
       - vault.dc
       secretName: vault-tls
+
   networkPolicy:
     egress: []
     enabled: true
+
   standalone:
     enabled: true
     config: |
@@ -57,5 +65,6 @@ server:
       storage "file" {
         path = "/vault/data"
       }
+
 ui:
   enabled: true

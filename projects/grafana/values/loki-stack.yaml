@@ -1,14 +1,23 @@
 loki:
   enabled: true
+  image:
+    repository: grafana/loki
+    tag: 2.4.1
 
 promtail:
   enabled: true
 
 fluent-bit:
   enabled: true
+  image:
+    repository: grafana/fluent-bit-plugin-loki
+    tag: 2.1.0-amd64
 
 grafana:
   enabled: true
+  image:
+    repository: grafana/grafana
+    tag: 8.3.3
 
   admin:
     existingSecret: "loki-stack-grafana"
@@ -62,20 +71,5 @@ grafana:
     server:
       root_url: https://grafana.dc
 
-    auth.generic_oauth:
-     name: Authentik
-     enabled: true
-     allow_sign_up: true
-     client_id: 779461ddc18a79dba69cf2eef895a20d59b21d59
-     #client_secret: IN ENV
-     scopes: "openid profile email"
-     #email_attribute_name: email:primary
-     role_attribute_path: "contains(groups[*], 'Grafana Admins') && 'Admin' || contains(groups[*], 'Grafana Editors') && 'Editor' || 'Viewer'"
-     auth_url: https://auth.dc/application/o/authorize/
-     token_url: https://auth.dc/application/o/token/
-     api_url: https://auth.dc/application/o/userinfo/
-     # meh.. but for now...
-     tls_skip_verify_insecure: true
- 
 prometheus:
   enabled: false

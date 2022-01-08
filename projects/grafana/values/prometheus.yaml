@@ -6,6 +6,10 @@ kubeStateMetrics:
 
 nodeExporter:
   enabled: true
+  image:
+    repository: quay.io/prometheus/node-exporter
+    tag: v1.3.0
+
   hostNetwork: true
   hostPID: true
   hostRootfs: true
@@ -19,6 +23,9 @@ nodeExporter:
 
 server:
   enabled: true
+  image:
+    repository: quay.io/prometheus/prometheus
+    tag: v2.31.1
 
   persistentVolume:
     enabled: true
@@ -31,10 +38,10 @@ extraScrapeConfigs: |
    scrape_interval: 10s
    static_configs:
     - targets: ['192.168.1.1:9100']
- - job_name: 'borg'
-   scrape_interval: 120s
-   static_configs:
-    - targets: ['192.168.1.111:9942']
+# - job_name: 'borg'
+#   scrape_interval: 120s
+#   static_configs:
+#    - targets: ['192.168.1.111:9942']
 # - job_name: 'octoprint'
 #    scrape_interval: 5s
 #    metrics_path: '/plugin/prometheus_exporter/metrics'
