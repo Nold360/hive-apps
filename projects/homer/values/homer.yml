@@ -2,6 +2,22 @@ image:
   repository: b4bz/homer
   tag: 21.09.2
 
+initContainers:
+  clone-assets:
+    name: clone-assets
+    image: alpine/git
+    command: [ "/bin/sh", "-c" ]
+    args:
+    - "git clone --depth=1 ${THEME_SOURCE} /tmp/theme && git clone --depth=1 ${ICON_SOURCE} /tmp/icons && cp -rv /tmp/theme/assets/* /tmp/icons/png /www/assets/"
+    env:
+    - name: THEME_SOURCE
+      value: https://github.com/walkxcode/homer-theme
+    - name: ICON_SOURCE
+      value: https://github.com/NX211/homer-icons
+    volumeMounts:
+    - name: assets
+      mountPath: /www/assets
+
 ingress:
   main:
     enabled: true
@@ -18,6 +34,12 @@ ingress:
       hosts:
       - homer.dc
 
+persistence:
+  assets:
+    enabled: true
+    type: emptyDir
+    mountPath: /www/assets
+
 configmap:
   # -- Store homer configuration as a ConfigMap
   config:
@@ -31,27 +53,44 @@ configmap:
         subtitle: "Homer on the Hive"
         logo: "logo.png"
 
-        header: true
+        header: false
         footer: false
-        columns: "6"
-     
-        connectivityCheck: true
+        columns: "4"
+             
+        stylesheet:
+          - "assets/custom.css"
 
-        # Optional theme customization
         theme: default
         colors:
+          light:
+            highlight-primary: "#fff5f2"
+            highlight-secondary: "#fff5f2"
+            highlight-hover: "#bebebe"
+            background: "#12152B"
+            card-background: "#fff5f2"
+            text: "#ffffff"
+            text-header: "#fafafa"
+            text-title: "#000000"
+            text-subtitle: "#111111"
+            card-shadow: rgba(0, 0, 0, 0.5)
+            link: "#3273dc"
+            link-hover: "#2e4053"
+            background-image: "../assets/wallpaper-light.jpeg" # Change wallpaper.jpeg to the name of your own custom wallpaper!
           dark:
-            highlight-primary: "#013c3d"
-            highlight-secondary: "#057752"
-            highlight-hover: "#2a8769"
-            background: "#131313"
-            card-background: "#2b2b2b"
+            highlight-primary: "#181C3A"
+            highlight-secondary: "#181C3A"
+            highlight-hover: "#1F2347"
+            background: "#12152B"
+            card-background: "#181C3A"
             text: "#eaeaea"
-            text-header: "#ffffff"
+            text-header: "#7C71DD"
             text-title: "#fafafa"
-            text-subtitle: "#f5f5f5"
-            card-shadow: rgba(0, 0, 0, 0.4)
-            link-hover: "#ffdd57"
+            text-subtitle: "#8B8D9C"
+            card-shadow: rgba(0, 0, 0, 0.5)
+            link: "#c1c1c1"
+            link-hover: "#fafafa"
+            background-image: "../assets/wallpaper.jpeg"
+
         #message:
         # Optional navbar
         links: [] # Allows for navbar (dark mode, layout, and search) without any links
@@ -75,71 +114,51 @@ configmap:
           - name: "// Admin"
             icon: "fas fa-tools"
             items:
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/openwrt.png
+            - logo: assets/png/openwrt.png
               name: OpenWRT
               url: https://openwrt.lan
               target: "_blank"
-            - logo: https://argocd.dc/assets/images/logo.png
+            - logo: assets/png/argocd.png
               name: ArgoCD
               url: https://argocd.dc
               target: "_blank"
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/vault.png
+            - logo: assets/png/vault.png
               name: Vault
               url: https://vault.dc
               target: "_blank"
-            - logo: https://grafana.dc/public/img/grafana_icon.svg
+            - logo: assets/png/grafana.png
               name: Grafana
               url: https://grafana.dc
               target: "_blank"
-            - logo: https://raw.githubusercontent.com/falcosecurity/falcosidekick/master/imgs/falcosidekick_color.png
-              name: Falco
-              url: https://falco.dc/ui
-              target: "_blank"
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/minio.png
+            - logo: assets/png/minio.png
               name: MinIO
               url: https://minio.dc
-              target: "_blank"
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/kibana.png
-              name: Kibana
-              url: https://kibana.dc
-              target: "_blank"
-
-          - name: "// Coding"
-            icon: fas fa-code-branch
-            items:
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/drone.png
-              name: Drone.io
-              url: https://drone.nold.in
-              target: "_blank"
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/gitea.png
-              name: Gitea
-              url: https://git.nold.in
               target: "_blank"
 
           - name: "// Arrrrrr"
             icon: "fas fa-download"
             items:
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/ombi.png
+            - logo: assets/png/ombi.png
               name: Ombi
               url: https://ombi.dc
               target: "_blank"
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/radarr.png
+            - logo: assets/png/radarr.png
               name: Radarr
               url: https://radarr.dc
               target: "_blank"
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/sonarr.png
+            - logo: assets/png/sonarr.png
               name: Sonarr
               url: https://sonarr.dc
               target: "_blank"
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/lidarr.png
+            - logo: assets/png/lidarr.png
               name: Lidarr
               url: https://lidarr.dc
               target: "_blank"
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/bazarr.png
+            - logo: assets/png/bazarr.png
               name: Bazarr
               url: https://bazarr.dc
               target: "_blank"
-            - logo: https://jackett.dc/jacket_medium.png
+            - logo: assets/png/jackett.png
               name: Jackett
               url: https://jackett.dc
               target: "_blank"
@@ -147,15 +166,23 @@ configmap:
           - name: "// Apps"
             icon: "fas fa-cloud"
             items:
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/octoprint.png
+            - logo: assets/png/drone.png
+              name: Drone.io
+              url: https://drone.nold.in
+              target: "_blank"
+            - logo: assets/png/gitea.png
+              name: Gitea
+              url: https://git.nold.in
+              target: "_blank"
+            - logo: assets/png/octoprint.png
               name: OctoPrint
               url: https://octo.dc
               target: "_blank"
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/kodi.png
+            - logo: assets/png/kodi.png
               name: Kodi
               url: http://libreelec.lan:8080
               target: "_blank"
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/home-assistant.png
+            - logo: assets/png/home-assistant.png
               name: HomeAssi
               url: https://hass.dc
               target: "_blank"
@@ -163,23 +190,19 @@ configmap:
               name: Chia Farm
               url: https://chia.dc
               target: "_blank"
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/navidrome.png
-              name: Music Stream
-              url: https://music.dc
-              target: "_blank"
 
           - name: "// Loader"
             icon: "fas fa-download"
             items:
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/deluge.png
+            - logo: assets/png/deluge.png
               name: Deluge
               url: https://torrent.dc
               target: "_blank"
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/pyload.png
+            - logo: assets/png/pyload.png
               name: pyLoad
               url: https://pyload.dc
               target: "_blank"
-            - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/youtube.png
+            - logo: assets/png/youtubedl.png
               name: YouTube-dl
               url: https://youtubedl.dc
               target: "_blank"
