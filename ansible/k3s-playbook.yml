@@ -1,0 +1,21 @@
+# K3s Setup/Update Playbook for my Homelab host
+- hosts: localhost
+  connection: local
+  vars:
+    k3s_release_version: v1.22
+    k3s_debug: false
+    k3s_registration_address: 192.168.1.111
+    k3s_become_for_all: false
+    k3s_control_node: true
+    k3s_start_on_boot: false
+    k3s_server:
+      cluster-cidr: 10.0.0.0/8
+      flannel-backend: "none"
+      default-local-storage-path: /data/kubernetes/storage
+      disable:
+        - traefik
+        - servicelb
+      disable-network-policy: true
+
+  roles:
+    - ansible-role-k3s
