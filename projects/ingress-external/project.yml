@@ -4,9 +4,9 @@ config:
     config:
       allowNamespace: false
     rules:
-    #- allow-dns
+    - allow-dns
     - allow-ingress-traffic
-    #- allow-external-services
+    - allow-external-services
     #- allow-kubeapi
 
 apps:
