@@ -26,7 +26,7 @@ ingress:
   labels:
     environment: external
   annotations:
-#    kubernetes.io/ingress.class: ingress-external-traefik
+    kubernetes.io/ingress.class: ingress-external
     traefik.ingress.kubernetes.io/router.tls: 'true'
     cert-manager.io/cluster-issuer: letsencrypt
     kubernetes.io/tls-acme: "true"
