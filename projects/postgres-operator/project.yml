@@ -1,0 +1,8 @@
+config:
+  description: Zalando Postgres Operator
+
+apps:
+- name: postgres-operator
+  repoURL: https://github.com/zalando/postgres-operator
+  path: charts/postgres-operator
+  targetRevision: master
