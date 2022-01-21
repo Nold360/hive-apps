@@ -12,10 +12,11 @@ kubernetesIngress:
   - drone
   - nextcloud
   - gitea
+  - cert-manager
 
 ports:
   web:
-    redirectTo: websecure
+#    redirectTo: websecure
   websecure:
     tls:
       enabled: true
