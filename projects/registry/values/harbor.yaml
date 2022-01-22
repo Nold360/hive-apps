@@ -1,0 +1,29 @@
+expose:
+  type: ingress
+  tls:
+    enabled: true
+    certSource: secret
+    secret:
+      secretName: "harbor-tls"
+      notarySecretName: "notarty-tls"
+  ingress:
+    hosts:
+      core: registry.dc
+      notary: notary.dc
+    controller: default
+    className: ""
+    annotations:
+      traefik.ingress.kubernetes.io/router.tls: 'true'
+      cert-manager.io/cluster-issuer: vault-issuer
+
+externalURL: https://registry.dc
+
+ipFamily:
+  ipv6:
+    enabled: false
+
+persistence:
+  enabled: true
+
+notary:
+  enabled: false
