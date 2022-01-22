@@ -1,7 +1,7 @@
 config:
   description: Container Image Registry
 apps:
-- name: harbor
-  repoURL: https://helm.goharbor.io
-  chart: harbor
-  targetRevision: 1.8.1
+- name: trow
+  repoURL: https://github.com/ContainerSolutions/trow/
+  path: charts/trow
+  targetRevision: main

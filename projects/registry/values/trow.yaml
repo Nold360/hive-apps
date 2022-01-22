@@ -1,0 +1,32 @@
+trow:
+  domain: reg.dc
+  validation:
+    enabled: false
+    allowDocker: false
+    allowKubernetes: true
+    proxyDockerHub: true
+
+service:
+  type: ClusterIP
+  port: 8000
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: vault-issuer
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+  hosts:
+    - paths: ['/']
+      host: reg.dc
+  tls:
+  - secretName: chart-example-tls
+    hosts:
+       - reg.dc
+  
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 64Mi
