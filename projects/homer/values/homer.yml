@@ -130,6 +130,10 @@ configmap:
               name: Grafana
               url: https://grafana.dc
               target: "_blank"
+            - logo: https://cilium.dc/favicon.ico
+              name: Hubble-UI [Cilium]
+              url: https://cilium.dc
+              target: "_blank"
             - logo: assets/png/minio.png
               name: MinIO
               url: https://minio.dc
@@ -188,7 +192,7 @@ configmap:
               target: "_blank"
             - logo: https://www.chia.net/android-chrome-384x384.png
               name: Chia Farm
-              url: https://chia.dc
+              url: https://machinaris.dc
               target: "_blank"
 
           - name: "// Loader"
