@@ -1,0 +1,9 @@
+FROM quay.io/ansible/ansible-runner:latest
+
+RUN useradd -m nold && chown -R nold:nold /home/runner
+
+COPY . /ansible
+WORKDIR /ansible
+
+USER 1000
+CMD ["/bin/bash", "/ansible/entrypoint.sh"]

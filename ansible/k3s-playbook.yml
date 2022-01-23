@@ -1,13 +1,25 @@
 # K3s Setup/Update Playbook for my Homelab host
-- hosts: localhost
-  connection: local
+- hosts: all
   vars:
+    ansible_user: nold
+    ansible_become_method: su
+    ansible_become: true
+
     k3s_release_version: v1.22
     k3s_debug: false
     k3s_registration_address: 192.168.1.111
-    k3s_become_for_all: false
+    k3s_become: true
     k3s_control_node: true
     k3s_start_on_boot: false
+    k3s_registries:
+      mirrors:
+        docker.io:
+          endpoint:
+          - "https://reg.dc/f/docker"
+      configs:
+        "reg.dc":
+          tls:
+            ca_file: /etc/ssl/vault_ca.crt
     k3s_server:
       cluster-cidr: 10.0.0.0/8
       flannel-backend: "none"
@@ -16,6 +28,10 @@
         - traefik
         - servicelb
       disable-network-policy: true
-
+  pre_tasks:
+    - name: Ensure Vault CA file exists
+      copy:
+        src: vault_ca.crt
+        dest: /etc/ssl/vault_ca.crt
   roles:
     - ansible-role-k3s

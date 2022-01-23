@@ -5,6 +5,9 @@ ingressClass:
 providers:
   kubernetesCRD:
     ingressClass: traefik
+  kubernetesIngress:
+    publishedService:
+      enabled: true
 
 globalArguments: []
 
