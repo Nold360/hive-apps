@@ -1,6 +1,6 @@
 image:
   repository: spx01/blocky
-  tag: v0.15
+  tag: v0.17
 
 env:
   TZ: Europe/Amsterdam
