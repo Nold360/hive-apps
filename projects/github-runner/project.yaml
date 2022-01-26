@@ -1,0 +1,18 @@
+config:
+  description: Github Action Runner
+  syncWave: 100
+
+apps:
+- name: github-runner
+  repoURL: https://github.com/actions-runner-controller/actions-runner-controller/
+  path: charts/actions-runner-controller
+  targetRevision: master
+  secrets:
+    - name: controller-manager
+      keys:
+        - github_token
+  parameters:
+  - name: securityContext.runAsNonRoot
+    value: "true"
+  - name: securityContext.runAsUser
+    value: "1000"
