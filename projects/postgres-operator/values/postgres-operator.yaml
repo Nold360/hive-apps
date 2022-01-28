@@ -2,6 +2,7 @@ image:
   registry: docker.io
   repository: nold360/postgres-operator
   tag: latest
+  pullPolicy: Always
 
 configLogicalBackup:
   logical_backup_s3_access_key_id: ""
