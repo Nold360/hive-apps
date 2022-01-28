@@ -186,6 +186,13 @@ repoServer:
   - name: cmp-heqet
     command: [/var/run/argocd/argocd-cmp-server]
     image: lib42/heqet-cli:latest
+    env:
+      - name: HELM_CACHE_HOME
+        value: /helm-working-dir
+      - name: HELM_CONFIG_HOME
+        value: /helm-working-dir
+      - name: HELM_DATA_HOME
+        value: /helm-working-dir
     securityContext:
       runAsNonRoot: true
       runAsUser: 999
@@ -196,6 +203,8 @@ repoServer:
         name: plugins
       - mountPath: /tmp
         name: tmp-dir
+      - mountPath: /helm-working-dir
+        name: helm-working-dir
 
   ## Repo server rbac rules
   # rbac:
