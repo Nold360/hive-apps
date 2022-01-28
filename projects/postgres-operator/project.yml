@@ -3,6 +3,6 @@ config:
 
 apps:
 - name: postgres-operator
-  repoURL: https://github.com/zalando/postgres-operator
+  repoURL: https://github.com/nold360/postgres-operator
   path: charts/postgres-operator
-  targetRevision: master
+  targetRevision: f/secret_template

@@ -1,7 +1,7 @@
 image:
-  registry: registry.opensource.zalan.do
-  repository: acid/postgres-operator
-  tag: v1.7.1
+  registry: docker.io
+  repository: nold360/postgres-operator
+  tag: latest
 
 configLogicalBackup:
   logical_backup_s3_access_key_id: ""
