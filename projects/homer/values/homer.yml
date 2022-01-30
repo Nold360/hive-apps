@@ -118,6 +118,10 @@ configmap:
               name: OpenWRT
               url: https://openwrt.lan
               target: "_blank"
+            - logo: assets/png/adguardhome.png
+              name: AdGuard Home
+              url: https://adguard.dc
+              target: "_blank"
             - logo: assets/png/argocd.png
               name: ArgoCD
               url: https://argocd.dc

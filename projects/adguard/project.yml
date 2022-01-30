@@ -1,0 +1,8 @@
+config:
+  description: Adguard Home DNS Server
+
+apps:
+- name: adguard
+  repoURL: https://k8s-at-home.com/charts
+  chart: adguard-home
+  targetRevision: 5.2.0
