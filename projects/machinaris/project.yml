@@ -1,0 +1,8 @@
+config:
+  description: Chia Farm
+
+apps:
+- name: farm
+  repoURL: https://lib42.github.io/charts
+  chart: machinaris
+  targetRevision: 0.1.0
