@@ -12,6 +12,11 @@ configInline:
     - 192.168.1.19/32
     - 192.168.1.20/32
 
+  - name: dns
+    protocol: layer2
+    addresses:
+    - 192.168.1.53/32
+
   - name: external
     protocol: layer2
     addresses:
