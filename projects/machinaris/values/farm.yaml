@@ -172,7 +172,7 @@ worker:
       api: 8934
 
   - name: btcgreen
-    enabled: false
+    enabled: true
     image: ghcr.io/guydavis/machinaris-btcgreen
     mode: fullnode
     ports:
@@ -201,24 +201,21 @@ worker:
 
   - name: shibgreen
     enabled: false
-    #image: ghcr.io/guydavis/machinaris-shibgreen:v0.6.8
-    image: nold360/machinaris-shibgreen:latest
+    image: ghcr.io/guydavis/machinaris-shibgreen
     mode: fullnode
     ports:
       api: 8939
 
   - name: flora
     enabled: false
-    #image: ghcr.io/guydavis/machinaris-flora:v0.6.8
-    image: nold360/machinaris-flora:latest
+    image: ghcr.io/guydavis/machinaris-flora
     mode: fullnode
     ports:
       api: 8932
 
   - name: cryptodoge
     enabled: false
-    #image: ghcr.io/guydavis/machinaris-cryptodoge:v0.6.8
-    image: nold360/machinaris-cryptodoge:latest
+    image: ghcr.io/guydavis/machinaris-cryptodoge
     mode: fullnode
     ports:
       api: 8937
