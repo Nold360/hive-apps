@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/linuxserver/ombi
-  tag: version-v4.0.1430
+  tag: 4.10.2
 
 ingress:
   main:
