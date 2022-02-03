@@ -186,6 +186,7 @@ repoServer:
   - name: cmp-heqet
     command: [/var/run/argocd/argocd-cmp-server]
     image: lib42/heqet-cli:latest
+    imagePullPolicy: Always
     env:
       - name: HELM_CACHE_HOME
         value: /helm-working-dir
