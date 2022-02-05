@@ -39,7 +39,7 @@ apps:
   namespace: cert-manager
   repoURL: https://charts.jetstack.io
   chart: cert-manager
-  targetRevision: v1.7.0
+  targetRevision: v1.7.1
   parameters:
   - name: installCRDs
     value: 'true'
