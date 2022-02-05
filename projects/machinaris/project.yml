@@ -5,4 +5,4 @@ apps:
 - name: farm
   repoURL: https://lib42.github.io/charts
   chart: machinaris
-  targetRevision: 0.1.1
+  targetRevision: 0.1.2
