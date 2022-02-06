@@ -185,7 +185,7 @@ repoServer:
   extraContainers:
   - name: cmp-heqet
     command: ["/bin/sh","-c"]
-    args: [ 'helm plugin install https://github.com/lib42/helm-heqet ; sed -i "s/bin\/bash\$/bin\/sh/" /helm-working-dir/.local/share/helm/plugins/helm-heqet/heqet.sh ; /var/run/argocd/argocd-cmp-server' ]
+    args: [ 'HELM_CACHE_HOME=/tmp helm plugin install https://github.com/lib42/helm-heqet ; sed -i "s/bin\/bash\$/bin\/sh/" /helm-working-dir/plugins/helm-heqet/heqet.sh ; /var/run/argocd/argocd-cmp-server' ]
     image: lib42/heqet-cli:latest
     imagePullPolicy: Always
     env:
