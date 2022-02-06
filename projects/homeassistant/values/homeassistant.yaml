@@ -5,7 +5,8 @@ image:
 additionalContainers:
   addon-homematic:
     name: addon-homematic
-    image: homeassistant/i386-addon-homematic:latest
+    #image: homeassistant/i386-addon-homematic:latest
+    image: reg.dc/homematic-addon:latest
     volumeMounts:
     - name: data
       mountPath: /data
