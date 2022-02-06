@@ -26,6 +26,9 @@ server:
   image:
     repository: quay.io/prometheus/prometheus
     tag: v2.33.1
+ 
+  strategy:
+    type: Recreate
 
   persistentVolume:
     enabled: true
