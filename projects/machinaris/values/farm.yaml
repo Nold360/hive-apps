@@ -158,7 +158,7 @@ worker:
 
   - name: silicoin
     enabled: true
-    image: nold360/machinaris-silicoin
+    image: ghcr.io/guydavis/machinaris-silicoin
     tag: latest
     mode: fullnode
     ports:
