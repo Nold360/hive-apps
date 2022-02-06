@@ -159,7 +159,6 @@ worker:
   - name: silicoin
     enabled: true
     image: ghcr.io/guydavis/machinaris-silicoin
-    tag: latest
     mode: fullnode
     ports:
       api: 8934
