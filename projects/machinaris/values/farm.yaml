@@ -220,7 +220,7 @@ worker:
       api: 8937
 
   - name: mmx
-    enabled: true
+    enabled: false
     image: ghcr.io/guydavis/machinaris-mmx
     mode: fullnode
     ports:
