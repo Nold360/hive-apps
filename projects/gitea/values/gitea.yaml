@@ -1,7 +1,7 @@
 # Gitea
 image:
   repository: gitea/gitea
-  tag: 1.16.1
+  tag: 1.16-dev
   rootless: true
 
 statefulset:
@@ -14,8 +14,8 @@ statefulset:
       value: http://proxy-squid.proxy.svc.cluster.local:80
     - name: https_proxy
       value: http://proxy-squid.proxy.svc.cluster.local:80
-    - name: GITEA_APP_INI
-      value: conf/app.ini
+#    - name: GITEA_APP_INI
+#      value: conf/app.ini
 
 securityContext:
   allowPrivilegeEscalation: false
