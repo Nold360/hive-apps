@@ -1,0 +1,8 @@
+config:
+  description: NeuVector Security
+
+apps:
+- name: core
+  repoURL: https://neuvector.github.io/neuvector-helm/
+  chart: core
+  targetRevision: 1.9.0
