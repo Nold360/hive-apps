@@ -6,6 +6,7 @@ apps:
   repoURL: http://honestica.github.io/lifen-charts
   chart: squid
   targetRevision: 0.4.1
+
 - name: minio
   namespace: minio
   repoURL: https://charts.bitnami.com/bitnami
