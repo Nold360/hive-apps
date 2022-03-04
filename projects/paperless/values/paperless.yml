@@ -1,0 +1,70 @@
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+      traefik.ingress.kubernetes.io/router.tls: "true"
+    hosts:
+    - host: paperless.dc
+      paths:
+      - path: /
+        pathType: Prefix
+    tls:
+    - secretName: paperless-tls
+      hosts:
+      - paperless.dc
+image:
+  repository: jonaswinkler/paperless-ng
+  tag: 1.5.0
+  pullPolicy: IfNotPresent
+
+# -- See the following files for additional environment variables:
+# https://github.com/jonaswinkler/paperless-ng/tree/master/docker/compose/
+# https://github.com/jonaswinkler/paperless-ng/blob/master/paperless.conf.example
+env:
+  # -- Project name
+  COMPOSE_PROJECT_NAME: paperless
+  # -- Redis to use
+  PAPERLESS_REDIS: redis://paperless-redis-master
+  # -- OCR languages to install
+  PAPERLESS_OCR_LANGUAGE: deu+eng
+  USERMAP_UID: 1000
+  USERMAP_GID: 1000
+  PAPERLESS_TIME_ZONE: Europe/Amsterdam
+  # -- Database host to use
+  PAPERLESS_DBHOST:
+
+persistence:
+  # -- Configure persistence for data.
+  data:
+    enabled: true
+    mountPath: /usr/src/paperless/data
+    accessMode: ReadWriteOnce
+    size: 10G
+
+  # -- Configure persistence for media.
+  media:
+    enabled: true
+    mountPath: /usr/src/paperless/media
+    accessMode: ReadWriteOnce
+    size: 10G
+
+  # -- Configure volume to monitor for new documents.
+  consume:
+    enabled: true
+    type: hostPath
+    mountPath: /usr/src/paperless/consume
+    hostPath: /data/paperless/import
+
+  # -- Configure export volume.
+  export:
+    enabled: true
+    type: hostPath
+    mountPath: /usr/src/paperless/export
+    hostPath: /data/paperless/export
+
+postgresql:
+  enabled: false
+redis:
+  enabled: true
+  architecture: standalone
