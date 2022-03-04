@@ -191,8 +191,12 @@ configmap:
               url: http://libreelec.lan:8080
               target: "_blank"
             - logo: assets/png/home-assistant.png
-              name: HomeAssi
+              name: Home-Assistant
               url: https://hass.dc
+              target: "_blank"
+            - logo: assets/png/paperless-ng.png
+              name: Paperless
+              url: https://paperless.dc
               target: "_blank"
             - logo: https://www.chia.net/android-chrome-384x384.png
               name: Chia Farm
