@@ -2,7 +2,7 @@ podSecurityPolicy:
   enabled: true
 
 kubeStateMetrics:
-  enabled: false
+  enabled: true
 
 nodeExporter:
   enabled: true
@@ -20,7 +20,6 @@ nodeExporter:
       hostPath: /var/lib/node-exporter
       readOnly: true
       mountPropagation: HostToContainer
-
 server:
   enabled: true
   image:
@@ -33,18 +32,29 @@ server:
   persistentVolume:
     enabled: true
 
+  sidecarContainers:
+    smartctl:
+      name: smartctl-exporter
+      image: matusnovak/prometheus-smartctl:latest
+      securityContext:
+        runAsNonRoot: false
+        privileged: true
+      ports:
+        - name: metrics
+          containerPort: 9902
+
 pushgateway:
   enabled: true
 
-extraScrapeConfigs:
+extraScrapeConfigs: |
   - job_name: 'openwrt'
     scrape_interval: 10s
     static_configs:
     - targets: ['192.168.1.1:9100']
-# - job_name: 'borg'
-#   scrape_interval: 120s
-#   static_configs:
-#    - targets: ['192.168.1.111:9942']
+  - job_name: 'smartctl'
+    scrape_interval: 60s
+    static_configs:
+     - targets: ['127.0.0.1:9902']
 # - job_name: 'octoprint'
 #    scrape_interval: 5s
 #    metrics_path: '/plugin/prometheus_exporter/metrics'
