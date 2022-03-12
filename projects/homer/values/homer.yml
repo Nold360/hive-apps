@@ -182,6 +182,10 @@ configmap:
               name: Gitea
               url: https://git.nold.in
               target: "_blank"
+            - logo: assets/png/mealie.png
+              name: Recipes
+              url: https://cook.dc
+              target: "_blank"
             - logo: assets/png/octoprint.png
               name: OctoPrint
               url: https://octo.dc

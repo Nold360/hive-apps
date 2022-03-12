@@ -1,0 +1,32 @@
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+      traefik.ingress.kubernetes.io/router.tls: "true"
+    hosts:
+    - host: cook.dc
+      paths:
+      - path: /
+        pathType: Prefix
+    tls:
+    - secretName: cook-tls
+      hosts:
+      - cook.dc
+
+image:
+  repository: hkotel/mealie
+  tag:
+
+env:
+  TZ: Europe/Amsterdam
+  DB_ENGINE: sqlite
+
+persistence:
+  config:
+    enabled: true
+    mountPath: /app/data/
+    size: 5G
+
+postgresql:
+  enabled: false

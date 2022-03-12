@@ -1,0 +1,10 @@
+config:
+  description:  A Place for All my Recipes
+
+apps:
+- name: mealie
+  repoURL: https://k8s-at-home.com/charts/
+  chart: mealie
+  targetRevision: 4.0.0
+  include:
+  - ingress-internal
