@@ -157,7 +157,7 @@ worker:
             - /chia/temp
 
   - name: silicoin
-    enabled: true
+    enabled: false
     image: ghcr.io/guydavis/machinaris-silicoin
     mode: fullnode
     ports:
@@ -171,7 +171,7 @@ worker:
       api: 8934
 
   - name: btcgreen
-    enabled: true
+    enabled: false
     image: ghcr.io/guydavis/machinaris-btcgreen
     mode: fullnode
     ports:
@@ -206,7 +206,7 @@ worker:
       api: 8939
 
   - name: flora
-    enabled: false
+    enabled: true
     image: ghcr.io/guydavis/machinaris-flora
     mode: fullnode
     ports:
