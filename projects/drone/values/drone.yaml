@@ -1,6 +1,6 @@
 image:
   repository: drone/drone
-  tag: 2.11.0
+  tag: 2.11.1
 #  pullPolicy: IfNotPresent
 
 containerPort: 8000
