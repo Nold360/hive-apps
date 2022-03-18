@@ -121,7 +121,7 @@ worker:
       api: 8930
 
   - name: flax
-    enabled: true
+    enabled: false
     mode: fullnode
     image: ghcr.io/guydavis/machinaris-flax
     ports:
