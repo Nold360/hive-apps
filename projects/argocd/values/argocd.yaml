@@ -121,16 +121,16 @@ server:
       g, ArgoCDAdmins, role:admin
 
   # Mount public CA cert
-  volumeMounts:
-  - name: certificate
-    mountPath: /etc/ssl/certs/ca.crt
-    subPath: ca
+  volumeMounts: []
+#  - name: certificate
+#    mountPath: /etc/ssl/certs/ca.crt
+#    subPath: ca
 
-  volumes:
-  - name: certificate
-    secret:
-      secretName: ca-cert
-      defaultMode: 420
+  volumes: []
+#  - name: certificate
+#    secret:
+#      secretName: ca-cert
+#      defaultMode: 420
 
   additionalApplications: []
 
@@ -160,15 +160,13 @@ repoServer:
         prometheus.io/port: '8084'
       servicePort: 8084
 
-  volumes:
-  - name: var-files
-    emptyDir: {}
-  - name: plugins
-    emptyDir: {}
+#  volumes:
+#    - name: cmp-plugins
+#      emptyDir: {}
 
-  volumeMounts:
-  - mountPath: /home/argocd/cmp-server/plugins
-    name: plugins
+#  volumeMounts:
+#  - mountPath: /home/argocd/cmp-server/plugins
+#    name: cmp-plugins
 
   initContainers:
   - name: copy-cmp-server

@@ -3,7 +3,7 @@ config:
   existingNamespace: argocd
 
 apps:
-  - name: heqet-apps
+  - name: apps-of-heqet
     existingNamespace: argocd
     repoURL: https://github.com/nold360/hive-apps
     path: .

@@ -2,7 +2,6 @@ config:
   description: ArgoCD - Continous Deployment from Git
 apps:
 - name: argocd
-  namespace: argo
   repoURL: https://argoproj.github.io/argo-helm
   chart: argo-cd
   targetRevision: 3.35.4
