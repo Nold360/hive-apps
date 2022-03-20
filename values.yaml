@@ -1,8 +1,9 @@
 # Default values that are used for creating ArgoCD `Application` definitions
 # You can add all supported heqet config options here
 defaults:
-  argocdNamespace: argocd
-  # ArgoCD Project
+  fluxNamespace: flux-system
+
+  # Default Project
   project: "default"
 
   # Kubernetes Cluster

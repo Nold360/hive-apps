@@ -1,0 +1,92 @@
+## For Security Stuff, IDK...
+#---
+#apiVersion: v1
+#kind: Secret
+#metadata:
+#  name: https-credentials
+#  namespace: default
+#type: Opaque
+#data:
+#  username: <GitHub Username>
+#  password: <GitHub Token>
+#
+
+# This is for our custom application configuration repository
+# It'll be included into the heqet HelmRelease as values
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: heqet-userdata
+  namespace: flux-system
+spec:
+  interval: 5m
+  # CHANGE ME:
+  # @desc: URL to your application configuration Git Repository
+  url: https://github.com/nold360/hive-apps
+  ref:
+    branch: flux
+#  secretRef:
+#    name: https-credentials
+  ignore: |
+    # exclude all
+    /*
+    # include heqet userdata
+    # These are the directories/files your repo needs to include:
+    !/projects
+    !/resources
+    !/values.yaml
+
+# This is the Heqet Chart source
+# You can simply use the upstream version
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: heqet
+  namespace: flux-system
+spec:
+  interval: 5m
+  url: https://github.com/lib42/heqet
+#  secretRef:
+#    name: https-credentials
+  ref:
+    branch: flux
+  ignore: |
+    # exclude all
+    /*
+    # include heqet chart dir
+    !/heqet
+  # This includes your repo into the heqet Chart:
+  include:
+    - repository:
+        name: heqet-userdata
+      fromPath: .
+      toPath: heqet/userdata
+
+# Finally, we are able to create a HelmRelease based on the upper GitRepositories.
+# This will bootstrap the Heqet Magic, also known as "app-of-apps"-Pattern
+--- 
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: apps-of-heqet
+  namespace: flux-system
+spec:
+  releaseName: apps-of-heqet
+  chart:
+    spec:
+      chart: heqet
+      sourceRef:
+        kind: GitRepository
+        name: heqet
+        namespace: flux-system
+    valuesFrom: 
+    - heqet/values.yaml
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  # We can overwrite some defaults here:
+  values:
+    server: https://kubernetes.default.svc
