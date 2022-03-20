@@ -19,6 +19,8 @@ kind: GitRepository
 metadata:
   name: heqet-userdata
   namespace: flux-system
+  finalizers:
+  - finalizers.fluxcd.io
 spec:
   interval: 5m
   # CHANGE ME:
@@ -46,6 +48,8 @@ kind: GitRepository
 metadata:
   name: heqet
   namespace: flux-system
+  finalizers:
+  - finalizers.fluxcd.io
 spec:
   interval: 5m
   url: https://github.com/lib42/heqet
@@ -73,6 +77,10 @@ kind: HelmRelease
 metadata:
   name: apps-of-heqet
   namespace: flux-system
+  labels:
+    app.kubernetes.io/managed-by: helm
+    meta.helm.sh/release-namespace: flux-system
+    meta.helm.sh/release-name: apps-of-heqet
 spec:
   releaseName: apps-of-heqet
   chart:
@@ -88,7 +96,9 @@ spec:
   install:
     crds: CreateReplace
     remediation:
-      retries: 3
+      retries: 42
+    # For CRD Installs
+    disableOpenAPIValidation: true
   upgrade:
     crds: CreateReplace
   # We can overwrite some defaults here:
