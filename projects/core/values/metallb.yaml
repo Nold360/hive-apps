@@ -1,0 +1,34 @@
+configInline:
+  address-pools:
+  - name: default
+    protocol: layer2
+    addresses:
+    - 192.168.1.13/32
+    - 192.168.1.14/32
+    - 192.168.1.15/32
+    - 192.168.1.16/32
+    - 192.168.1.17/32
+    - 192.168.1.18/32
+    - 192.168.1.19/32
+    - 192.168.1.20/32
+
+  - name: dns
+    protocol: layer2
+    addresses:
+    - 192.168.1.53/32
+
+  - name: external
+    protocol: layer2
+    addresses:
+    - 192.168.1.12/32
+  
+  - name: internal
+    protocol: layer2
+    addresses:
+    - 192.168.1.11/32
+
+prometheus:
+  serviceMonitor:
+    enabled: true
+  prometheusRule:
+    enabled: true

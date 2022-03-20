@@ -1,0 +1,14 @@
+config:
+  description: Vault Secret Managemet
+apps:
+- name: vault
+  repoURL: https://helm.releases.hashicorp.com
+  chart: vault
+  targetRevision: 0.19.0
+  syncWave: '-3'
+- name: vault-secrets-operator
+  namespace: vault-secrets-operator
+  repoURL: https://ricoberger.github.io/helm-charts
+  chart: vault-secrets-operator
+  targetRevision: 1.16.5
+  syncWave: '-2'

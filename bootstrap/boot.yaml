@@ -86,8 +86,11 @@ spec:
       - heqet/values.yaml
   interval: 5m
   install:
+    crds: CreateReplace
     remediation:
       retries: 3
+  upgrade:
+    crds: CreateReplace
   # We can overwrite some defaults here:
   values:
     server: https://kubernetes.default.svc

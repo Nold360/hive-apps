@@ -1,0 +1,32 @@
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+
+providers:
+  kubernetesCRD:
+    ingressClass: traefik
+  kubernetesIngress:
+    publishedService:
+      enabled: true
+
+globalArguments: []
+
+ports:
+  web:
+    redirectTo: websecure
+  websecure:
+    tls:
+      enabled: true
+
+service:
+  enabled: true
+  type: LoadBalancer
+  annotations:
+    metallb.universe.tf/address-pool: internal
+
+  externalIPs:
+  - 192.168.1.11
+
+logs:
+  general:
+    level: DEBUG
