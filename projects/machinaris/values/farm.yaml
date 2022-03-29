@@ -185,7 +185,7 @@ worker:
       api: 8933
 
   - name: nchain
-    enabled: true
+    enabled: false
     image: ghcr.io/guydavis/machinaris-nchain
     mode: fullnode
     ports:
