@@ -25,7 +25,7 @@ env:
   # -- Project name
   COMPOSE_PROJECT_NAME: paperless
   # -- Redis to use
-  PAPERLESS_REDIS: redis://paperless-redis-master
+  PAPERLESS_REDIS: redis://paperless-redis-master.paperless.svc.cluster.local
   # -- OCR languages to install
   PAPERLESS_OCR_LANGUAGE: deu+eng
   USERMAP_UID: 1000
@@ -66,6 +66,9 @@ persistence:
 
 postgresql:
   enabled: false
+
 redis:
   enabled: true
   architecture: standalone
+  auth:
+    enabled: false
