@@ -1,21 +1,8 @@
 config:
   description: Grafana, Prometheus and friends
+
 apps:
-- name: prometheus
-  namespace: prometheus
-  repoURL: https://prometheus-community.github.io/helm-charts
-  chart: prometheus
-  targetRevision: 15.8.0
-- name: loki-stack
-  existingNamespace: prometheus
-  repoURL: https://grafana.github.io/helm-charts
-  chart: loki-stack
-  targetRevision: 2.6.1
-  secrets:
-  - name: loki-stack-grafana
-    keys:
-    - admin-user
-    - admin-password
-  - name: grafana-env
-    keys:
-    - GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
+- name: kube-prometheus-stack
+  repoURL: https://prometheus-community.github.io/helm-charts 
+  chart: kube-prometheus-stack
+  targetRevision: 34.7.1

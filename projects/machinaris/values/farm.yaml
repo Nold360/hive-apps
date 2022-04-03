@@ -29,10 +29,6 @@ ingress:
 
 # Machinaris controller configuration
 machinaris:
-
-  # IMPORTANT: Choose which worker will become controller:
-  controller: chia
-
   # HTTP/API Service
   service:
     type: ClusterIP
