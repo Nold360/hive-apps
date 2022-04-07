@@ -202,7 +202,7 @@ worker:
       api: 8939
 
   - name: flora
-    enabled: true
+    enabled: false
     image: ghcr.io/guydavis/machinaris-flora
     mode: fullnode
     ports:
