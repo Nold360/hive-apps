@@ -45,7 +45,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "description": "System uptime",
       "fieldConfig": {
@@ -125,7 +125,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "description": "",
       "fieldConfig": {
@@ -336,7 +336,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "r4unnE9Gk"
+            "uid": "$datasource"
           },
           "exemplar": true,
           "expr": "kubelet_running_pods{job=\"kubernetes-apiservers\"}",
@@ -398,7 +398,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "r4unnE9Gk"
+            "uid": "$datasource"
           },
           "exemplar": false,
           "expr": "chia_wallet_confirmed_balance_mojo{wallet_id=\"1\", fork=\"chives\"}/100000000",
@@ -411,7 +411,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "r4unnE9Gk"
+            "uid": "$datasource"
           },
           "exemplar": false,
           "expr": "chia_wallet_confirmed_balance_mojo{wallet_id=\"1\", fork!~\"chives|staicoin\"}/1000000000000",
@@ -424,7 +424,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "r4unnE9Gk"
+            "uid": "$datasource"
           },
           "exemplar": true,
           "expr": "chia_wallet_confirmed_balance_mojo{wallet_id=\"1\", fork=~\"staicoin\"}/1000000000",
@@ -518,7 +518,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "r4unnE9Gk"
+                "uid": "$datasource"
               },
               "exemplar": false,
               "expr": "chia_plots{fork=~\"chia|chives\"}",
@@ -673,7 +673,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "r4unnE9Gk"
+                "uid": "$datasource"
               },
               "exemplar": true,
               "expr": "chia_blockchain_space_bytes{fork=\"$chia_fork\"}/1000/1000/1000/1000/1000",
@@ -762,7 +762,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "r4unnE9Gk"
+                "uid": "$datasource"
               },
               "exemplar": true,
               "expr": "chia_blockchain_space_bytes{fork!~\"chia|\"}/1000/1000/1000/1000/1000",
@@ -797,7 +797,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "description": "",
       "fieldConfig": {
@@ -881,7 +881,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "description": "",
       "fieldConfig": {
@@ -1022,7 +1022,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "r4unnE9Gk"
+            "uid": "$datasource"
           },
           "exemplar": false,
           "expr": "((node_memory_MemTotal_bytes{node=\"hive\"} -node_memory_MemFree_bytes{node=\"hive\"}) / (node_memory_MemTotal_bytes{node=\"hive\"}))* 100",
@@ -1093,7 +1093,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "r4unnE9Gk"
+            "uid": "$datasource"
           },
           "exemplar": false,
           "expr": "100 - ((node_filesystem_avail_bytes{node=~\"hive\",mountpoint=\"/\",fstype=~\"ext4|xfs\"} * 100) / node_filesystem_size_bytes{node=~\"hive\",mountpoint=\"/\",fstype=~\"ext4|xfs\"})",
@@ -1111,7 +1111,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "description": "",
       "fieldConfig": {
@@ -1254,7 +1254,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "r4unnE9Gk"
+            "uid": "$datasource"
           },
           "exemplar": false,
           "expr": "sum(argocd_app_info{namespace=~\"$namespace\",dest_server=~\"$cluster\",health_status=~\"$health_status\",sync_status=~\"$sync_status\",health_status!=\"\",sync_status!=\"Unknown\"}) by (sync_status)",
@@ -1280,7 +1280,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "description": "",
       "editable": true,
@@ -1404,7 +1404,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "decimals": 1,
       "editable": true,
@@ -1563,7 +1563,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "decimals": 2,
       "description": "Basic CPU info",
@@ -1811,7 +1811,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "editable": true,
       "error": false,
@@ -1940,7 +1940,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "decimals": 2,
       "editable": true,
@@ -2056,7 +2056,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "decimals": 2,
       "editable": true,
@@ -2162,7 +2162,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "editable": true,
       "error": false,
@@ -2263,7 +2263,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "editable": true,
       "error": false,
@@ -2374,7 +2374,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "decimals": 0,
       "fieldConfig": {
@@ -2479,7 +2479,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -2893,7 +2893,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "decimals": 0,
       "fieldConfig": {
@@ -3006,7 +3006,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "decimals": 3,
       "description": "",
@@ -3140,7 +3140,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -3253,7 +3253,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -3466,7 +3466,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "decimals": 2,
       "description": "",
@@ -3576,7 +3576,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "decimals": 2,
       "editable": true,
@@ -3683,7 +3683,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -3800,7 +3800,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "decimals": 2,
       "editable": true,
@@ -3914,7 +3914,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "decimals": 2,
       "editable": false,
@@ -4015,7 +4015,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "decimals": 3,
       "editable": true,
@@ -4113,7 +4113,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "description": "CurrEstab - number of TCP connections with current state of ESTABLISHED or CLOSE-WAIT\n\nActiveOpens - TCP average connections that have been converted from the CLOSED state to the SYN-SENT state (within 1 minute)\n\nPassiveOpens - TCP average connections that have been converted from the LISTEN state to the SYN-RCVD state (within 1 minute)\n\nTCP_alloc - the number of TCP sockets that have been allocated (established, applied to sk_buff)\n\nTCP_inuse - the number of TCP sockets being used (listening)\n\nTCP_tw - number of TCP connections waiting to be closed",
       "fieldConfig": {
@@ -4245,7 +4245,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "decimals": 2,
       "editable": true,
@@ -4394,7 +4394,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "r4unnE9Gk"
+            "uid": "$datasource"
           },
           "exemplar": true,
           "expr": "rate (container_cpu_usage_seconds_total{image!=\"\"}[5m]) ",
@@ -4462,7 +4462,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "r4unnE9Gk"
+        "uid": "$datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -4612,6 +4612,16 @@
   "templating": {
     "list": [
       {
+        "hide": 0,
+        "label": "datasource",
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "type": "datasource"
+      },
+      {
         "auto": true,
         "auto_count": 10,
         "auto_min": "10s",
@@ -4699,7 +4709,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "r4unnE9Gk"
+          "uid": "$datasource"
         },
         "definition": "",
         "hide": 0,
@@ -4736,7 +4746,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "r4unnE9Gk"
+          "uid": "$datasource"
         },
         "definition": "label_values(node_exporter_build_info{env=~'$env'},name)",
         "hide": 0,
@@ -4767,7 +4777,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "r4unnE9Gk"
+          "uid": "$datasource"
         },
         "definition": "label_values(node_exporter_build_info{name=~'$name'},instance)",
         "hide": 0,
@@ -4798,7 +4808,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "r4unnE9Gk"
+          "uid": "$datasource"
         },
         "definition": "",
         "hide": 2,
@@ -4828,7 +4838,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "r4unnE9Gk"
+          "uid": "$datasource"
         },
         "definition": "label_values(node_uname_info, job)",
         "hide": 0,
@@ -4880,7 +4890,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "r4unnE9Gk"
+          "uid": "$datasource"
         },
         "definition": "label_values(kube_pod_info, namespace)",
         "hide": 0,
@@ -4910,7 +4920,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "r4unnE9Gk"
+          "uid": "$datasource"
         },
         "definition": "label_values(argocd_cluster_info, server)",
         "hide": 0,
@@ -5078,7 +5088,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "r4unnE9Gk"
+          "uid": "$datasource"
         },
         "filters": [],
         "hide": 0,
