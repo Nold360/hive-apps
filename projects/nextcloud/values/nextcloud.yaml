@@ -1,5 +1,5 @@
 image:
-  tag: 22-fpm
+  tag: 23-fpm
   pullPolicy: Always
 
 nextcloud:
@@ -66,7 +66,7 @@ nginx:
   enabled: true
 
 cronjob:
-  enabled: false
+  enabled: true
   curlInsecure: true
 
 internalDatabase:
@@ -84,6 +84,10 @@ externalDatabase:
 
 postgresql:
   enabled: true
+  image: 
+    registry: docker.io
+    repository: bitnami/postgresql
+    tag: 11
   postgresqlDatabase: nextcloud
   postgresqlUsername: nextcloud
   existingSecret: nextcloud-postgres
