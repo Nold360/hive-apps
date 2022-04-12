@@ -654,7 +654,7 @@ grafana:
 
   image:
     repository: grafana/grafana
-    tag: 8.4.5
+    tag: 8.4.6
 
   ## ForceDeployDatasources Create datasource configmap even if grafana deployment has been disabled
   ##
