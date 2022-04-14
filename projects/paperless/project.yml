@@ -5,6 +5,6 @@ apps:
 - name: paperless
   repoURL: https://k8s-at-home.com/charts/
   chart: paperless
-  targetRevision: 8.6.0
+  targetRevision: 8.6.1
   include:
   - ingress-internal
