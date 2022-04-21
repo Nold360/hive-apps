@@ -17,7 +17,7 @@ grafana:
   enabled: true
   image:
     repository: grafana/grafana
-    tag: 8.4.7
+    tag: 8.5.0
 
   admin:
     existingSecret: "loki-stack-grafana"
