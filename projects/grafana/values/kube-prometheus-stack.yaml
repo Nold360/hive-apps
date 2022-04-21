@@ -1768,7 +1768,7 @@ prometheus:
 
   image:
     repository: quay.io/prometheus/prometheus
-    tag: v2.34.0
+    tag: v2.35.0
 
   strategy: 
     type: Recreate
@@ -2190,7 +2190,7 @@ prometheus:
     ##
     image:
       repository: quay.io/prometheus/prometheus
-      tag: v2.34.0
+      tag: v2.35.0
       sha: ""
 
     ## Tolerations for use with node taints
