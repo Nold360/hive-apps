@@ -17,3 +17,8 @@ apps:
     keys:
     - root-user
     - root-password
+
+- name: mqtt
+  chart: mosquitto
+  repo: k8s-at-home
+  targetRevision: 4.3.1
