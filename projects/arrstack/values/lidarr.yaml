@@ -38,9 +38,13 @@ persistence:
     type: hostPath
     mountPath: /music
     hostPath: /data/media/music
+  torrent:
+    enabled: true
+    type: hostPath
+    mountPath: /torrent
+    hostPath: /data/torrent
   downloads:
     enabled: true
     type: hostPath
     mountPath: /downloads
-    hostPath: /data/torrent
-    
+    hostPath: /data/downloads
