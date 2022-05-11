@@ -224,7 +224,7 @@ alertmanager:
     # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
     ingressClassName: ingress-internal-traefik
 
-    annotations: 
+    annotations:
       cert-manager.io/cluster-issuer: vault-issuer
       traefik.ingress.kubernetes.io/router.tls: 'true'
 
@@ -232,7 +232,7 @@ alertmanager:
 
     ## Hosts must be provided if Ingress is enabled.
     ##
-    hosts: 
+    hosts:
       - alertmanager.dc
 
     ## Paths to use for ingress rules - one path should match the alertmanagerSpec.routePrefix
@@ -656,6 +656,9 @@ grafana:
     repository: grafana/grafana
     tag: 8.5.2
 
+  persistence:
+    enabled: true
+
   ## ForceDeployDatasources Create datasource configmap even if grafana deployment has been disabled
   ##
   forceDeployDatasources: false
@@ -707,7 +710,7 @@ grafana:
     ##
     # hosts:
     #   - grafana.domain.com
-    hosts: 
+    hosts:
       - grafana.dc
 
     ## Path for grafana ingress
@@ -716,7 +719,7 @@ grafana:
     ## TLS configuration for grafana Ingress
     ## Secret must be manually created in the namespace
     ##
-    tls: 
+    tls:
      - secretName: grafana-general-tls
        hosts:
        - grafana.dc
@@ -1770,7 +1773,7 @@ prometheus:
     repository: quay.io/prometheus/prometheus
     tag: v2.35.0
 
-  strategy: 
+  strategy:
     type: Recreate
 
   sidecarContainers:
