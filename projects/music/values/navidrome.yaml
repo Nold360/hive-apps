@@ -1,6 +1,6 @@
 image:
   repository: deluan/navidrome
-  tag: 0.43.0
+  tag: 0.47.5
 
 ingress:
   main:
