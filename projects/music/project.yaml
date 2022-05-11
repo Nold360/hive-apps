@@ -1,0 +1,11 @@
+config:
+  description: Music Streaming
+  syncWave: 100
+  repo: k8s-at-home
+
+apps:
+- name: navidrome
+  chart: navidrome
+  targetRevision: 6.3.2
+  include:
+  - ingress-internal
