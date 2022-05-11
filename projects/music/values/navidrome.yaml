@@ -29,11 +29,16 @@ env:
   # -- Folder where your music library is stored.
   ND_MUSICFOLDER: /music
 
+  ND_SCANSCHEDULE: "0"
+  ND_LASTFM_ENABLED: "false"
+  ND_ENABLEEXTERNALSERVICES: "false"
+  ND_LISTENBRAINZ_ENABLED: "false"
+
 securityContext:
   privileged: false
 
 podSecurityContext:
-  #runAsUser: 1000
+  runAsUser: 1000
   runAsGroup: 1000
   fsGroup: 1000
 
