@@ -6,6 +6,12 @@ image:
 env:
   JAVA_OPTS: "-Dserver.use-forward-headers=true"
 
+service:
+  main:
+    ports:
+      http:
+        port: 4040
+
 ingress:
   main:
     enabled: true
