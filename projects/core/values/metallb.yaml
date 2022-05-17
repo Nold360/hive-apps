@@ -4,7 +4,6 @@ configInline:
     protocol: layer2
     addresses:
     - 192.168.1.13/32
-    - 192.168.1.14/32
     - 192.168.1.15/32
     - 192.168.1.16/32
     - 192.168.1.17/32
@@ -21,11 +20,12 @@ configInline:
     protocol: layer2
     addresses:
     - 192.168.1.12/32
-  
+
   - name: internal
     protocol: layer2
     addresses:
     - 192.168.1.11/32
+    - 192.168.1.14/32
 
 prometheus:
   serviceMonitor:
