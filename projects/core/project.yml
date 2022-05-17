@@ -55,13 +55,6 @@ apps:
   targetRevision: 10.19.5
   syncWave: '0'
 
-- name: apisix-ingress
-  namespace: ingress-apisix
-  repoURL: https://charts.apiseven.com
-  chart: apisix-ingress-controller
-  targetRevision: 0.9.2
-  syncWave: '0'
-
 - name: apisix
   namespace: ingress-apisix
   repoURL: https://charts.apiseven.com
