@@ -78,7 +78,7 @@ initContainer:
 
 serviceMonitor:
   enabled: true
-  namespace: "monitoring"
+  namespace: "grafana"
   interval: 15s
   # @param serviceMonitor.labels ServiceMonitor extra labels
   labels: {}
