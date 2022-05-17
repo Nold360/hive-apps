@@ -11,8 +11,6 @@ apps:
       keys:
         - admin-password
         - admin-user
-  helm:
-    skipCrds: true
 
 - name: kube-prometheus-crds
   repoURL: https://github.com/prometheus-community/helm-charts.git
