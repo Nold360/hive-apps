@@ -118,7 +118,7 @@ gateway:
     servicePort: 80
     containerPort: 9080
   tls:
-    enabled: false
+    enabled: true
     servicePort: 443
     containerPort: 9443
     existingCASecret: ""
@@ -131,18 +131,19 @@ gateway:
     tcp: []
     udp: []
   ingress:
-    enabled: false
-    annotations: {}
-      # kubernetes.io/ingress.class: nginx
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: apisix
+      cert-manager.io/cluster-issuer: vault-issuer
       # kubernetes.io/tls-acme: "true"
     hosts:
-      - host: apisix.local
-        paths: []
-    tls: []
-  #  - secretName: apisix-tls
-  #    hosts:
-  #      - chart-example.local
-
+      - host: api.six
+        paths:
+          - '/'
+    tls:
+    - secretName: apisix-tls
+      hosts:
+        - api.six
 
 admin:
   # Enable Admin API
