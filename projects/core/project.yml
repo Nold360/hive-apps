@@ -59,7 +59,7 @@ apps:
   namespace: ingress-apisix
   repoURL: https://charts.apiseven.com
   chart: apisix
-  targetRevision: 0.9.2
+  targetRevision: 0.9.3
   syncWave: '0'
 
 - name: cilium
