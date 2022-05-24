@@ -1,9 +1,0 @@
-config:
-  description: Music Streaming
-  syncWave: 100
-
-apps:
-- name: airsonic
-  chart: airsonic
-  repo: k8s-at-home
-  targetRevision: 6.3.2
