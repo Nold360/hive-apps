@@ -55,13 +55,6 @@ apps:
   targetRevision: 10.19.5
   syncWave: '0'
 
-- name: apisix
-  namespace: ingress-apisix
-  repoURL: https://charts.apiseven.com
-  chart: apisix
-  targetRevision: 0.9.3
-  syncWave: '0'
-
 - name: cilium
   existingNamespace: kube-system
   repoURL: https://helm.cilium.io
