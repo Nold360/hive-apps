@@ -30,7 +30,7 @@ apps:
     namespace: drone-runner
     repoURL: https://charts.drone.io
     chart: drone-runner-kube
-    targetRevision: 0.1.7
+    targetRevision: 0.1.8
     secrets:
       - name: drone-env
         fromApp: drone
