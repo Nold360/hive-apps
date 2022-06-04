@@ -1,6 +1,6 @@
 image:
   repository: homeassistant/home-assistant
-  tag: 2022.6.1
+  tag: 2022.6.2
 
 additionalContainers:
   addon-homematic:
