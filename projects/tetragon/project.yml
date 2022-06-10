@@ -1,8 +1,0 @@
-config:
-  description: Cilium Tetragon
-
-apps:
-- name: tetragon
-  repoURL: https://github.com/cilium/tetragon
-  targetRevision: main
-  path: install/kubernetes
