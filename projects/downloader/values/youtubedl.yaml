@@ -1,6 +1,6 @@
 image:
   repository: tzahi12345/youtubedl-material
-  tag: "4.2"
+  tag: "4.3"
 
 ingress:
   main:
