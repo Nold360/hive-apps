@@ -16,7 +16,7 @@ ingress:
 
 image:
   repository: hkotel/mealie
-  tag:
+  tag: v0.5.6
 
 env:
   TZ: Europe/Amsterdam
