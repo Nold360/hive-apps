@@ -1,6 +1,6 @@
 image:
   repository: b4bz/homer
-  tag: v22.07.1
+  tag: v22.07.2
 
 initContainers:
   clone-assets:
