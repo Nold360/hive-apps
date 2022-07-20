@@ -107,6 +107,8 @@ gitea:
     server:
       LFS_START_SERVER: true
       PROTOCOL: http
+      DOMAIN: git.nold.in
+      ROOT_URL: https://git.nold.in
     database:
       HOST: gitea-postgresql.gitea.svc.cluster.local:5432
     service:
