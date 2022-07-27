@@ -1,0 +1,88 @@
+USER-SUPPLIED VALUES:
+env:
+  TZ: UTC
+image:
+  pullPolicy: IfNotPresent
+  repository: octoprint/octoprint
+  tag: 1.8.1
+ingress:
+  main:
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+      nginx.ingress.kubernetes.io/proxy-body-size: 100m
+      traefik.ingress.kubernetes.io/router.tls: "true"
+    enabled: true
+    hosts:
+    - host: octo.dc
+      paths:
+      - path: /
+        pathType: Prefix
+      - path: /stream
+        pathType: Prefix
+        service:
+          name: octo2-octoprint-stream
+          port: 80
+    tls:
+    - hosts:
+      - octo.dc
+      secretName: octo-tls
+mjpg_streamer:
+  enabled: false
+  image: badsmoke/mjpg-streamer
+  imagePullPolicy: IfNotPresent
+  tag: latest
+octoprint:
+  plugins:
+    install: true
+    plugins:
+    - https://github.com/LazeMSS/OctoPrint-UICustomizer/archive/main.zip
+    - https://github.com/NilsRo/OctoPrint-SlicerEstimator/archive/master.zip
+    upgrade: true
+persistence:
+  camera:
+    enabled: true
+    hostPath: /dev/video0
+    type: hostPath
+  data:
+    accessMode: ReadWriteOnce
+    enabled: true
+    mountPath: /octoprint
+    size: 1Gi
+    storageClass: local-path
+  printer:
+    enabled: true
+    hostPath: /dev/ttyACM0
+    type: hostPath
+podAnnotations:
+  prometheus.io/path: /plugin/prometheus_exporter/metrics
+  prometheus.io/port: "5000"
+  prometheus.io/scrape: "true"
+securityContext:
+  privileged: true
+service:
+  main:
+    enabled: true
+    ports:
+      http:
+        port: 80
+        targetPort: 5000
+  stream:
+    enabled: true
+    ports:
+      http-stream:
+        enabled: true
+        port: 80
+        targetPort: 8080
+streamer:
+  device: /dev/video0
+  encoder: CPU
+  format: YUYV
+  framerate: 15
+  port: 8080
+  quality: 70
+  resolution: 640x480
+ustreamer:
+  enabled: true
+  image: lib42/ustreamer
+  imagePullPolicy: IfNotPresent
+  tag: latest

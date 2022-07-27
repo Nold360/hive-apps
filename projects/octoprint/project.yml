@@ -1,0 +1,8 @@
+config:
+  description: Octoprint 3D-Printer Server
+
+apps:
+- name: octoprint
+  repoURL: https://github.com/nold360/hive-apps
+  path: projects/octoprint/chart
+  targetRevision: main
