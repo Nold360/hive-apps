@@ -1,0 +1,8 @@
+config:
+  description: Scan Server with Paperless import
+
+apps:
+- name: scanservjs
+  repoURL: https://github.com/nold360/hive-apps
+  path: projects/scanservjs/chart
+  targetRevision: main
