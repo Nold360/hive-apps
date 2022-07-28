@@ -1,6 +1,6 @@
 dependencies:
 - name: common
   repository: https://library-charts.k8s-at-home.com
-  version: 4.0.1
-digest: sha256:aa3b9210dbbc23788cf320730b1fbb9fc536bbd33f6ad66926212e203d6c7f42
-generated: "2022-03-05T09:16:38.261516795+01:00"
+  version: 4.5.0
+digest: sha256:71e3287191a858cb35cdcde36e158c0aeee38e4b01f2f47abcfa4dad1ccd7717
+generated: "2022-07-28T00:32:36.306921813Z"
