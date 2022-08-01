@@ -99,7 +99,7 @@ worker:
   forks:
   - name: chia
     enabled: true
-    plotter: true
+    plotter: false
     mode: fullnode
     image: ghcr.io/guydavis/machinaris
     ports:
@@ -110,7 +110,7 @@ worker:
         cpu: "6000m"
 
   - name: hddcoin
-    enabled: true
+    enabled: false
     mode: fullnode
     image: ghcr.io/guydavis/machinaris-hddcoin
     ports:
@@ -125,7 +125,7 @@ worker:
 
   - name: chives
     enabled: true
-    plotter: true
+    plotter: false
     image: ghcr.io/guydavis/machinaris-chives
     mode: fullnode
     ports:
@@ -160,7 +160,7 @@ worker:
       api: 8934
 
   - name: staicoin
-    enabled: true
+    enabled: false
     image: ghcr.io/guydavis/machinaris-staicoin
     mode: fullnode
     ports:
@@ -188,7 +188,7 @@ worker:
       api: 8929
 
   - name: stor
-    enabled: true
+    enabled: false
     image: ghcr.io/guydavis/machinaris-stor
     mode: fullnode
     ports:
