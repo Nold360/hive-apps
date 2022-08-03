@@ -24,6 +24,6 @@ apps:
 - name: pyload
   repoURL: https://k8s-at-home.com/charts/
   chart: pyload
-  targetRevision: 6.4.0
+  targetRevision: 6.4.2
   include:
   - ingress-internal
