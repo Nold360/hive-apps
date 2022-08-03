@@ -4,7 +4,7 @@ apps:
 - name: deluge
   repoURL: https://k8s-at-home.com/charts/
   chart: deluge
-  targetRevision: 5.4.0
+  targetRevision: 5.4.2
   secrets:
   - name: openvpn
     keys:
