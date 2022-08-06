@@ -11,7 +11,7 @@ apps:
   namespace: minio
   repoURL: https://charts.bitnami.com/bitnami
   chart: minio
-  targetRevision: 11.7.17
+  targetRevision: 11.7.18
   secrets:
   - name: minio-auth
     keys:
