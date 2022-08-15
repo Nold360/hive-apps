@@ -14,9 +14,9 @@ ingress:
       hosts:
       - cook.dc
 
-image:
-  repository: hkotel/mealie
-  tag: v0.5.6
+#image:
+#  repository: hkotel/mealie
+#  tag: v0.5.6
 
 env:
   TZ: Europe/Amsterdam
