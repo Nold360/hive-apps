@@ -5,7 +5,7 @@ apps:
 - name: fast-storage
   namespace: fast-storage
   repoURL: https://github.com/rancher/local-path-provisioner
-  path: deploy/chart
+  path: deploy/chart/local-path-provisioner
   syncWave: '0'
   parameters:
   - name: storageClass.name
@@ -18,7 +18,7 @@ apps:
 - name: ssd-storage
   namespace: ssd-storage
   repoURL: https://github.com/rancher/local-path-provisioner
-  path: deploy/chart
+  path: deploy/chart/local-path-provisioner
   syncWave: '0'
   parameters:
   - name: storageClass.name
