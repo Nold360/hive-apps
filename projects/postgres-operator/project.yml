@@ -1,8 +1,0 @@
-config:
-  description: Zalando Postgres Operator
-
-apps:
-- name: postgres-operator
-  repoURL: https://github.com/nold360/postgres-operator
-  path: charts/postgres-operator
-  targetRevision: f/secret_template
