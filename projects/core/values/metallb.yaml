@@ -1,34 +1,24 @@
-configInline:
-  address-pools:
-  - name: default
-    protocol: layer2
-    addresses:
-    - 192.168.1.13/32
-    - 192.168.1.15/32
-    - 192.168.1.16/32
-    - 192.168.1.17/32
-    - 192.168.1.18/32
-    - 192.168.1.19/32
-    - 192.168.1.20/32
-
-  - name: dns
-    protocol: layer2
-    addresses:
-    - 192.168.1.53/32
-
-  - name: external
-    protocol: layer2
-    addresses:
-    - 192.168.1.12/32
-
-  - name: internal
-    protocol: layer2
-    addresses:
-    - 192.168.1.11/32
-    - 192.168.1.14/32
+psp:
+  enabled: false
 
 prometheus:
   serviceMonitor:
     enabled: true
   prometheusRule:
     enabled: true
+
+  rbacProxy:
+    repository: gcr.io/kubebuilder/kube-rbac-proxy
+    tag: v0.12.0
+
+controller:
+  image:
+    repository: quay.io/metallb/controller
+    ## == Chart Version
+    #tag:
+
+speaker:
+  image:
+    repository: quay.io/metallb/speaker
+    ## == Chart Version
+    #tag: v0.13.4

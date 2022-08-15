@@ -29,10 +29,10 @@ apps:
     value: /data/kubernetes/ssd
 
 - name: metallb
-  repoURL: https://charts.bitnami.com/bitnami
+  repoURL: https://metallb.github.io/metallb
   chart: metallb
   namespace: metallb
-  targetRevision: 2.5.16
+  targetRevision: 0.13.4
   syncWave: '0'
 
 - name: cert-manager
