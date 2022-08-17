@@ -5,7 +5,7 @@ apps:
 - name: kube-prometheus-stack
   repoURL: https://prometheus-community.github.io/helm-charts
   chart: kube-prometheus-stack
-  targetRevision: 39.6.0
+  targetRevision: 39.7.0
   secrets:
     - name: grafana
       keys:
