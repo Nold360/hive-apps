@@ -115,7 +115,7 @@ server:
       clientID: 0c149045b7b87eb80e41fcdd3e788476472d7316
       clientSecret: $oidc.auth0.clientSecret
       requestedScopes: ["openid", "profile", "email", "groups"]
- 
+
   rbacConfig:
     policy.csv: |
       g, ArgoCDAdmins, role:admin
