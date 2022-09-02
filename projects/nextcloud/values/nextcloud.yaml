@@ -56,12 +56,12 @@ nextcloud:
       pm.max_requests = 1000
 
 # See: https://github.com/nextcloud/helm/issues/186
-securityContext:
-  runAsUser: 101
-  runAsGroup: 101
-  fsGroup: 101
-  fsGroupChangePolicy: "OnRootMismatch"
-  runAsNonRoot: true
+#securityContext:
+#  runAsUser: 101
+#  runAsGroup: 101
+#  fsGroup: 101
+#  fsGroupChangePolicy: "OnRootMismatch"
+#  runAsNonRoot: true
 
 ingress:
   enabled: true
