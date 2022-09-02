@@ -36,6 +36,14 @@ nextcloud:
     runAsGroup: "33"
     runAsNonRoot: true
     readOnlyRootFilesystem: true
+
+  extraVolumes:
+    - name: nginx-cache
+      emptyDir: {}
+  extraVolumeMounts:
+    - mountPath: /var/cache/nginx
+      name: nginx-cache
+
   phpConfigs:
     memory_limit.conf: |
       php_admin_value[memory_limit] = 512M
@@ -46,6 +54,14 @@ nextcloud:
       pm.min_spare_servers = 8
       pm.max_spare_servers = 24
       pm.max_requests = 1000
+
+# See: https://github.com/nextcloud/helm/issues/186
+securityContext:
+  runAsUser: 101
+  runAsGroup: 101
+  fsGroup: 101
+  fsGroupChangePolicy: "OnRootMismatch"
+  runAsNonRoot: true
 
 ingress:
   enabled: true
