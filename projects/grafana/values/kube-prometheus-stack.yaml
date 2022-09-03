@@ -1723,7 +1723,7 @@ prometheusOperator:
   ##
   image:
     repository: quay.io/prometheus-operator/prometheus-operator
-    tag: v0.58.0
+    tag: v0.59.0
     sha: ""
     pullPolicy: IfNotPresent
 
