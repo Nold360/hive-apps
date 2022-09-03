@@ -37,6 +37,9 @@ nextcloud:
     runAsNonRoot: true
     readOnlyRootFilesystem: true
 
+  # Needed for rootless:
+  containerPort: 8080
+
   extraVolumes:
     - name: nginx-cache
       emptyDir: {}
@@ -60,7 +63,7 @@ securityContext:
   runAsUser: 101
   runAsGroup: 101
   fsGroup: 101
-  fsGroupChangePolicy: "OnRootMismatch"
+  fsGroupChangePolicy: "Always"
   runAsNonRoot: true
 
 ingress:
