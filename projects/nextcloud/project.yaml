@@ -3,15 +3,18 @@ config:
   networkPolicy:
     groups:
     - internet
- 
+
   labels:
     environment: external
 
 apps:
 - name: nextcloud
-  repoURL: https://nextcloud.github.io/helm
-  chart: nextcloud
-  targetRevision: 3.1.0
+  #repoURL: https://nextcloud.github.io/helm
+  #chart: nextcloud
+  #targetRevision: 3.1.0
+  repoURL: https://github.com/Nold360/nextcloud-helm
+  targetRevision: fix/extraVolumeMounts
+  path: charts/nextcloud
   secrets:
   - name: nextcloud-user
     keys:
