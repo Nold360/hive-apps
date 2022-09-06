@@ -43,9 +43,13 @@ nextcloud:
   extraVolumes:
     - name: nginx-cache
       emptyDir: {}
+    - name: nginx-run
+      emptyDir: {}
   extraVolumeMounts:
     - mountPath: /var/cache/nginx
       name: nginx-cache
+    - mountPath: /var/run
+      name: nginx-run
 
   phpConfigs:
     memory_limit.conf: |
