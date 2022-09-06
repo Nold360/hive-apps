@@ -52,7 +52,7 @@ apps:
   namespace: ingress-internal
   repoURL: https://helm.traefik.io/traefik
   chart: traefik
-  targetRevision: 10.24.1
+  targetRevision: 10.24.2
   syncWave: '0'
 
 - name: cilium
