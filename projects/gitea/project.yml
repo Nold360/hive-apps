@@ -13,7 +13,7 @@ apps:
 - name: gitea
   repoURL: https://dl.gitea.io/charts/
   chart: gitea
-  targetRevision: 5.0.9
+  targetRevision: 6.0.1
   secrets:
   - name: admin
     keys:
