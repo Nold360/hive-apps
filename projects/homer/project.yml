@@ -7,3 +7,5 @@ apps:
   targetRevision: 8.0.2
   include:
   - ingress-internal
+  - noRoot
+  - tmpdirs
