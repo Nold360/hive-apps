@@ -13,7 +13,7 @@ apps:
   #chart: nextcloud
   #targetRevision: 3.1.0
   repoURL: https://github.com/Nold360/nextcloud-helm
-  targetRevision: fix/extraVolumeMounts
+  targetRevision: f/multifix
   path: charts/nextcloud
   secrets:
   - name: nextcloud-user
