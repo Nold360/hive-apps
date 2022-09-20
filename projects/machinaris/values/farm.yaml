@@ -99,7 +99,7 @@ worker:
   forks:
   - name: chia
     enabled: true
-    plotter: false
+    plotter: true
     mode: fullnode
     image: ghcr.io/guydavis/machinaris
     ports:
