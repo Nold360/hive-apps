@@ -30,3 +30,8 @@ persistence:
 
 postgresql:
   enabled: false
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
