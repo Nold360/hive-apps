@@ -124,7 +124,7 @@ worker:
       api: 8928
 
   - name: chives
-    enabled: true
+    enabled: false
     plotter: false
     image: ghcr.io/guydavis/machinaris-chives
     mode: fullnode
