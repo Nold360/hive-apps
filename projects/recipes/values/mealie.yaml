@@ -21,6 +21,10 @@ ingress:
 env:
   TZ: Europe/Amsterdam
   DB_ENGINE: sqlite
+  # Lower RAM usage:
+  WORKERS_PER_CORE: 0.5
+  MAX_WORKERS: 1
+  WEB_CONCURRENCY: 1
 
 persistence:
   config:
