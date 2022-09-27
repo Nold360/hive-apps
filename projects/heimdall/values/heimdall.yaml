@@ -20,16 +20,7 @@ service:
 
 ingress:
   main:
-    enabled: true
-    hosts:
-      - host: heimdall.dc
-        paths:
-          - path: /
-            pathType: Prefix
-    tls:
-    - secretName: heimdall-tls
-      hosts:
-        - heimdall.dc
+    enabled: false
 
 probes:
   startup:

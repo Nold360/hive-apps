@@ -1,0 +1,26 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: vault-issuer
+    traefik.ingress.kubernetes.io/router.tls: "true"
+  name: heimdall
+  namespace: heimdall
+spec:
+  ingressClassName: ingress-internal-traefik
+  rules:
+  - host: home.dc
+    http:
+      paths:
+      - backend:
+          service:
+            name: heimdall
+            port:
+              number: 10014
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - home.dc
+    secretName: heimdall-tls

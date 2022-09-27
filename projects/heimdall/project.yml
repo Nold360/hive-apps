@@ -5,5 +5,3 @@ apps:
   repoURL: https://charts.truecharts.org
   chart: heimdall
   targetRevision: 11.0.44
-  include:
-    - ingress-internal
