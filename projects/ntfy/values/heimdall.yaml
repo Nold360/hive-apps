@@ -1,0 +1,52 @@
+image:
+  repository: tccr.io/truecharts/heimdall
+  tag: v2.4.13
+  pullPolicy: IfNotPresent
+
+securityContext:
+  readOnlyRootFilesystem: false
+  runAsNonRoot: false
+
+podSecurityContext:
+  runAsUser: 0
+  runAsGroup: 0
+
+service:
+  main:
+    ports:
+      main:
+        port: 10014
+        targetPort: 80
+
+ingress:
+  main:
+    enabled: true
+    enableFixedMiddlewares: false
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+      traefik.ingress.kubernetes.io/router.tls: 'true'
+    hosts:
+    - host: heimdall.dc
+      paths:
+      - path: /
+        pathType: Prefix
+    tls:
+    - secretName: heimdall-tls
+      hosts:
+      - heimdall.dc
+
+
+probes:
+  startup:
+    enabled: true
+
+persistence:
+  config:
+    enabled: true
+    mountPath: "/config"
+
+portal:
+  enabled: false
+
+env:
+  APP_URL: https://home.dc
