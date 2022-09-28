@@ -4,4 +4,4 @@ apps:
 - name: heimdall
   repoURL: https://charts.truecharts.org
   chart: heimdall
-  targetRevision: 11.0.44
+  targetRevision: 11.0.45
