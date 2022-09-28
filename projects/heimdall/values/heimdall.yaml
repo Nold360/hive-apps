@@ -20,7 +20,21 @@ service:
 
 ingress:
   main:
-    enabled: false
+    enabled: true
+    enableFixedMiddlewares: false
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+      traefik.ingress.kubernetes.io/router.tls: 'true'
+    hosts:
+    - host: heimdall.dc
+      paths:
+      - path: /
+        pathType: Prefix
+    tls:
+    - secretName: heimdall-tls
+      hosts:
+      - heimdall.dc
+
 
 probes:
   startup:
