@@ -1,7 +1,0 @@
-config:
-  description: Heimdall Hive Dashboard
-apps:
-- name: heimdall
-  repoURL: https://charts.truecharts.org
-  chart: heimdall
-  targetRevision: 11.0.45
