@@ -4,4 +4,4 @@ apps:
 - name: ntfy
   repoURL: https://charts.truecharts.org
   chart: ntfy
-  targetRevision: 2.0.38
+  targetRevision: 2.0.39
