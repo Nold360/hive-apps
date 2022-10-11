@@ -13,5 +13,5 @@ apps:
 - name: ingress-external
   repoURL: https://helm.traefik.io/traefik
   chart: traefik
-  targetRevision: 12.0.7
+  targetRevision: 14.0.1
   syncWave: '0'
