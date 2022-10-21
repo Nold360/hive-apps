@@ -14,11 +14,9 @@ prometheus:
 controller:
   image:
     repository: quay.io/metallb/controller
-    ## == Chart Version
-    #tag:
+    tag: v0.13.7
 
 speaker:
   image:
     repository: quay.io/metallb/speaker
-    ## == Chart Version
-    #tag: v0.13.4
+    tag: v0.13.7
