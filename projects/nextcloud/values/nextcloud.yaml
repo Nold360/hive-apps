@@ -111,7 +111,7 @@ postgresql:
   image:
     registry: docker.io
     repository: bitnami/postgresql
-    tag: 11
+    tag: 15
   postgresqlDatabase: nextcloud
   postgresqlUsername: nextcloud
   existingSecret: nextcloud-postgres
