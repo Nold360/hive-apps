@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/k8s-at-home/jackett
-  tag: v0.20.2158
+  tag: v0.20.2163
 
 ingress:
   main:
