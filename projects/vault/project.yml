@@ -4,7 +4,7 @@ apps:
 - name: vault
   repoURL: https://helm.releases.hashicorp.com
   chart: vault
-  targetRevision: 0.22.0
+  targetRevision: 0.22.1
   syncWave: '-3'
 - name: vault-secrets-operator
   namespace: vault-secrets-operator
