@@ -2,7 +2,7 @@ config:
   description: Homer Hive Dashboard
 apps:
 - name: homer
-  repoURL: https://k8s-at-home.com/charts/
+  repoURL: https://helm.samipsolutions.fi
   chart: homer
   targetRevision: 8.0.2
   include:

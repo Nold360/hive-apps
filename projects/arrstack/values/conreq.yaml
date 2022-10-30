@@ -1,5 +1,5 @@
-env:
-  UMASK: ""
+#env:
+#  UMASK: ""
 
 image:
   pullPolicy: Always

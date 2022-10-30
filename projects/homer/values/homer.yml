@@ -23,16 +23,16 @@ ingress:
     enabled: true
     annotations:
       cert-manager.io/cluster-issuer: vault-issuer
-      traefik.ingress.kubernetes.io/router.tls: true
+      traefik.ingress.kubernetes.io/router.tls: "true"
     hosts:
-    - host: homer.dc
+    - host: home.dc
       paths:
       - path: /
         pathType: Prefix
     tls:
     - secretName: homer-tls
       hosts:
-      - homer.dc
+      - home.dc
 
 persistence:
   assets:
@@ -51,12 +51,12 @@ configmap:
         ---
         title: "Hive Dashboard"
         subtitle: "Homer on the Hive"
-        logo: "logo.png"
+        #logo: "logo.png"
 
         header: false
         footer: false
         columns: "4"
-             
+
         stylesheet:
           - "assets/custom.css"
 
@@ -147,23 +147,33 @@ configmap:
             icon: "fas fa-download"
             items:
             - logo: assets/png/ombi.png
+              name: Conreq
+              subtitle: "Request / Discover Movies/Series"
+              url: https://conreq.dc
+              target: "_blank"
+            - logo: assets/png/ombi.png
               name: Ombi
+              subtitle: "Request / Discover Movies/Series"
               url: https://ombi.dc
               target: "_blank"
             - logo: assets/png/radarr.png
               name: Radarr
+              subtitle: "Movie Loadarr"
               url: https://radarr.dc
               target: "_blank"
             - logo: assets/png/sonarr.png
               name: Sonarr
+              subtitle: "TV Show Loadarr"
               url: https://sonarr.dc
               target: "_blank"
             - logo: assets/png/lidarr.png
               name: Lidarr
+              subtitle: "Music Loadarr"
               url: https://lidarr.dc
               target: "_blank"
             - logo: assets/png/bazarr.png
               name: Bazarr
+              subtitle: "Subtitle Loadarr"
               url: https://bazarr.dc
               target: "_blank"
             - logo: assets/png/jackett.png
@@ -202,7 +212,7 @@ configmap:
               name: Paperless
               url: https://paperless.dc
               target: "_blank"
-            - logo: https://www.chia.net/android-chrome-384x384.png
+            - logo: https://machinaris.dc/static/machinaris.png
               name: Chia Farm
               url: https://machinaris.dc
               target: "_blank"
@@ -212,6 +222,7 @@ configmap:
             items:
             - logo: assets/png/deluge.png
               name: Deluge
+              subtitle: "Torrents"
               url: https://torrent.dc
               target: "_blank"
             - logo: assets/png/pyload.png
