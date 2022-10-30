@@ -1,0 +1,47 @@
+image:
+  repository: tccr.io/truecharts/organizr
+  pullPolicy: Always
+  tag: latest
+
+securityContext:
+  readOnlyRootFilesystem: false
+  runAsNonRoot: false
+
+podSecurityContext:
+  runAsUser: 0
+  runAsGroup: 0
+
+service:
+  main:
+    ports:
+      main:
+        port: 10022
+        targetPort: 80
+
+persistence:
+  config:
+    enabled: true
+    mountPath: "/config"
+  data:
+    enabled: true
+    mountPath: "/data"
+
+portal:
+  enabled: false
+
+ingress:
+  main:
+    enabled: true
+    enableFixedMiddlewares: false
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+      traefik.ingress.kubernetes.io/router.tls: 'true'
+    hosts:
+    - host: home.dc
+      paths:
+      - path: /
+        pathType: Prefix
+    tls:
+    - secretName: home-tls
+      hosts:
+      - home.dc

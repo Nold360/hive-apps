@@ -1,0 +1,9 @@
+config:
+  description: Organizr Dashboard
+apps:
+- name: organizr
+  repoURL: https://charts.truecharts.org/
+  chart: organizr
+  targetRevision: 11.0.38
+  include:
+  - ingress-internal
