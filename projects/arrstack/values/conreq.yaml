@@ -1,0 +1,48 @@
+env:
+  UMASK: ""
+
+image:
+  pullPolicy: Always
+  repository: tccr.io/truecharts/conreq
+  tag: latest
+
+persistence:
+  config:
+    enabled: true
+    mountPath: /config
+
+podSecurityContext:
+  runAsGroup: 0
+  runAsUser: 0
+securityContext:
+  readOnlyRootFilesystem: false
+  runAsNonRoot: false
+
+service:
+  main:
+    ports:
+      main:
+        port: 8000
+        protocol: TCP
+        targetPort: 8000
+
+ingress:
+  main:
+    enabled: true
+    enableFixedMiddlewares: false
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+      traefik.ingress.kubernetes.io/router.tls: 'true'
+    hosts:
+    - host: conreq.dc
+      paths:
+      - path: /
+        pathType: Prefix
+    tls:
+    - secretName: conreq-tls
+      hosts:
+      - conreq.dc
+
+
+portal:
+  enabled: false

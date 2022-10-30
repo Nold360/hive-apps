@@ -4,6 +4,14 @@ config:
   repo: k8s-at-home
 
 apps:
+- name: conreq
+  namespace: conreq
+  chart: conreq
+  repoURL: https://charts.truecharts.org
+  targetRevision: 0.0.35
+  include:
+  - ingress-internal
+
 - name: ombi
   namespace: ombi
   chart: ombi
