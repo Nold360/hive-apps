@@ -4,7 +4,7 @@ apps:
 - name: homer
   repoURL: https://helm.samipsolutions.fi
   chart: homer
-  targetRevision: 8.0.2
+  targetRevision: 10.0.0
   include:
   - ingress-internal
   - noRoot
