@@ -1,6 +1,6 @@
 image:
   repository: tccr.io/truecharts/ntfy
-  tag: 1.28.0
+  tag: 1.29.0
 
 extraArgs: ["serve"]
 
