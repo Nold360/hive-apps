@@ -39,6 +39,11 @@ persistence:
     hostPath: /data/torrent
     mountPath: /downloads
 
+  startupProbe:
+    initialDelaySeconds: 600
+    periodSeconds: 120
+    failureThreshold: 6
+
 ## VPN
 addons:
   vpn:
