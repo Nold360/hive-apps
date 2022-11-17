@@ -13,9 +13,9 @@ config:
 
 apps:
   - name: drone
-    repoURL: https://github.com/nold360/drone-charts.git
-    path: charts/drone
-    targetRevision: master
+    repoURL: https://charts.drone.io
+    chart: drone
+    targetRevision: 0.6.4
     secrets:
       - name: drone-env
         keys:
