@@ -2,9 +2,9 @@ config:
   description: Tools for downloading linux isos
 apps:
 - name: deluge
-  repoURL: https://k8s-at-home.com/charts/
-  chart: deluge
-  targetRevision: 5.4.2
+  repoURL: https://github.com/nold360/hive-apps
+  path: projects/downloader/charts/deluge
+  targetRevision: main
   secrets:
   - name: openvpn
     keys:
