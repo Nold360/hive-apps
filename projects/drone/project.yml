@@ -25,6 +25,8 @@ apps:
           - DRONE_GITHUB_CLIENT_ID
           - DRONE_GITHUB_CLIENT_SECRET
           - DRONE_RPC_SECRET
+          - DRONE_GIT_USERNAME
+          - DRONE_GIT_PASSWORD
 
   - name: drone-runner
     namespace: drone-runner
