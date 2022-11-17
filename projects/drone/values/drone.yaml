@@ -53,14 +53,28 @@ persistentVolume:
 extraSecretNamesForEnvFrom:
  - drone-env
 
+
+extraContainers:
+- name: convert-pathschanged
+  image: meltwater/drone-convert-pathschanged
+  env:
+    - name: PROVIDER
+      value: github
+  envFrom:
+    - secretRef:
+        name: drone-env
+
 env:
   DRONE_USER_FILTER: nold360
   DRONE_USER_CREATE: username:nold360,admin:true
   DRONE_SERVER_PORT: ":8000"
- 
+
   HTTP_PROXY: http://proxy-squid.proxy.svc.cluster.local
   HTTPS_PROXY: http://proxy-squid.proxy.svc.cluster.local
   NO_PROXY: localhost,.cluster.local
+
+  # Path Converter Plugin
+  DRONE_CONVERT_PLUGIN_ENDPOINT: http://127.0.0.1:3000
 
   DRONE_DATADOG_ENABLED: "false"
 
