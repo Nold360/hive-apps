@@ -22,7 +22,7 @@ extraSecretNamesForEnvFrom:
   - drone-env
 
 env:
-  DRONE_RPC_HOST: drone.drone.svc.cluster.local
+  DRONE_RPC_HOST: drone.drone.svc.cluster.local:8080
 
   DRONE_SECRET_PLUGIN_ENDPOINT: http://drone-secrets-drone-kubernetes-secrets.drone-runner.svc.cluster.local:3000
   DRONE_NAMESPACE_DEFAULT: drone-runner
