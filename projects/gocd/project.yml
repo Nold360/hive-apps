@@ -1,0 +1,21 @@
+config:
+  description: goCD - ci/cd
+  #networkPolicy:
+  #  groups:
+  #  - internet
+  #  rules:
+  #  - allow-runner
+  #  - allow-minio
+
+  #labels:
+  # environment: external
+
+apps:
+  - name: gocd
+    repoURL: https://gocd.github.io/helm-chart
+    chart: gocd
+    targetRevision: 2.0.0
+    #secrets:
+      #- name: drone-env
+      #  keys:
+      #    - DRONE_GITEA_SERVER

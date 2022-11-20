@@ -1,0 +1,468 @@
+# Default values for gocd.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+rbac:
+  # Specifies whether rbac resources must be created.
+  create: true
+  # The API version to use while creating the rbac resources. Use `kubectl api-versions | grep rbac` to find which abi versions are supported for your cluster.
+  apiVersion: v1
+  # Create a cluster role binding with the existing role, do not create a new one. If left blank, a new cluster role is created.
+  roleRef:
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the ServiceAccount to use.
+  # If not set and create is true, a name is generated using the fullname template
+  # If create is false and a name is not specified, the default service account is used for the cluster role binding.
+  name:
+  annotations:
+    # eks.amazonaws.com/role-arn: arn:aws:iam::123456789000:role/iam-role-name-here
+
+server:
+  # server.enabled is the toggle to run GoCD Server. Change to false for Agent Only Deployment.
+  enabled: true
+
+  # server.deployment.labels is the labels for the GoCD Server Deployment
+  deployment:
+    labels: {}
+  # server.pod.labels is the labels for the GoCD Server Pods
+  pod:
+    labels: {}
+  # server.annotations is the annotations for the GoCD Server Deployment and Pod spec.
+  annotations:
+    deployment:
+      # iam.amazonaws.com/role: arn:aws:iam::xxx:role/my-custom-role
+    pod:
+      # iam.amazonaws.com/role: arn:aws:iam::xxx:role/my-custom-role
+  # Specify security settings for GoCD Server Pod
+  securityContext:
+    # Specify the container user for the GoCD server pod
+    runAsUser: 1000
+    # Specify the container group for the GoCD server pod
+    runAsGroup: 0
+    # Specify the container supplementary group for the GoCD server pod
+    fsGroup: 0
+    # Specify the policy for checking volume permissions
+    fsGroupChangePolicy: "OnRootMismatch"
+  # server.shouldPreconfigure is used to invoke a script to pre configure the elastic agent profile and the plugin settings in the GoCD server.
+  # Note: If this value is set to true, then, the serviceAccount.name is configured for the GoCD server pod. The service account token is mounted as a secret and is used in the lifecycle hook.
+  # Note: An attempt to preconfigure the GoCD server is made. There are cases where the pre-configuration can fail and the GoCD server starts with an empty config.
+  shouldPreconfigure: false
+  preconfigureCommand:
+    - "/bin/bash"
+    - "/preconfigure_server.sh"
+  # server.preStop - array of commands to use in the server pre-stop lifecycle hook
+  # preStop:
+  #  - "/bin/bash"
+  #  - "/backup_and_stop.sh"
+  # server.terminationGracePeriodSeconds is the optional duration in seconds the gocd server pod needs to terminate gracefully.
+  # Note: SIGTERM is issued immediately after the pod deletion request is sent. If the pod doesn't terminate, k8s waits for terminationGracePeriodSeconds before issuing SIGKILL.
+  # terminationGracePeriodSeconds: 60
+  # server.priorityClassName is an optional setting to allow the server pod to be prioritized over other pods. The value here must match a priotyClass that exists on the cluster
+  # priorityClassName: high-priority
+  image:
+    # server.image.repository is the GoCD Server image name
+    repository: "gocd/gocd-server"
+    # server.image.tag is the GoCD Server image's tag
+    tag:
+    # server.image.pullPolicy is the GoCD Server image's pull policy
+    pullPolicy: "IfNotPresent"
+    # Specify an array of imagePullSecrets to pull from private registries
+    # You need to manually create secrets in the namespace
+    # See https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    pullSecrets: []
+#    - name: registryKeySecretName
+
+  ## Configure GoCD server resource requests and limits
+  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  ##
+  resources: {}
+  #   requests:
+  #     memory: 512Mi
+  #     cpu: 300m
+  #   limits:
+  #     cpu: 100m
+  #     memory: 1024Mi
+
+  # Sidecar containers that runs alongside GoCD server.
+  # https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/
+  sidecarContainers: []
+  # - name: sidecar-container
+  #   image: sidecar-image:latest
+  #   volumeMounts:
+  #     - name: goserver-vol
+  #     mountPath: /godata
+
+  # specify init containers, e.g. to prepopulate home directories etc
+  initContainers: []
+  #  - name: download-kubectl
+  #    image: "ellerbrock/alpine-bash-curl-ssl:latest"
+  #    imagePullPolicy: "IfNotPresent"
+  #    volumeMounts:
+  #      - name: kubectl
+  #        mountPath: /download
+  #    workingDir: /download
+  #    command: ["/bin/bash"]
+  #    args:
+  #      - "-c"
+  #      - 'curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x ./kubectl'
+
+  # specify restart policy for server
+  restartPolicy: Always
+
+  ## Additional GoCD server pod labels
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  nodeSelector: {}
+
+  ## Affinity for assigning pods to specific nodes
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  affinity: {}
+
+  ## Tolerations for allowing pods to be scheduled on nodes with matching taints
+  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: {}
+
+  healthCheck:
+    # server.healthCheck.initialDelaySeconds is the initial delays in seconds to start the health checks
+    initialDelaySeconds: 90
+    # server.healthCheck.periodSeconds is the health check interval duration
+    periodSeconds: 15
+    # server.healthCheck.failureThreshold is the number of unsuccessful attempts made to the GoCD server health check endpoint before the container is restarted (for liveness) or marked as unready (for readiness)
+    failureThreshold: 10
+  env:
+    # server.env.goServerJvmOpts is a list of JVM options, which needs to be provided to the GoCD Server, typically prefixed with -D unless otherwise stated.
+    # Example: "-Xmx4096mb -Dfoo=bar"
+    goServerJvmOpts:
+    #  server.env.extraEnvVars is the list of environment variables passed to GoCD Server
+    extraEnvVars:
+      - name: GOCD_PLUGIN_INSTALL_kubernetes-elastic-agents
+        value: https://github.com/gocd/kubernetes-elastic-agents/releases/download/v3.8.2-350/kubernetes-elastic-agent-3.8.2-350.jar
+      - name: GOCD_PLUGIN_INSTALL_docker-registry-artifact-plugin
+        value: https://github.com/gocd/docker-registry-artifact-plugin/releases/download/v1.3.1-329/docker-registry-artifact-plugin-1.3.1-329.jar
+      - name: GOCD_PLUGIN_INSTALL_github-oauth-authorization-plugin
+        value: https://github.com/gocd-contrib/github-oauth-authorization-plugin/releases/download/v3.3.1-211/github-oauth-authorization-plugin-3.3.1-211.jar
+      - name: GOCD_PLUGIN_INSTALL_gocd-yaml-config-plugin
+        value: https://github.com/gocd-contrib/github-oauth-authorization-plugin/releases/download/v3.3.1-211/github-oauth-authorization-plugin-3.3.1-211.jar
+      - name: GOCD_PLUGIN_INSTALL_gocd-git-path-material-plugin
+        value: https://github.com/TWChennai/gocd-git-path-material-plugin/releases/download/v2.2.2-262/gocd-git-path-material-plugin-2.2.2-262.jar
+      - name: GOCD_PLUGIN_INSTALL_gocd-vault-secret-plugin
+        value: https://github.com/gocd/gocd-vault-secret-plugin/releases/download/v1.2.1-171/gocd-vault-secret-plugin-1.2.1-171.jar
+      - name: GOCD_PLUGIN_INSTALL_gocd-kubernetes-based-secrets-plugin
+        value: https://github.com/gocd/gocd-kubernetes-based-secrets-plugin/releases/download/v1.2.1-147/gocd-kubernetes-based-secrets-plugin-1.2.1-147.jar
+
+  service:
+    # server.service.type is the GoCD Server service type
+    type: "ClusterIP"
+    # server.service.httpPort is the GoCD Server HTTP port
+    httpPort: 8153
+    # Provide the nodeHttpPort if you want the service to be exposed on specific ports. Without this, random node ports will be assigned.
+    # server.service.nodeHttpPort is the GoCD Server Service Node HTTP port
+    nodeHttpPort:
+    annotations:
+      ## When using LoadBalancer service type, use the following AWS certificate from ACM
+      ## https://aws.amazon.com/documentation/acm/
+      # service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:eu-west-1:123456789:certificate/abc123-abc123-abc123-abc123"
+      # service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "https"
+      # service.beta.kubernetes.io/aws-load-balancer-backend-port: "https"
+    ## When using LoadBalancer service type, whitelist these source IP ranges
+    ## https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/
+    # loadBalancerSourceRanges:
+    #   - 192.168.1.10/32
+  ingress:
+    # server.ingress.enabled is the toggle to enable/disable GoCD Server Ingress
+    enabled: true
+
+    # Override the default ingress class selection
+    # ingressClassName: nginx
+
+    # server.ingress.hosts is used to create an Ingress record.
+    hosts:
+    - gocd.dc
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+      traefik.ingress.kubernetes.io/router.tls: 'true'
+    path: /
+    pathType:
+    extraPaths: []
+    # - path: /*
+    #   backend:
+    #     serviceName: ssl-redirect
+    #     servicePort: use-annotation
+    tls:
+      - secretName: ci-gocd-tls
+        hosts:
+          - gocd.dc
+
+  persistence:
+    # server.persistence.enabled is the toggle for server volume persistence.
+    enabled: true
+    accessMode: "ReadWriteOnce"
+    # The storage space that should be claimed from the persistent volume
+    size: 2Gi
+    # If defined, storageClassName: <storageClass>
+    # If set to "-", storageClassName: "", which disables dynamic provisioning
+    # If undefined (the default) or set to null, no storageClassName spec is
+    # set, choosing 'standard' storage class available with the default provisioner (gcd-pd on GKE, hostpath on minikube, etc).
+
+#    storageClass: "-"
+
+    # A manually managed Persistent Volume and Claim
+    # If defined, PVC must be created manually before volume will be bound
+    existingClaim:
+    # To choose a suitable persistent volume from available static persistent volumes, selectors are used.
+    pvSelector:
+#      matchLabels:
+#        volume-type: ssd
+    name:
+      # server.persistence.name.dockerEntryPoint name of the volume mounted at /docker-entrypoint.d/ on the server
+      dockerEntryPoint: goserver-vol
+      # "" for the volume root
+    subpath:
+      # godata is where the config, db, plugins are stored
+      godata: godata
+      # homego can be used for storing and mounting secrets
+      homego: homego
+      # custom entrypoint scripts that should be run before starting the GoCD server inside the container.
+      dockerEntryPoint: scripts
+    # server.persistence.extraVolumes additional server volumes
+    extraVolumes: []
+    # - name: gocd-server-init-scripts
+    #   configMap:
+    #      name: gocd-server-init-scripts
+    #      defaultMode: 0755
+    # - name: github-key
+    #   secret:
+    #     secretName: github-key
+    #     defaultMode: 0744
+
+    # server.persistence.extraVolumeMounts additional server volumeMounts
+    extraVolumeMounts: []
+    # - name: github-key
+    #   mountPath: /etc/config/keys/
+    #   readOnly: true
+    # - name: gocd-server-init-scripts
+    #   mountPath: /docker-entrypoint.d/
+
+  # server.hostAliases allows the modification of the hosts file inside a container
+  hostAliases:
+  # - ip: "192.168.1.10"
+  #   hostnames:
+  #   - "example.com"
+  #   - "www.example.com"
+
+  security:
+    ssh:
+      # server.security.ssh.enabled is the toggle to enable/disable mounting of ssh secret on GoCD server pods
+      enabled: false
+      # server.security.ssh.secretName specifies the name of the k8s secret object that contains the ssh key and known hosts
+      secretName: gocd-server-ssh
+      # server.security.ssh.defaultMode specifies the permission of the files in ~/.ssh directory
+      defaultMode:
+
+agent:
+  # specifies overrides for agent specific service account creation
+  serviceAccount:
+    # specifies whether the top level service account (also used by the server) should be reused as the service account for gocd agents
+    reuseTopLevelServiceAccount: false
+    # if reuseTopLevelServiceAccount is false, this field specifies the name of an existing service account to be associated with gocd agents
+    # If field is empty, the service account "default" will be used.
+    name:
+
+  # agent.deployment.labels is the labels for the GoCD Agent Deployment
+  deployment:
+    labels: {}
+  # agent.pod.labels is the labels for the GoCD Agent Pods
+  pod:
+    labels: {}
+
+  # agent.annotations is the annotations for the GoCD Agent Deployment and Pod Spec
+  annotations:
+    deployment:
+      # iam.amazonaws.com/role: arn:aws:iam::xxx:role/my-custom-role
+    pod:
+      # iam.amazonaws.com/role: arn:aws:iam::xxx:role/my-custom-role
+
+  # Specify security settings for GoCD Agent Pod
+  securityContext:
+    # Specify the container user for all the GoCD agent pods
+    runAsUser: 1000
+    # Specify the container group for all the GoCD agent pods
+    runAsGroup: 1000
+    # Specify the container supplementary group for all the GoCD agent pods
+    fsGroup: 1000
+    # Specify the policy for checking volume permissions
+    fsGroupChangePolicy: "OnRootMismatch"
+  # agent.replicaCount is the GoCD Agent replicas Count. Specify the number of GoCD agents to run
+  replicaCount: 1
+  # agent.preStop - array of command and arguments to run in the agent pre-stop lifecycle hook
+  # preStop:
+  #  - "/bin/bash"
+  #  - "/disable_and_stop.sh"
+  # agent.postStart - array of command and arguments to run in agent post-start lifecycle hook
+  # postStart:
+  #  - "/bin/bash"
+  #  - "/agent_startup.sh"
+  # agent.deployStrategy is the strategy explained in detail at https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
+  # agent.terminationGracePeriodSeconds is the optional duration in seconds the gocd agent pods need to terminate gracefully.
+  # Note: SIGTERM is issued immediately after the pod deletion request is sent. If the pod doesn't terminate, k8s waits for terminationGracePeriodSeconds before issuing SIGKILL.
+  # terminationGracePeriodSeconds: 60
+  deployStrategy: {}
+  image:
+    # agent.image.repository is the GoCD Agent image name
+    repository: "gocd/gocd-agent-alpine-3.16"
+    # agent.image.tag is the GoCD Agent image's tag
+    tag:
+    # agent.image.pullPolicy is the GoCD Agent image's pull policy
+    pullPolicy: "IfNotPresent"
+    # Specify an array of imagePullSecrets to pull from private registries
+    # You need to manually create secrets in the namespace
+    # See https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    pullSecrets: []
+#      - name: registryKeySecretName
+  env:
+    # agent.env.goServerUrl is the GoCD Server Url
+    goServerUrl: gocd.gocd.svc.cluster.local
+    # agent.env.agentAutoRegisterKey is the GoCD Agent auto-register key
+    agentAutoRegisterKey:
+    # agent.env.agentAutoRegisterResources is the GoCD Agent auto-register resources
+    agentAutoRegisterResources:
+    # agent.env.agentAutoRegisterEnvironments is the GoCD Agent auto-register Environments
+    agentAutoRegisterEnvironments:
+    # agent.env.agentAutoRegisterHostname is the GoCD Agent auto-register hostname
+    agentAutoRegisterHostname:
+    # agent.env.goAgentJvmOpts is the GoCD Agent JVM options
+    goAgentJvmOpts:
+    # agent.env.goAgentBootstrapperArgs is the GoCD Agent bootstrapper args
+    goAgentBootstrapperArgs:
+    # agent.env.goAgentBootstrapperJvmArgs is the GoCD Agent bootstrapper JVM args
+    goAgentBootstrapperJvmArgs:
+    # agent.env.extraEnvVars is the list of environment variables passed to GoCD Agent
+    extraEnvVars:
+  persistence:
+    # agent.persistence.enabled is the toggle for agent volume persistence. Change to true if a persistent volume is available and configured manually.
+    enabled: false
+    accessMode: "ReadWriteOnce"
+    size: 1Gi
+    # If defined, storageClassName: <storageClass>
+    # If set to "-", storageClassName: "", which disables dynamic provisioning
+    # If undefined (the default) or set to null, no storageClassName spec is
+    # set, choosing 'standard' storage class available with the default provisioner (gcd-pd on GKE, hostpath on minikube, etc).
+
+#   storageClass: "-"
+
+    # A manually managed Persistent Volume and Claim
+    # If defined, PVC must be created manually before volume will be bound
+    existingClaim:
+    pvSelector:
+#      matchLabels:
+#        app: godata-gocd-agent
+    name:
+      # agent.persistence.name.dockerEntryPoint name of the volume mounted at /docker-entrypoint.d/ on the agent
+      dockerEntryPoint: goagent-vol
+    # "" for the volume root
+    subpath:
+      homego: homego
+      dockerEntryPoint: scripts
+    # agent.persistence.extraVolumes additional agent volumes
+    extraVolumes: []
+    # - name: gocd-agent-init-scripts
+    #   configMap:
+    #      name: gocd-agent-init-scripts
+    #      defaultMode: 0755
+    # - name: github-key
+    #   secret:
+    #     secretName: github-key
+    #     defaultMode: 0744
+
+    # agent.persistence.extraVolumeMounts additional agent volumeMounts
+    extraVolumeMounts: []
+    # - name: github-key
+    #   mountPath: /etc/config/keys/
+    #   readOnly: true
+    # - name: gocd-agent-init-scripts
+    #   mountPath: /docker-entrypoint.d/
+
+  # specify init containers, e.g. to prepopulate home directories etc
+  initContainers: []
+  #  - name: download-kubectl
+  #    image: "ellerbrock/alpine-bash-curl-ssl:latest"
+  #    imagePullPolicy: "IfNotPresent"
+  #    volumeMounts:
+  #      - name: kubectl
+  #        mountPath: /download
+  #    workingDir: /download
+  #    command: ["/bin/bash"]
+  #    args:
+  #      - "-c"
+  #      - 'curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x ./kubectl'
+
+  # specify restart policy for agents
+  restartPolicy: Always
+
+  # agent.privileged is needed for running Docker-in-Docker (DinD) agents
+  privileged: false
+
+  healthCheck:
+   # agent.healthCheck.enable is the toggle for GoCD agent health checks
+    enabled: false
+    # agent.healthCheck.initialDelaySeconds is the initial delays in seconds to start the health checks
+    initialDelaySeconds: 60
+    # agent.healthCheck.periodSeconds is the health check interval duration
+    periodSeconds: 60
+    # agent.healthCheck.failureThreshold is the health check failure threshold of GoCD agent
+    failureThreshold: 60
+
+  security:
+    ssh:
+      # agent.security.ssh.enabled is the toggle to enable/disable mounting of ssh secret on GoCD agent pods
+      enabled: false
+      # agent.security.ssh.secretName specifies the name of the k8s secret object that contains the ssh key and known hosts
+      secretName: gocd-agent-ssh
+      # agent.security.ssh.defaultMode specifies the permission of the files in ~/.ssh directory
+      defaultMode:
+
+  ## Configure GoCD agent resource requests and limits
+  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  ##
+  resources: {}
+  #   requests:
+  #     memory: 512Mi
+  #     cpu: 300m
+  #   limits:
+  #     cpu: 100m
+  #     memory: 1024Mi
+
+  # agent.hostAliases allows the modification of the hosts file inside a container
+  hostAliases:
+  # - ip: "192.168.1.10"
+  #   hostnames:
+  #   - "example.com"
+  #   - "www.example.com"
+
+  ## Additional GoCD agent pod labels
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  nodeSelector: {}
+
+  ## Affinity for assigning pods to specific nodes
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  affinity: {}
+
+  ## Tolerations for allowing pods to be scheduled on nodes with matching taints
+  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: {}
+
+tests:
+  # Whether or not to create test resources for use in Helm chart testing.
+  # Without the resources being created the tests will not work; however the installation is cleaner.
+  enabled: false
+  # A BATS image to supply test runner, see https://hub.docker.com/r/bats/bats/tags
+  batsImage: "bats/bats:1.8.2"
+  # A image containing bash, curl and busybox|coreutils for executing tests, see https://github.com/containeroo/alpine-toolbox/releases
+  curlImage: "ghcr.io/containeroo/alpine-toolbox:2.0.20"
+  # Specify an array of imagePullSecrets to pull from private registries
+  # You need to manually create secrets in the namespace
+  # See https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  imagePullSecrets: []
+#    - name: registryKeySecretName
