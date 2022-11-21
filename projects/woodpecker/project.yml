@@ -1,11 +1,11 @@
 config:
   description: Woodpecker-CI
+  repoURL: https://woodpecker-ci.org
+  targetRevision: v0.15.5
 
 apps:
   - name: woodpecker-server
-    repoURL: https://github.com/nold360/woodpecker/
-    path: charts/woodpecker-server
-    targetRevision: helm
+    chart: woodpecker-server
     secrets:
       - name: github-oauth
         keys:
@@ -17,9 +17,7 @@ apps:
 
   - name: woodpecker-agent
     namespace: woodpecker-agent
-    repoURL: https://github.com/nold360/woodpecker
-    path: charts/woodpecker-agent
-    targetRevision: helm
+    chart: woodpecker-agent
     secrets:
       - name: woodpecker-secret
         fromApp: woodpecker-server
