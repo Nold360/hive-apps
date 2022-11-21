@@ -16,13 +16,19 @@ spec:
       name: issuer-account-key
     # Add a single challenge solver, HTTP01 using nginx
     solvers:
-    - http01:
-        ingress:
-          class: ingress-external-traefik
-          ingressTemplate:
-            metadata:
-              labels:
-                environment: external
-              annotations:
-                traefik.ingress.kubernetes.io/frontend-entry-points: "web"
-                kubernetes.io/ingress.class: ingress-external
+    - dns01:
+        cloudflare:
+          apiTokenSecretRef:
+            name: cloudflare-api
+            key: CF_API_TOKEN
+
+      #- http01:
+      #   ingress:
+      #    class: ingress-external-traefik
+      #    ingressTemplate:
+      #      metadata:
+      #        labels:
+      #          environment: external
+      #        annotations:
+      #         traefik.ingress.kubernetes.io/frontend-entry-points: "web"
+      #         kubernetes.io/ingress.class: ingress-external

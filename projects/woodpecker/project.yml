@@ -3,6 +3,14 @@ config:
   repoURL: https://woodpecker-ci.org
   targetRevision: v0.15.5
 
+  networkPolicy:
+    groups:
+    - internet
+
+  labels:
+    environment: external
+
+
 apps:
   - name: woodpecker-server
     chart: woodpecker-server

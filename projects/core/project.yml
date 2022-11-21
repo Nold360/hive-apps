@@ -35,19 +35,6 @@ apps:
   targetRevision: 0.13.4
   syncWave: '0'
 
-- name: cert-manager
-  namespace: cert-manager
-  repoURL: https://charts.jetstack.io
-  chart: cert-manager
-  targetRevision: v1.10.0
-  parameters:
-  - name: installCRDs
-    value: 'true'
-  secrets:
-  - name: cert-manager-vault-approle
-    keys:
-    - secretId
-
 - name: ingress-internal
   namespace: ingress-internal
   repoURL: https://helm.traefik.io/traefik
@@ -67,5 +54,19 @@ apps:
   targetRevision: 1.11.0
   secrets:
   - name: cloudflare-api
+    keys:
+    - CF_API_TOKEN
+
+- name: cert-manager
+  namespace: cert-manager
+  repoURL: https://charts.jetstack.io
+  chart: cert-manager
+  targetRevision: v1.10.0
+  secrets:
+  - name: cert-manager-vault-approle
+    keys:
+    - secretId
+  - name: cloudflare-api
+    fromApp: external-dns
     keys:
     - CF_API_TOKEN
