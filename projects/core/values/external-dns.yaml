@@ -4,8 +4,7 @@
 
 image:
   repository: k8s.gcr.io/external-dns/external-dns
-  # Overrides the image tag whose default is v{{ .Chart.AppVersion }}
-  tag: ""
+  tag: "v0.12.2"
   pullPolicy: IfNotPresent
 
 shareProcessNamespace: false
@@ -37,11 +36,13 @@ env:
       name: cloudflare-api
       key: CF_API_TOKEN
 
-extraVolumes: []
-
-extraVolumeMounts: []
-
-resources: {}
+resources:
+  limits:
+    memory: 50Mi
+    cpu: 200m
+  requests:
+    memory: 50Mi
+    cpu: 10m
 
 logLevel: info
 logFormat: text
@@ -60,8 +61,7 @@ txtOwnerId: ""
 txtPrefix: ""
 txtSuffix: ""
 
-domainFilters:
-  - nold.in
+domainFilters: []
 
 provider: cloudflare
 
