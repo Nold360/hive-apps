@@ -55,6 +55,7 @@ ingress:
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt
     kubernetes.io/ingress.class: external
+    external-dns.alpha.kubernetes.io/hostname: ci.nold.in
   hosts:
     - host: ci.nold.in
       paths:
