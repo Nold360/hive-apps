@@ -12,6 +12,7 @@ kubernetesIngress:
   - drone
   - nextcloud
   - gitea
+  - woodpecker
 
 ports:
   web:
