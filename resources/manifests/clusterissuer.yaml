@@ -17,6 +17,7 @@ spec:
     # Add a single challenge solver, HTTP01 using nginx
     solvers:
     - dns01:
+        cnameStrategy: Follow
         cloudflare:
           apiTokenSecretRef:
             name: cloudflare-api
