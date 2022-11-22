@@ -51,10 +51,12 @@ service:
 
 ingress:
   enabled: true
+  ingressClassName: ingress-external-traefik
   annotations:
     kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: ingress-external
+    traefik.ingress.kubernetes.io/router.tls: 'true'
     cert-manager.io/cluster-issuer: letsencrypt
-    kubernetes.io/ingress.class: external
     external-dns.alpha.kubernetes.io/hostname: ci.nold.in
     external-dns.alpha.kubernetes.io/target: nold.in
   hosts:
