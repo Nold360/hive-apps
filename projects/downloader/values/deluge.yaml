@@ -46,14 +46,6 @@ env:
   PUID: 1000
   GUID: 1000
 
-probes:
-  liveness:
-    enabled: false
-  readiness:
-    enabled: false
-  startup:
-    enabled: false
-
 persistence:
   config:
     enabled: true
@@ -66,11 +58,6 @@ persistence:
     type: hostPath
     hostPath: /data/torrent
     mountPath: /downloads
-
-  startupProbe:
-    initialDelaySeconds: 600
-    periodSeconds: 120
-    failureThreshold: 6
 
 ## VPN
 addons:
