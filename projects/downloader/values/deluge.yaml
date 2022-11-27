@@ -1,10 +1,13 @@
 ---
 image:
-  repository: reg.dc/deluge
-  tag: 2.1.1
+  repository: lib42/deluge
+  tag: 2.1.1-r6
 
 command: [ "/usr/bin/deluge-web" ]
 args: [ "-d", "-c", "/config", "-L", "info" ]
+
+podSecurityContext:
+  fsGroup: 1000
 
 securityContext:
   runAsNonRoot: true
@@ -101,9 +104,18 @@ addons:
       initialDelaySeconds: 30
       periodSeconds: 30
 
+initContainers:
+  init-config:
+    image: lib42/deluge:2.1.1-r6
+    command: ["/bin/sh"]
+    args: [ "-c", "([ ! -f /config/core.conf ] && cp -v /defaults/core.conf /config/core.conf) || true"]
+    volumeMounts:
+    - name: config
+      mountPath: /config
+
 additionalContainers:
   deluge-daemon:
-    image: reg.dc/deluge:2.1.1
+    image: lib42/deluge:2.1.1-r6
     volumeMounts:
     - name: config
       mountPath: /config
