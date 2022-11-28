@@ -59,6 +59,11 @@ persistence:
     hostPath: /data/torrent
     mountPath: /downloads
 
+  tmp:
+    enabled: true
+    type: emptyDir
+    mountPath: /tmp
+
 ## VPN
 addons:
   vpn:
