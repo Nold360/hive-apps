@@ -1,10 +1,11 @@
 config:
   description: Tools for downloading linux isos
+
 apps:
 - name: deluge
-  repoURL: https://github.com/nold360/hive-apps
-  path: projects/downloader/charts/deluge
-  targetRevision: main
+  repoURL: https://lib42.github.io/charts
+  chart: deluge
+  targetRevision: 1.1.0
   secrets:
   - name: openvpn
     keys:
@@ -12,7 +13,6 @@ apps:
     - vpnConfigfile
   include:
   - ingress-internal
-
 
 - name: youtubedl
   repoURL: https://k8s-at-home.com/charts/
