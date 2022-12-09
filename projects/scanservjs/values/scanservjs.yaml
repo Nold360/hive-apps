@@ -1,10 +1,3 @@
-#
-# IMPORTANT NOTE
-#
-# This chart inherits from our common library chart. You can check the default values/options here:
-# https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common/values.yaml
-#
-
 image:
   # -- image repository
   repository:  sbs20/scanservjs
@@ -13,25 +6,27 @@ image:
   # -- image pull policy
   pullPolicy: Always
 
-# -- environment variables. See more environment variables in the [scanservjs documentation](https://scanservjs.org/docs).
-# @default -- See below
+# -- environment variables.
+# See more environment variables in the [scanservjs documentation](https://scanservjs.org/docs).
 env:
   # -- Set the container timezone
   TZ: UTC
-  #SANED_NET_HOSTS: 192.168.1.111
-  OCR_LANG: "deu+eng"
+  # SANED_NET_HOSTS: 127.0.0.1
+  # OCR_LANG: "eng"
+  # AIRSCAN_DEVICES:
+  # DELIMITER:
+  # DEVICES:
+  # SCANIMAGE_LIST_IGNORE:
 
 # -- Configures service settings for the chart.
-# @default -- See values.yaml
 service:
   main:
     ports:
       http:
         port: 8080
 
+# -- Enable and configure ingress settings for the chart under this key.
 ingress:
-  # -- Enable and configure ingress settings for the chart under this key.
-  # @default -- See values.yaml
   main:
     enabled: true
     annotations:
@@ -48,13 +43,13 @@ ingress:
       - scan.dc
 
 # -- Configure persistence settings for the chart under this key.
-# @default -- See values.yaml
 persistence:
-  dbus:
-    enabled: true
-    mountPath: /var/run/dbus
-    hostPath: /var/run/dbus
-    type: hostPath
+  ## This might be needed for local scanners:
+  #dbus:
+  #  enabled: true
+  #  mountPath: /var/run/dbus
+  #  hostPath: /var/run/dbus
+  #  type: hostPath
 
   output:
     enabled: true
@@ -66,3 +61,17 @@ persistence:
     enabled: true
     mountPath: /app/config
     size: 1G
+
+podSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+securityContext:
+  runAsNonRoot: true
+  privileged: false
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
