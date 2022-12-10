@@ -5,7 +5,7 @@ apps:
 - name: deluge
   repoURL: https://lib42.github.io/charts
   chart: deluge
-  targetRevision: 1.1.0
+  targetRevision: 1.1.1
   secrets:
   - name: openvpn
     keys:
