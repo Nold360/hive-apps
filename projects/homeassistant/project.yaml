@@ -13,5 +13,9 @@ apps:
     - postgresql-username
     - postgresql-password
     - postgresql-postgres-password
+  - name: bucket
+    keys:
+    - accesskey
+    - secretkey
   include:
   - ingress-internal
