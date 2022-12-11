@@ -16,6 +16,7 @@ networkPolicy:
       - allow-dns
       - allow-proxy
       - allow-ingress
+      - allow-ingress-traffic
 
   rules:
   # Allow DNS to all Namespaces, deny everything else
@@ -45,9 +46,7 @@ networkPolicy:
 
     # Cloudnative PG
     allow-cnpg-nextcloud:
-      podSelector:
-        matchLabels:
-          cnpg.io/cluster: nextcloud
+      podSelector: {}
       policyTypes:
       - Egress
       egress:
@@ -55,9 +54,8 @@ networkPolicy:
         - port: 443
           protocol: TCP
         to:
-        - namespaceSelector:
-            matchLabels:
-              name: kube-system
+        - ipBlock:
+            cidr: 10.43.0.1/32
 
     # Allow access to internet proxy
     allow-proxy:
@@ -136,7 +134,7 @@ networkPolicy:
         to:
         - namespaceSelector:
             matchLabels:
-              name: minio
+              app.heqet.gnu.one/name: minio
 
     allow-ingress-traffic:
       podSelector: {}
