@@ -102,7 +102,7 @@ internalDatabase:
 externalDatabase:
   enabled: true
   type: postgresql
-  host: nextcloud-postgresql.nextcloud.svc.cluster.local
+  host: nextcloud-db-rw.nextcloud.svc.cluster.local
   existingSecret:
     enabled: true
     secretName: nextcloud-postgres

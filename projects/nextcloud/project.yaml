@@ -4,7 +4,7 @@ config:
     groups:
     - internet
     rules:
-    - allow-cnpg-nextcloud
+    - allow-minio
 
   labels:
     environment: external
