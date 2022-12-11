@@ -3,6 +3,8 @@ config:
   networkPolicy:
     groups:
     - internet
+    rules:
+    - allow-cnpg-nextcloud
 
   labels:
     environment: external

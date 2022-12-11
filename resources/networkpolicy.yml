@@ -43,6 +43,22 @@ networkPolicy:
             matchLabels:
               name: kube-system
 
+    # Cloudnative PG
+    allow-cnpg-nextcloud:
+      podSelector:
+        matchLabels:
+          cnpg.io/cluster: nextcloud
+      policyTypes:
+      - Egress
+      egress:
+      - ports:
+        - port: 443
+          protocol: TCP
+        to:
+        - namespaceSelector:
+            matchLabels:
+              name: kube-system
+
     # Allow access to internet proxy
     allow-proxy:
       podSelector: {}
@@ -50,8 +66,6 @@ networkPolicy:
       - Egress
       egress:
       - ports:
-        - port: 80
-          protocol: TCP
         - port: 3128
           protocol: TCP
         to:
@@ -100,17 +114,6 @@ networkPolicy:
         - port: 2222
           protocol: TCP
 
-    # Allow Drone-Runner to access Drone
-    allow-runner:
-      podSelector: {}
-      policyTypes:
-      - Ingress
-      ingress:
-      - from:
-        - namespaceSelector:
-            matchLabels:
-              app.heqet.gnu.one/name: drone-runner
-
     # Allow Woodpacker-Agent to access Woodpacker Server
     allow-agent:
       podSelector: {}
@@ -151,5 +154,3 @@ networkPolicy:
         - namespaceSelector:
             matchLabels:
               environment: external
-
-    
