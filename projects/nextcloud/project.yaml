@@ -31,3 +31,7 @@ apps:
     keys:
     - db-username
     - db-password
+  - name: bucket
+    keys:
+    - accesskey
+    - secretkey
