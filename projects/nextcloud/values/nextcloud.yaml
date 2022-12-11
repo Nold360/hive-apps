@@ -110,28 +110,7 @@ externalDatabase:
     usernameKey:  postgresql-username
 
 postgresql:
-  enabled: true
-  # old:
-  image:
-    registry: docker.io
-    repository: bitnami/postgresql
-    tag: 11
-  postgresqlDatabase: nextcloud
-  postgresqlUsername: nextcloud
-  existingSecret: nextcloud-postgres
-  persistence:
-    enabled: true
-
-  # New:
-  global:
-    auth:
-      username: nextcloud
-      password: nextcloud
-      database: nextcloud
-      existingSecret: nextcloud-postgres
-  primary:
-    persistence:
-      enabled: true
+  enabled: false
 
 redis:
   enabled: false
