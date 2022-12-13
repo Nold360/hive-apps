@@ -111,26 +111,32 @@ server:
 
     oidc.config: |
       name: Authentik
+      type: oidc
+      id: authentik
       issuer: https://auth.dc/application/o/argocd/
-      clientID: 0c149045b7b87eb80e41fcdd3e788476472d7316
-      clientSecret: $oidc.auth0.clientSecret
-      requestedScopes: ["openid", "profile", "email", "groups"]
+      clientID: 3793eb413f1d568b9e9cf82fd4d8d596b2867ec5
+      clientSecret: $dex.authentik.clientSecret
+      scopes:
+          - openid
+          - profile
+          - email
+          - groups
 
   rbacConfig:
     policy.csv: |
       g, ArgoCDAdmins, role:admin
 
-  # Mount public CA cert
-  volumeMounts: []
-#  - name: certificate
-#    mountPath: /etc/ssl/certs/ca.crt
-#    subPath: ca
+  # Mount vault CA cert
+  volumeMounts:
+  - name: certificate
+    mountPath: /etc/ssl/certs/vault-ca-certificates.crt
+    subPath: ca
 
-  volumes: []
-#  - name: certificate
-#    secret:
-#      secretName: ca-cert
-#      defaultMode: 420
+  volumes:
+  - name: certificate
+    secret:
+      secretName: ca-cert
+      defaultMode: 420
 
   additionalApplications: []
 

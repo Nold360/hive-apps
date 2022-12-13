@@ -15,7 +15,7 @@ apps:
     keys:
     - admin.password
     - server.secretkey
-    - oidc.auth0.clientSecret
+    - dex.authentik.clientSecret
     - webhook.gogs.secret
   - name: ca-cert
     keys:
