@@ -1,0 +1,57 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: nextcloud-db
+  namespace: nextcloud
+spec:
+  instances: 1
+  imageName: ghcr.io/cloudnative-pg/postgresql:15
+
+  bootstrap:
+    initdb:
+      import:
+        type: microservice
+        databases:
+          - nextcloud
+        source:
+          externalCluster: nextcloud
+
+  backup:
+    barmanObjectStore:
+      destinationPath: "s3://nextcloud-db/"
+      endpointURL: "http://minio.minio.svc.cluster.local:9000"
+      s3Credentials:
+        accessKeyId:
+          name: bucket
+          key: accesskey
+        secretAccessKey:
+          name: bucket
+          key: secretkey
+      wal:
+        compression: gzip
+        #encryption: AES256
+      data:
+        compression: gzip
+        #encryption: AES256
+    retentionPolicy: "90d"
+
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "50m"
+    limits:
+      memory: "1Gi"
+      cpu: "1"
+
+  storage:
+    size: 10Gi
+
+  externalClusters:
+    - name: nextcloud
+      connectionParameters:
+        host: nextcloud-postgresql.nextcloud.svc.cluster.local
+        user: nextcloud
+        dbname: nextcloud
+      password:
+        name: nextcloud-postgres
+        key: postgresql-password
