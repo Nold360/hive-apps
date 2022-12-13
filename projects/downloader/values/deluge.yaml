@@ -106,6 +106,14 @@ initContainers:
     volumeMounts:
     - name: config
       mountPath: /config
+    securityContext:
+      runAsNonRoot: true
+      privileged: false
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
 
 additionalContainers:
   deluge-daemon:
@@ -117,3 +125,11 @@ additionalContainers:
       mountPath: /downloads
     - name: cache
       mountPath: /home/deluge/.cache
+    securityContext:
+      runAsNonRoot: true
+      privileged: false
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
