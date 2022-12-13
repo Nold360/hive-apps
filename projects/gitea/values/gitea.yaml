@@ -27,8 +27,8 @@ securityContext:
     drop:
       - ALL
 #   # https://gitea.com/gitea/helm-chart/issues/161
-#     add:
-#       - SYS_CHROOT
+    add:
+      - SYS_CHROOT
   privileged: false
   readOnlyRootFilesystem: true
   runAsGroup: 1000
@@ -104,6 +104,8 @@ gitea:
 
   config:
     APP_NAME: "Git with a lot of coffee"
+    webhook:
+      ALLOWED_HOST_LIST: argocd-server.argocd.svc.cluster.local
     ui:
       DEFAULT_THEME: arc-green
     repository:
@@ -114,7 +116,8 @@ gitea:
       DOMAIN: git.nold.in
       ROOT_URL: https://git.nold.in
     database:
-      HOST: gitea-postgresql.gitea.svc.cluster.local:5432
+      NAME: app
+      HOST: gitea-db-rw.gitea.svc.cluster.local:5432
     service:
       DISABLE_REGISTRATION: true
     lfs:
@@ -128,20 +131,22 @@ gitea:
     oauth:
       ENABLE: false
 
+  additionalConfigFromEnvs:
+    - name: ENV_TO_INI__DATABASE__PASSWD
+      valueFrom:
+        secretKeyRef:
+          name: gitea-db-app
+          key: password
+    - name: ENV_TO_INI__DATABASE__USER
+      valueFrom:
+        secretKeyRef:
+          name: gitea-db-app
+          key: username
+
 memcached:
   enabled: true
   service:
     port: 11211
 
 postgresql:
-  enabled: true
-  global:
-    #storageClass: slow
-    postgresql:
-      existingSecret: postgres
-  persistence:
-    size: 10Gi
-  psp:
-    create: true
-  rbac:
-    create: true
+  enabled: false
