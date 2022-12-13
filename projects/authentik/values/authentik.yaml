@@ -1,0 +1,168 @@
+# -- Server replicas
+replicas: 1
+
+# -- server securityContext
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+worker:
+  # -- worker replicas
+  replicas: 1
+  # -- Custom priority class for different treatment by the scheduler
+  priorityClassName:
+  # -- worker securityContext
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+
+
+image:
+  repository: ghcr.io/goauthentik/server
+  tag: 2022.11.3
+
+# -- See https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common#values
+initContainers: {}
+
+# -- See https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common#values
+additionalContainers: {}
+
+ingress:
+  enabled: true
+  ingressClassName: "ingress-internal-traefik"
+  annotations:
+    cert-manager.io/cluster-issuer: "vault-issuer"
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+  labels: {}
+  hosts:
+    - host: auth.dc
+      paths:
+        - path: "/"
+          pathType: Prefix
+  tls:
+    - secretName: auth.dc-tls
+      hosts:
+        - auth.dc
+
+authentik:
+  # -- Log level for server and worker
+  log_level: info
+  # -- Secret key used for cookie singing and unique user IDs,
+  # don't change this after the first install
+  #secret_key: ""
+  # -- Path for the geoip database. If the file doesn't exist, GeoIP features are disabled.
+  geoip: /geoip/GeoLite2-City.mmdb
+  # -- Mode for the avatars. Defaults to gravatar. Possible options 'gravatar' and 'none'
+  avatars: none
+  email:
+    # -- SMTP Server emails are sent from, fully optional
+    host: ""
+    port: 587
+    # -- SMTP credentials, when left empty, not authentication will be done
+    username: ""
+    # -- SMTP credentials, when left empty, not authentication will be done
+    password: ""
+    # -- Enable either use_tls or use_ssl, they can't be enabled at the same time.
+    use_tls: false
+    # -- Enable either use_tls or use_ssl, they can't be enabled at the same time.
+    use_ssl: false
+    # -- Connection timeout
+    timeout: 30
+    # -- Email from address, can either be in the format "foo@bar.baz" or "authentik <foo@bar.baz>"
+    from: ""
+  outposts:
+    # -- Template used for managed outposts. The following placeholders can be used
+    # %(type)s - the type of the outpost
+    # %(version)s - version of your authentik install
+    # %(build_hash)s - only for beta versions, the build hash of the image
+    container_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
+  error_reporting:
+    # -- This sends anonymous usage-data, stack traces on errors and
+    # performance data to sentry.beryju.org, and is fully opt-in
+    enabled: false
+    # -- This is a string that is sent to sentry with your error reports
+    environment: "k8s"
+    # -- Send PII (Personally identifiable information) data to sentry
+    send_pii: false
+  postgresql:
+    # -- set the postgresql hostname to talk to
+    # if unset and .Values.postgresql.enabled == true, will generate the default
+    # @default -- `{{ .Release.Name }}-postgresql`
+    host: 'authentik-db-rw.authentik.svc.cluster.local'
+    # -- postgresql Database name
+    # @default -- `authentik`
+    name: "app"
+    # -- postgresql Username
+    # @default -- `authentik`
+    user: "app"
+    #password: ""
+    port: 5432
+  redis:
+    # -- set the redis hostname to talk to
+    # @default -- `{{ .Release.Name }}-redis-master`
+    host: '{{ .Release.Name }}-redis-master'
+    password: ""
+
+# -- List of config maps to mount blueprints from. Only keys in the
+# configmap ending with ".yaml" wil be discovered and applied
+blueprints: []
+
+# -- see configuration options at https://goauthentik.io/docs/installation/configuration/
+env: {}
+# AUTHENTIK_VAR_NAME: VALUE
+
+envFrom: []
+#  - configMapRef:
+#      name: special-config
+
+envValueFrom:
+  AUTHENTIK_POSTGRESQL__PASSWORD:
+    secretKeyRef:
+      key: password
+      name: authentik-db-app
+  AUTHENTIK_SECRET_KEY:
+    secretKeyRef:
+      key: secret_key
+      name: authentik
+
+
+service:
+  # -- Service that is created to access authentik
+  enabled: true
+  type: ClusterIP
+  port: 80
+  name: http
+  protocol: TCP
+  labels: {}
+  annotations: {}
+
+volumes: []
+
+volumeMounts: []
+
+resources:
+  server: {}
+  worker: {}
+
+serviceAccount:
+  # -- Service account is needed for managed outposts
+  create: true
+
+prometheus:
+  serviceMonitor:
+    create: false
+    interval: 30s
+    scrapeTimeout: 3s
+  rules:
+    create: false
+
+postgresql:
+  enabled: false
+
+redis:
+  enabled: true
+  architecture: standalone
+  auth:
+    enabled: false

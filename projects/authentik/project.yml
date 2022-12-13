@@ -1,0 +1,16 @@
+config:
+  description: Authentik OIDC
+
+apps:
+- name: authentik
+  repoURL: https://charts.goauthentik.io/
+  chart: authentik
+  targetRevision: 2022.11.3
+  secrets:
+    - name: authentik
+      keys:
+        - secret_key
+    - name: bucket
+      keys:
+        - secretkey
+        - accesskey
