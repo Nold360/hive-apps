@@ -24,3 +24,7 @@ apps:
     keys:
     - postgresql-password
     - postgresql-postgres-password
+  - name: bucket
+    keys:
+    - secretkey
+    - accesskey
