@@ -5,6 +5,8 @@ config:
     - internet
     rules:
     - allow-ssh
+    - allow-argocd
+    - allow-minio
 
   labels:
     environment: external

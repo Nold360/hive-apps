@@ -152,3 +152,18 @@ networkPolicy:
         - namespaceSelector:
             matchLabels:
               environment: external
+
+    allow-argocd:
+      podSelector: {}
+      policyTypes:
+      - Egress
+      egress:
+      - ports:
+        - port: 80
+          protocol: TCP
+        - port: 8080
+          protocol: TCP
+        to:
+        - namespaceSelector:
+            matchLabels:
+              app.heqet.gnu.one/project: argocd

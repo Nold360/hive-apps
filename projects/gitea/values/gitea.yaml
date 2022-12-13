@@ -4,22 +4,20 @@ image:
   tag: 1.18-dev
   rootless: true
 
-statefulset:
-  env:
-    - name: HTTP_PROXY
-      value: http://proxy-squid.proxy.svc.cluster.local:3128
-    - name: HTTPS_PROXY
-      value: http://proxy-squid.proxy.svc.cluster.local:3128
-    - name: http_proxy
-      value: http://proxy-squid.proxy.svc.cluster.local:3128
-    - name: https_proxy
-      value: http://proxy-squid.proxy.svc.cluster.local:3128
-    - name: NO_PROXY
-      value: argocd-server.argocd.svc.cluster.local, 10.43.0.0/16
-    - name: no_proxy
-      value: argocd-server.argocd.svc.cluster.local, 10.43.0.0/16
-#    - name: GITEA_APP_INI
-#      value: conf/app.ini
+#statefulset:
+  #env:
+  #  - name: HTTP_PROXY
+  #    value: http://proxy-squid.proxy.svc.cluster.local:3128
+  #  - name: HTTPS_PROXY
+  #    value: http://proxy-squid.proxy.svc.cluster.local:3128
+  #  - name: http_proxy
+  #    value: http://proxy-squid.proxy.svc.cluster.local:3128
+  #  - name: https_proxy
+  #    value: http://proxy-squid.proxy.svc.cluster.local:3128
+  #  - name: NO_PROXY
+  #    value: argocd-server.argocd.svc.cluster.local,10.43.0.0/16
+  #  - name: no_proxy
+  #    value: argocd-server.argocd.svc.cluster.local,10.43.0.0/16
 
 securityContext:
   allowPrivilegeEscalation: false
@@ -130,6 +128,10 @@ gitea:
       ENABLE_SWAGGER: false
     oauth:
       ENABLE: false
+    proxy:
+      PROXY_ENABLED: true
+      PROXY_URL: "http://proxy-squid.proxy.svc.cluster.local:3128"
+      PROXY_HOSTS: "github.com"
 
   additionalConfigFromEnvs:
     - name: ENV_TO_INI__DATABASE__PASSWD
