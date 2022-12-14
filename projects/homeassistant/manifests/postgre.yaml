@@ -40,3 +40,14 @@ spec:
       password:
         name: hass-postgres
         key: postgresql-password
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: homeassistant-db-backup
+  namespace: homeassistant
+spec:
+  schedule: "0 0 0 * * *"
+  backupOwnerReference: self
+  cluster:
+    name: homeassistant-db
