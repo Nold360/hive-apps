@@ -31,32 +31,6 @@ networkPolicy:
         to:
         - namespaceSelector: {}
 
-    allow-kubeapi:
-      podSelector: {}
-      policyTypes:
-      - Egress
-      egress:
-      - ports:
-        - port: 443
-          protocol: TCP
-        to:
-        - namespaceSelector:
-            matchLabels:
-              name: kube-system
-
-    # Cloudnative PG
-    allow-cnpg-nextcloud:
-      podSelector: {}
-      policyTypes:
-      - Egress
-      egress:
-      - ports:
-        - port: 443
-          protocol: TCP
-        to:
-        - ipBlock:
-            cidr: 10.43.0.1/32
-
     # Allow access to internet proxy
     allow-proxy:
       podSelector: {}

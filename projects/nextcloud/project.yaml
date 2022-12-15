@@ -5,7 +5,6 @@ config:
     - internet
     rules:
     - allow-minio
-    - allow-cnpg-nextcloud
 
   labels:
     environment: external
