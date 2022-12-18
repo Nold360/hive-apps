@@ -1,19 +1,10 @@
 ---
 image:
   repository: lib42/deluge
-  tag: "2"
+  tag: "latest"
 
 podSecurityContext:
   fsGroup: 1000
-
-securityContext:
-  runAsNonRoot: true
-  privileged: false
-  readOnlyRootFilesystem: true
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop:
-    - ALL
 
 ingress:
   main:
@@ -42,6 +33,7 @@ service:
 env:
   PUID: 1000
   GUID: 1000
+  SSL_CERT_DIR: /etc/ssl/certs
 
 persistence:
   config:
@@ -98,38 +90,8 @@ addons:
       initialDelaySeconds: 30
       periodSeconds: 30
 
-initContainers:
-  init-config:
-    image: lib42/deluge:2
-    command: ["/bin/sh"]
-    args: [ "-c", "([ ! -f /config/core.conf ] && cp -v /defaults/core.conf /config/core.conf) || true"]
-    volumeMounts:
-    - name: config
-      mountPath: /config
-    securityContext:
-      runAsNonRoot: true
-      privileged: false
-      readOnlyRootFilesystem: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
-
 additionalContainers:
   deluge-daemon:
-    image: lib42/deluge:2
-    volumeMounts:
-    - name: config
-      mountPath: /config
-    - name: downloads
-      mountPath: /downloads
-    - name: cache
-      mountPath: /home/deluge/.cache
-    securityContext:
-      runAsNonRoot: true
-      privileged: false
-      readOnlyRootFilesystem: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
+    env:
+      - name: SSL_CERT_DIR
+        value: /etc/ssl/certs
