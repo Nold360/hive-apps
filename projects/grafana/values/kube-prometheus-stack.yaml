@@ -419,7 +419,8 @@ alertmanager:
     ## Image of Alertmanager
     ##
     image:
-      repository: quay.io/prometheus/alertmanager
+      registry: quay.io
+      repository: prometheus/alertmanager
       tag: v0.25.0
       sha: ""
 
@@ -1503,7 +1504,8 @@ prometheusOperator:
     patch:
       enabled: true
       image:
-        repository: k8s.gcr.io/ingress-nginx/kube-webhook-certgen
+        registry: k8s.gcr.io
+        repository: ingress-nginx/kube-webhook-certgen
         tag: v1.3.0
         sha: ""
         pullPolicy: IfNotPresent
@@ -1729,7 +1731,8 @@ prometheusOperator:
   ## Prometheus-operator image
   ##
   image:
-    repository: quay.io/prometheus-operator/prometheus-operator
+    registry: quay.io
+    repository: prometheus-operator/prometheus-operator
     tag: v0.61.1
     sha: ""
     pullPolicy: IfNotPresent
@@ -1747,7 +1750,8 @@ prometheusOperator:
   prometheusConfigReloader:
     # image to use for config and rule reloading
     image:
-      repository: quay.io/prometheus-operator/prometheus-config-reloader
+      registry: quay.io
+      repository: prometheus-operator/prometheus-config-reloader
       tag: v0.61.1
       sha: ""
 
@@ -1763,7 +1767,8 @@ prometheusOperator:
   ## Thanos side-car image when configured
   ##
   thanosImage:
-    repository: quay.io/thanos/thanos
+    registry: quay.io
+    repository: thanos/thanos
     tag: v0.29.0
     sha: ""
 
@@ -2199,7 +2204,8 @@ prometheus:
     ## Image of Prometheus.
     ##
     image:
-      repository: quay.io/prometheus/prometheus
+      registry: quay.io
+      repository: prometheus/prometheus
       tag: v2.41.0
       sha: ""
 
