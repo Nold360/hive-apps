@@ -4,7 +4,10 @@
       {
         "$$hashKey": "object:31",
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -24,13 +27,16 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 10645,
   "graphTooltip": 0,
-  "id": 1,
-  "iteration": 1645372785989,
+  "id": 251,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -39,6 +45,15 @@
       },
       "id": 282,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Overview",
       "type": "row"
     },
@@ -107,9 +122,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "node_time_seconds{instance=\"192.168.1.1:9100\", job=\"openwrt\"} - node_boot_time_seconds{instance=\"192.168.1.1:9100\", job=\"openwrt\"}",
           "interval": "",
@@ -191,9 +210,14 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
           "expr": "time() - node_boot_time_seconds{instance=~\"$node\"}",
           "format": "time_series",
           "hide": false,
@@ -259,9 +283,12 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "sum(argocd_app_info{namespace=~\"$namespace\",dest_server=~\"$cluster\",health_status=~\"$health_status\",sync_status=~\"$sync_status\",health_status!=\"\"}) by (health_status)",
           "format": "time_series",
@@ -272,6 +299,9 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "sum(argocd_app_info{namespace=~\"$namespace\",dest_server=~\"$cluster\",health_status=~\"$health_status\",sync_status=~\"$sync_status\",health_status!=\"\"}) by (sync_status)",
           "hide": true,
@@ -286,6 +316,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -331,15 +365,16 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "$datasource"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "kubelet_running_pods{job=\"kubernetes-apiservers\"}",
+          "expr": "kubelet_running_pods{node=\"hive\"}",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -351,446 +386,28 @@
       "type": "stat"
     },
     {
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "#167e08",
-            "mode": "fixed"
-          },
-          "decimals": 2,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "dark-green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
+      "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
       },
-      "gridPos": {
-        "h": 3,
-        "w": 14,
-        "x": 10,
-        "y": 1
-      },
-      "id": 293,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.4.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$datasource"
-          },
-          "exemplar": false,
-          "expr": "chia_wallet_confirmed_balance_mojo{wallet_id=\"1\", fork=\"chives\"}/100000000",
-          "hide": false,
-          "instant": true,
-          "interval": "",
-          "legendFormat": "{{fork}}",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$datasource"
-          },
-          "exemplar": false,
-          "expr": "chia_wallet_confirmed_balance_mojo{wallet_id=\"1\", fork!~\"chives|staicoin\"}/1000000000000",
-          "hide": false,
-          "instant": true,
-          "interval": "",
-          "legendFormat": "{{fork}}",
-          "refId": "F"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$datasource"
-          },
-          "exemplar": true,
-          "expr": "chia_wallet_confirmed_balance_mojo{wallet_id=\"1\", fork=~\"staicoin\"}/1000000000",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "{{fork}}",
-          "refId": "B"
-        }
-      ],
-      "transformations": [
-        {
-          "disabled": true,
-          "id": "seriesToColumns",
-          "options": {
-            "byField": "Time"
-          }
-        },
-        {
-          "disabled": true,
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true
-            },
-            "indexByName": {},
-            "renameByName": {
-              "Time {name=\"Chia\"}": "Chia",
-              "Time {name=\"Value\"}": "Chives",
-              "Value": ""
-            }
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
         "y": 4
       },
-      "id": 280,
-      "panels": [
-        {
-          "description": "Number of plots",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "fixedColor": "dark-green",
-                "mode": "fixed"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 3,
-            "w": 6,
-            "x": 5,
-            "y": 5
-          },
-          "id": 258,
-          "options": {
-            "colorMode": "background",
-            "graphMode": "none",
-            "justifyMode": "center",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "text": {},
-            "textMode": "auto"
-          },
-          "pluginVersion": "8.4.1",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "$datasource"
-              },
-              "exemplar": false,
-              "expr": "chia_plots{fork=~\"chia|chives\"}",
-              "instant": true,
-              "interval": "",
-              "legendFormat": "{{fork}}",
-              "refId": "A"
-            }
-          ],
-          "transformations": [],
-          "type": "stat"
-        },
-        {
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "bytes"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 3,
-            "w": 2,
-            "x": 16,
-            "y": 5
-          },
-          "id": 273,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "area",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "text": {},
-            "textMode": "auto"
-          },
-          "pluginVersion": "8.4.1",
-          "targets": [
-            {
-              "exemplar": true,
-              "expr": "(sum(node_filesystem_avail_bytes{instance=~\"$node\",mountpoint=~\"/chia/farm/.*\",fstype=~\"ext4|xfs|zfs\"}) )",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "Farm Space Available",
-              "refId": "A"
-            },
-            {
-              "exemplar": true,
-              "expr": "",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "",
-              "refId": "B"
-            }
-          ],
-          "title": "Farm Space",
-          "type": "stat"
-        },
-        {
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "decpbytes"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 0,
-            "y": 8
-          },
-          "id": 285,
-          "maxPerRow": 3,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "max",
-                "min"
-              ],
-              "displayMode": "table",
-              "placement": "bottom"
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "repeat": "chia_fork",
-          "repeatDirection": "h",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "$datasource"
-              },
-              "exemplar": true,
-              "expr": "chia_blockchain_space_bytes{fork=\"$chia_fork\"}/1000/1000/1000/1000/1000",
-              "instant": false,
-              "interval": "",
-              "legendFormat": "{{fork}}",
-              "refId": "A"
-            }
-          ],
-          "title": "$chia_fork Netspace",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "decpbytes"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 15,
-            "w": 24,
-            "x": 0,
-            "y": 32
-          },
-          "id": 290,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "max",
-                "min"
-              ],
-              "displayMode": "table",
-              "placement": "right"
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "$datasource"
-              },
-              "exemplar": true,
-              "expr": "chia_blockchain_space_bytes{fork!~\"chia|\"}/1000/1000/1000/1000/1000",
-              "hide": false,
-              "instant": false,
-              "interval": "",
-              "legendFormat": "{{fork}}",
-              "refId": "A"
-            }
-          ],
-          "title": "Netspaces",
-          "transformations": [],
-          "type": "timeseries"
-        }
-      ],
-      "title": "Chia/-forks",
-      "type": "row"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 5
-      },
       "id": 200,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "The Hive",
       "type": "row"
     },
@@ -844,7 +461,7 @@
         "h": 5,
         "w": 3,
         "x": 0,
-        "y": 6
+        "y": 5
       },
       "id": 167,
       "links": [],
@@ -862,15 +479,21 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
-          "expr": "100 - (avg(irate(node_cpu_seconds_total{instance=~\"$node\",mode=\"idle\"}[5m])) * 100)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "100 - (avg(irate(node_cpu_seconds_total{instance=\"$node\",mode=\"idle\"}[5m])) * 100)",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
+          "range": true,
           "refId": "A",
           "step": 20
         }
@@ -928,7 +551,7 @@
         "h": 5,
         "w": 3,
         "x": 3,
-        "y": 6
+        "y": 5
       },
       "id": 20,
       "links": [],
@@ -946,9 +569,13 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "avg(irate(node_cpu_seconds_total{instance=~\"$node\",mode=\"iowait\"}[5m])) * 100",
           "format": "time_series",
           "hide": false,
@@ -963,6 +590,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -998,7 +629,7 @@
         "h": 5,
         "w": 3,
         "x": 6,
-        "y": 6
+        "y": 5
       },
       "hideTimeOverride": false,
       "id": 172,
@@ -1017,15 +648,16 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "$datasource"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "((node_memory_MemTotal_bytes{node=\"hive\"} -node_memory_MemFree_bytes{node=\"hive\"}) / (node_memory_MemTotal_bytes{node=\"hive\"}))* 100",
+          "expr": "((node_memory_MemTotal_bytes{node=\"$node\"} -node_memory_MemFree_bytes{node=\"$node\"}) / (node_memory_MemTotal_bytes{node=\"$node\"}))* 100",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -1041,6 +673,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1070,7 +706,7 @@
         "h": 5,
         "w": 3,
         "x": 9,
-        "y": 6
+        "y": 5
       },
       "id": 166,
       "links": [],
@@ -1087,7 +723,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "repeatDirection": "h",
       "targets": [
         {
@@ -1095,8 +731,9 @@
             "type": "prometheus",
             "uid": "$datasource"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "100 - ((node_filesystem_avail_bytes{node=~\"hive\",mountpoint=\"/\",fstype=~\"ext4|xfs\"} * 100) / node_filesystem_size_bytes{node=~\"hive\",mountpoint=\"/\",fstype=~\"ext4|xfs\"})",
+          "expr": "100 - ((node_filesystem_avail_bytes{node=~\"$node\",mountpoint=\"/\",fstype=~\"ext4|xfs\"} * 100) / node_filesystem_size_bytes{node=~\"$node\",mountpoint=\"/\",fstype=~\"ext4|xfs\"})",
           "hide": false,
           "instant": true,
           "interval": "",
@@ -1147,7 +784,7 @@
         "h": 5,
         "w": 3,
         "x": 12,
-        "y": 6
+        "y": 5
       },
       "hideTimeOverride": false,
       "id": 16,
@@ -1166,9 +803,13 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "node_filefd_allocated{instance=~\"$node\"}",
           "format": "time_series",
@@ -1220,7 +861,7 @@
         "h": 5,
         "w": 4,
         "x": 15,
-        "y": 6
+        "y": 5
       },
       "id": 240,
       "interval": "",
@@ -1231,6 +872,7 @@
           "calcs": [],
           "displayMode": "table",
           "placement": "right",
+          "showLegend": true,
           "values": [
             "value"
           ]
@@ -1298,7 +940,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 11
+        "y": 10
       },
       "height": "300",
       "hiddenSeries": false,
@@ -1323,7 +965,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1333,6 +975,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "node_load1{instance=~\"$node\"}",
           "format": "time_series",
@@ -1346,6 +992,10 @@
           "target": ""
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "node_load5{instance=~\"$node\"}",
           "format": "time_series",
           "instant": false,
@@ -1356,6 +1006,10 @@
           "step": 20
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "node_load15{instance=~\"$node\"}",
           "format": "time_series",
           "instant": false,
@@ -1422,7 +1076,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 11
+        "y": 10
       },
       "hiddenSeries": false,
       "id": 184,
@@ -1446,7 +1100,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1473,6 +1127,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "node_memory_MemTotal_bytes{instance=\"192.168.1.111:9100\"} - (node_memory_MemFree_bytes{instance=\"192.168.1.111:9100\"}  + node_memory_Buffers_bytes{instance=\"192.168.1.111:9100\"}  + node_memory_Cached_bytes{instance=\"192.168.1.111:9100\"} )",
           "interval": "",
@@ -1482,6 +1140,10 @@
           "step": 1
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "node_memory_MemFree_bytes{instance=\"192.168.1.111:9100\"} ",
           "interval": "",
@@ -1491,6 +1153,10 @@
           "step": 1
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "node_memory_Buffers_bytes{instance=\"192.168.1.111:9100\"} ",
           "interval": "",
@@ -1500,6 +1166,10 @@
           "step": 1
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "node_memory_Cached_bytes{instance=\"192.168.1.111:9100\"} ",
           "interval": "",
@@ -1579,7 +1249,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 18
+        "y": 17
       },
       "hiddenSeries": false,
       "id": 224,
@@ -1604,7 +1274,7 @@
         "alertThreshold": true
       },
       "percentage": true,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1635,52 +1305,88 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (instance)(irate(node_cpu_seconds_total{mode=\"system\",instance=\"$node\",job=\"$job\"}[5m])) * 100",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum by (instance)(irate(node_cpu_seconds_total{mode=\"system\",instance=\"$node\"}[5m])) * 100",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
           "legendFormat": "Busy System",
+          "range": true,
           "refId": "A",
           "step": 240
         },
         {
-          "expr": "sum by (instance)(irate(node_cpu_seconds_total{mode='user',instance=\"$node\",job=\"$job\"}[5m])) * 100",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum by (instance)(irate(node_cpu_seconds_total{mode='user',instance=\"$node\"}[5m])) * 100",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
           "legendFormat": "Busy User",
+          "range": true,
           "refId": "B",
           "step": 240
         },
         {
-          "expr": "sum by (instance)(irate(node_cpu_seconds_total{mode='iowait',instance=\"$node\",job=\"$job\"}[5m])) * 100",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum by (instance)(irate(node_cpu_seconds_total{mode='iowait',instance=\"$node\"}[5m])) * 100",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Busy Iowait",
+          "range": true,
           "refId": "C",
           "step": 240
         },
         {
-          "expr": "sum by (instance)(irate(node_cpu_seconds_total{mode=~\".*irq\",instance=\"$node\",job=\"$job\"}[5m])) * 100",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum by (instance)(irate(node_cpu_seconds_total{mode=~\".*irq\",instance=\"$node\"}[5m])) * 100",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Busy IRQs",
+          "range": true,
           "refId": "D",
           "step": 240
         },
         {
-          "expr": "sum (irate(node_cpu_seconds_total{mode!='idle',mode!='user',mode!='system',mode!='iowait',mode!='irq',mode!='softirq',instance=\"$node\",job=\"$job\"}[5m])) * 100",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum (irate(node_cpu_seconds_total{mode!='idle',mode!='user',mode!='system',mode!='iowait',mode!='irq',mode!='softirq',instance=\"$node\"}[5m])) * 100",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Busy Other",
+          "range": true,
           "refId": "E",
           "step": 240
         },
         {
-          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode='idle',instance=\"$node\",job=\"$job\"}[5m])) * 100",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode='idle',instance=\"$node\"}[5m])) * 100",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Idle",
+          "range": true,
           "refId": "F",
           "step": 240
         }
@@ -1719,6 +1425,10 @@
       }
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1727,6 +1437,8 @@
             "seriesBy": "last"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "axisSoftMin": 0,
@@ -1777,14 +1489,15 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 18
+        "y": 17
       },
       "id": 275,
       "options": {
         "legend": {
           "calcs": [],
-          "displayMode": "hidden",
-          "placement": "bottom"
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
         },
         "tooltip": {
           "mode": "single",
@@ -1793,6 +1506,10 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "avg(irate(node_cpu_seconds_total{instance=~\"$node\",mode=\"iowait\"}[5m])) * 100",
           "instant": false,
@@ -1828,7 +1545,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 25
+        "y": 24
       },
       "hiddenSeries": false,
       "id": 208,
@@ -1852,7 +1569,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1875,6 +1592,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "sum(irate(node_disk_read_bytes_total[5m]))",
           "interval": "2s",
           "intervalFactor": 4,
@@ -1884,6 +1605,10 @@
           "step": 8
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "sum(irate(node_disk_written_bytes_total[5m]))",
           "interval": "2s",
           "intervalFactor": 4,
@@ -1893,6 +1618,10 @@
           "step": 8
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "sum(irate(node_disk_io_time_seconds_total[5m]))",
           "interval": "2s",
           "intervalFactor": 4,
@@ -1958,7 +1687,7 @@
         "h": 6,
         "w": 6,
         "x": 12,
-        "y": 25
+        "y": 24
       },
       "hiddenSeries": false,
       "id": 190,
@@ -1982,7 +1711,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2001,6 +1730,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "node_memory_SwapTotal_bytes - node_memory_SwapFree_bytes",
           "interval": "10s",
           "intervalFactor": 1,
@@ -2009,6 +1742,10 @@
           "step": 10
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "node_memory_SwapFree_bytes",
           "interval": "10s",
           "intervalFactor": 1,
@@ -2074,7 +1811,7 @@
         "h": 6,
         "w": 6,
         "x": 18,
-        "y": 25
+        "y": 24
       },
       "hiddenSeries": false,
       "id": 192,
@@ -2097,7 +1834,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2107,6 +1844,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "rate(node_vmstat_pswpin[1m]) * 4096 or irate(node_vmstat_pswpin[5m]) * 4096",
           "interval": "10s",
           "intervalFactor": 1,
@@ -2115,6 +1856,10 @@
           "step": 10
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "rate(node_vmstat_pswpout[1m]) * 4096 or irate(node_vmstat_pswpout[5m]) * 4096",
           "interval": "10s",
           "intervalFactor": 1,
@@ -2179,7 +1924,7 @@
         "h": 6,
         "w": 6,
         "x": 0,
-        "y": 31
+        "y": 30
       },
       "hiddenSeries": false,
       "id": 194,
@@ -2201,7 +1946,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2216,6 +1961,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": " irate(node_intr_total[5m])",
           "interval": "10s",
           "intervalFactor": 1,
@@ -2280,7 +2029,7 @@
         "h": 6,
         "w": 6,
         "x": 6,
-        "y": 31
+        "y": 30
       },
       "hiddenSeries": false,
       "id": 196,
@@ -2302,7 +2051,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2317,6 +2066,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "node_procs_running",
           "interval": "10s",
           "intervalFactor": 1,
@@ -2326,6 +2079,10 @@
           "step": 10
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "node_procs_blocked",
           "interval": "10s",
           "intervalFactor": 1,
@@ -2389,7 +2146,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 31
+        "y": 30
       },
       "hiddenSeries": false,
       "id": 242,
@@ -2413,7 +2170,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2423,6 +2180,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "irate(node_zfs_zpool_reads{instance=~\"$node\"}[5m])",
           "format": "time_series",
@@ -2434,6 +2195,10 @@
           "target": ""
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "irate(node_zfs_zpool_writes{instance=~\"$node\"}[5m])",
           "format": "time_series",
@@ -2489,7 +2254,8 @@
           "custom": {
             "align": "auto",
             "displayMode": "auto",
-            "filterable": true
+            "filterable": true,
+            "inspect": false
           },
           "decimals": 2,
           "displayName": "",
@@ -2781,7 +2547,7 @@
         "h": 20,
         "w": 12,
         "x": 0,
-        "y": 37
+        "y": 36
       },
       "id": 164,
       "links": [],
@@ -2796,11 +2562,16 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "builder",
           "exemplar": true,
-          "expr": "sum by (device, partition)(node_filesystem_avail_bytes{instance=~'$node',fstype=~\"ext4|xfs|zfs\",mountpoint!~\"/export.*\"})",
+          "expr": "sum by (device)(node_filesystem_avail_bytes{instance=~'$node',fstype=~\"ext4|xfs|zfs\",mountpoint!~\"/export.*\"})",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -2810,8 +2581,13 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (device, partition) (node_filesystem_size_bytes{instance=~'$node',fstype=~\"ext4|xfs|zfs\",mountpoint!~\"/export.*\"})",
+          "expr": "sum by (device) (node_filesystem_size_bytes{instance=~'$node',fstype=~\"ext4|xfs|zfs\",mountpoint!~\"/export.*\"})",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -2821,6 +2597,10 @@
           "refId": "C"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "1-(node_filesystem_free_bytes{instance=~'$node',fstype=~\"ext4|xfs|zfs\",mountpoint!~\"/export.*\"} / node_filesystem_size_bytes{instance=~'$node',fstype=~\"ext4|xfs|zfs\",mountpoint!~\"/export.*\"})",
           "format": "table",
@@ -2850,13 +2630,18 @@
               "argocd_argoproj_io_instance": true,
               "chart": true,
               "component": true,
+              "container": true,
+              "endpoint": true,
               "heritage": true,
               "instance": true,
               "job": true,
               "kubernetes_name": true,
               "kubernetes_namespace": true,
               "kubernetes_node": true,
-              "release": true
+              "namespace": true,
+              "pod": true,
+              "release": true,
+              "service": true
             },
             "indexByName": {
               "Time": 0,
@@ -2908,7 +2693,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 37
+        "y": 36
       },
       "hiddenSeries": false,
       "id": 244,
@@ -2934,7 +2719,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2944,6 +2729,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "irate(node_zfs_arc_demand_data_hits{instance=~\"$node\"}[5m]) / (irate(node_zfs_arc_demand_data_hits{instance=~\"$node\"}[5m]) + irate(node_zfs_arc_demand_data_misses{instance=~\"$node\"}[5m])) * 100",
           "format": "time_series",
@@ -2955,6 +2744,10 @@
           "target": ""
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "irate(node_zfs_arc_demand_metadata_hits{instance=~\"$node\"}[5m]) / (irate(node_zfs_arc_demand_metadata_hits{instance=~\"$node\"}[5m]) + irate(node_zfs_arc_demand_metadata_misses{instance=~\"$node\"}[5m])) * 100",
           "format": "time_series",
@@ -3022,7 +2815,7 @@
         "h": 14,
         "w": 12,
         "x": 12,
-        "y": 43
+        "y": 42
       },
       "hiddenSeries": false,
       "id": 222,
@@ -3046,7 +2839,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -3081,6 +2874,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "irate(node_disk_read_bytes_total{instance=\"192.168.1.111:9100\",job=\"$job\",device=~\"$diskdevices\"}[5m])",
           "format": "time_series",
@@ -3092,6 +2889,10 @@
           "step": 240
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "irate(node_disk_written_bytes_total{instance=\"$node\",job=\"$job\",device=~\"$diskdevices\"}[5m])",
           "format": "time_series",
           "hide": false,
@@ -3154,7 +2955,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 57
+        "y": 56
       },
       "hiddenSeries": false,
       "id": 169,
@@ -3181,7 +2982,7 @@
         "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 0.5,
       "points": false,
       "renderer": "flot",
@@ -3191,6 +2992,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "node_hwmon_temp_celsius{instance=~'$node'}",
           "format": "time_series",
           "intervalFactor": 1,
@@ -3235,14 +3040,27 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 66
+        "y": 65
       },
       "id": 238,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Kubernetes",
       "type": "row"
     },
@@ -3267,7 +3085,7 @@
         "h": 12,
         "w": 12,
         "x": 0,
-        "y": 67
+        "y": 66
       },
       "hiddenSeries": false,
       "id": 267,
@@ -3290,7 +3108,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -3300,6 +3118,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "sum(rate(hubble_flows_processed_total{verdict=\"DROPPED\"}[5m]))",
           "format": "time_series",
@@ -3309,6 +3131,10 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "sum(rate(hubble_flows_processed_total{verdict=\"FORWARDED\"}[5m]))",
           "hide": false,
@@ -3348,6 +3174,10 @@
       }
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -3355,6 +3185,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -3430,7 +3262,7 @@
         "h": 12,
         "w": 12,
         "x": 12,
-        "y": 67
+        "y": 66
       },
       "id": 269,
       "options": {
@@ -3440,7 +3272,8 @@
             "sum"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "right",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -3449,6 +3282,10 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "rate(hubble_flows_processed_total[5m])",
           "interval": "",
@@ -3479,7 +3316,7 @@
         "h": 17,
         "w": 24,
         "x": 0,
-        "y": 79
+        "y": 78
       },
       "hiddenSeries": false,
       "id": 254,
@@ -3506,7 +3343,7 @@
         "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -3516,6 +3353,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "sum (rate(container_network_receive_bytes_total{image!=\"\"}[5m])) by (pod)",
           "interval": "10s",
@@ -3526,6 +3367,10 @@
           "step": 10
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "- sum (rate(container_network_transmit_bytes_total{image!=\"\"}[5m])) by (pod)",
           "interval": "10s",
@@ -3588,7 +3433,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 96
+        "y": 95
       },
       "hiddenSeries": false,
       "id": 214,
@@ -3615,7 +3460,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -3625,6 +3470,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "sort_desc(sum by (pod_name) (rate (container_network_receive_bytes_total{name!=\"\"}[5m])))",
           "format": "time_series",
           "interval": "10s",
@@ -3635,6 +3484,10 @@
           "step": 10
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "sort_desc(sum by (pod_name) (rate (container_network_transmit_bytes_total{name!=\"\"}[5m])))",
           "format": "time_series",
           "interval": "10s",
@@ -3697,7 +3550,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 96
+        "y": 95
       },
       "height": "300",
       "hiddenSeries": false,
@@ -3725,7 +3578,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -3740,6 +3593,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "irate(node_network_receive_bytes_total{instance=~'$node',device!~'tap.*|veth.*|br.*|docker.*|virbr*|lo*|cali.*'}[5m])*8",
           "format": "time_series",
@@ -3750,6 +3607,10 @@
           "step": 4
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "irate(node_network_transmit_bytes_total{instance=~'$node',device!~'tap.*|veth.*|br.*|docker.*|virbr*|lo*|cali.*'}[5m])*8",
           "format": "time_series",
@@ -3812,7 +3673,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 104
+        "y": 103
       },
       "height": "200px",
       "hiddenSeries": false,
@@ -3840,7 +3701,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -3850,6 +3711,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "sum (irate (nginx_ingress_controller_request_size_sum{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\"}[2m]))",
           "format": "time_series",
           "instant": false,
@@ -3861,6 +3726,10 @@
           "step": 10
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "- sum (irate (nginx_ingress_controller_response_size_sum{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\"}[2m]))",
           "format": "time_series",
           "hide": false,
@@ -3926,7 +3795,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 104
+        "y": 103
       },
       "hiddenSeries": false,
       "id": 252,
@@ -3955,7 +3824,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -3965,6 +3834,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "sum(rate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",status!~\"[4-5].*\"}[2m])) by (ingress) / sum(rate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\"}[2m])) by (ingress)",
           "format": "time_series",
@@ -4027,7 +3900,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 110
+        "y": 109
       },
       "hiddenSeries": false,
       "id": 210,
@@ -4053,7 +3926,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -4063,6 +3936,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "sum by (container_name)( rate(container_cpu_usage_seconds_total{image!=\"\"}[5m] ) )",
           "format": "time_series",
           "interval": "10s",
@@ -4128,7 +4005,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 110
+        "y": 109
       },
       "height": "300",
       "hiddenSeries": false,
@@ -4152,7 +4029,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -4162,6 +4039,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "node_netstat_Tcp_CurrEstab{instance=~'$node'}",
           "format": "time_series",
           "hide": false,
@@ -4172,6 +4053,10 @@
           "step": 20
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "node_sockstat_TCP_tw{instance=~'$node'}",
           "format": "time_series",
           "intervalFactor": 1,
@@ -4179,6 +4064,10 @@
           "refId": "D"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "irate(node_netstat_Tcp_ActiveOpens{instance=~'$node'}[1m])",
           "format": "time_series",
           "hide": false,
@@ -4187,6 +4076,10 @@
           "refId": "B"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "irate(node_netstat_Tcp_PassiveOpens{instance=~'$node'}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
@@ -4194,6 +4087,10 @@
           "refId": "C"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "node_sockstat_TCP_alloc{instance=~'$node'}",
           "format": "time_series",
           "intervalFactor": 1,
@@ -4201,6 +4098,10 @@
           "refId": "E"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "node_sockstat_TCP_inuse{instance=~'$node'}",
           "format": "time_series",
           "intervalFactor": 1,
@@ -4257,7 +4158,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 117
+        "y": 116
       },
       "hiddenSeries": false,
       "id": 212,
@@ -4284,7 +4185,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -4294,6 +4195,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "expr": "sort_desc(sum(container_memory_usage_bytes{image!=\"\"}) by (container_name, image))",
           "interval": "10s",
           "intervalFactor": 1,
@@ -4339,6 +4244,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "decimals": 2,
       "editable": true,
       "error": false,
@@ -4355,7 +4264,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 124
+        "y": 123
       },
       "hiddenSeries": false,
       "id": 300,
@@ -4382,7 +4291,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -4439,14 +4348,27 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 131
+        "y": 130
       },
       "id": 236,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "OpenWRT",
       "type": "row"
     },
@@ -4476,7 +4398,7 @@
         "h": 13,
         "w": 24,
         "x": 0,
-        "y": 132
+        "y": 131
       },
       "hiddenSeries": false,
       "id": 234,
@@ -4504,7 +4426,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "9.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -4547,6 +4469,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "irate(node_network_receive_bytes_total{instance=~\"192.168.1.1:9100\",job=~\"openwrt\"}[5m])/1024",
           "format": "time_series",
@@ -4557,6 +4483,10 @@
           "step": 4
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "irate(node_network_transmit_bytes_total{instance=~\"192.168.1.1:9100\",job=~\"openwrt\"}[5m])/1024",
           "format": "time_series",
@@ -4602,7 +4532,7 @@
     }
   ],
   "refresh": "1m",
-  "schemaVersion": 35,
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [
     "Prometheus-1",
@@ -4612,30 +4542,20 @@
   "templating": {
     "list": [
       {
-        "hide": 0,
-        "label": "datasource",
-        "name": "datasource",
-        "options": [],
-        "query": "prometheus",
-        "refresh": 1,
-        "regex": "",
-        "type": "datasource"
-      },
-      {
         "auto": true,
         "auto_count": 10,
         "auto_min": "10s",
         "current": {
           "selected": false,
-          "text": "10m",
-          "value": "10m"
+          "text": "auto",
+          "value": "$__auto_interval_interval"
         },
         "hide": 0,
         "label": "interval",
         "name": "interval",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "auto",
             "value": "$__auto_interval_interval"
           },
@@ -4660,7 +4580,7 @@
             "value": "1m"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "10m",
             "value": "10m"
           },
@@ -4803,8 +4723,8 @@
       {
         "current": {
           "selected": false,
-          "text": "/chia/farm/6",
-          "value": "/chia/farm/6"
+          "text": "/data/kubernetes/ssd",
+          "value": "/data/kubernetes/ssd"
         },
         "datasource": {
           "type": "prometheus",
@@ -4832,9 +4752,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "kubernetes-service-endpoints",
-          "value": "kubernetes-service-endpoints"
+          "selected": true,
+          "text": "kubernetes-services",
+          "value": "kubernetes-services"
         },
         "datasource": {
           "type": "prometheus",
@@ -5035,24 +4955,19 @@
       {
         "current": {
           "selected": false,
-          "text": "Prometheus-1",
-          "value": "Prometheus-1"
+          "text": "Prometheus",
+          "value": "Prometheus"
         },
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "datasource",
-        "options": [
-          {
-            "selected": true,
-            "text": "Prometheus-1",
-            "value": "Prometheus-1"
-          }
-        ],
-        "query": "Prometheus-1",
-        "queryValue": "",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
         "skipUrlSync": false,
-        "type": "custom"
+        "type": "datasource"
       },
       {
         "current": {
@@ -5102,6 +5017,10 @@
           "text": "All",
           "value": "$__all"
         },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
         "definition": "label_values(nginx_ingress_controller_config_hash{namespace=~\"$namespace\"}, controller_class) ",
         "hide": 0,
         "includeAll": true,
@@ -5128,6 +5047,10 @@
           "text": "All",
           "value": "$__all"
         },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
         "definition": "label_values(nginx_ingress_controller_config_hash{namespace=~\"$namespace\",controller_class=~\"$controller_class\"}, controller_pod) ",
         "hide": 0,
         "includeAll": true,
@@ -5153,6 +5076,10 @@
           "text": "All",
           "value": "$__all"
         },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
         "definition": "label_values(nginx_ingress_controller_requests{namespace=~\"$namespace\",controller_class=~\"$controller_class\",controller=~\"$controller\"}, ingress) ",
         "hide": 0,
         "includeAll": true,
@@ -5175,27 +5102,14 @@
       },
       {
         "current": {
+          "isNone": true,
           "selected": false,
-          "text": [
-            "chia",
-            "flax",
-            "hddcoin",
-            "maize",
-            "nchain",
-            "silicoin",
-            "stor",
-            "btcgreen"
-          ],
-          "value": [
-            "chia",
-            "flax",
-            "hddcoin",
-            "maize",
-            "nchain",
-            "silicoin",
-            "stor",
-            "btcgreen"
-          ]
+          "text": "None",
+          "value": ""
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
         },
         "definition": "label_values(chia_blockchain_space_bytes,fork)",
         "hide": 0,
@@ -5217,7 +5131,7 @@
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -5249,6 +5163,6 @@
   "timezone": "browser",
   "title": "~| The Hive |~",
   "uid": "9CWBz0bik",
-  "version": 99,
+  "version": 5,
   "weekStart": ""
 }
