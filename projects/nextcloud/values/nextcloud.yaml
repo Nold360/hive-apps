@@ -23,10 +23,6 @@ nextcloud:
       <?php
         $CONFIG = array (
            'proxy' => 'proxy-squid.proxy.svc.cluster.local:3128',
-           'trusted_proxies' =>
-              array (
-                0 => 'proxy-squid.proxy.svc.cluster.local',
-            ),
             'proxyexclude' => ['.cluster.local'],
             'debug' => true,
             'loglevel' => 1,
