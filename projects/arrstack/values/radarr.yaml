@@ -2,6 +2,9 @@ image:
   repository: ghcr.io/onedr0p/radarr
   tag: 4.3.2.6857
 
+env:
+  UMASK: "002"
+
 ingress:
   main:
     enabled: true
