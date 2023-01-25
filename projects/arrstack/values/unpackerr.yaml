@@ -1,6 +1,6 @@
 image:
-  repository: golift/unpackerr
-  tag: 0.11.1
+  repository: ghcr.io/onedr0p/unpackerr 
+  tag: 0.10.1
 
 env:
   UN_FOLDER_0_PATH: /downloads
