@@ -3,9 +3,22 @@ image:
   tag: 0.10.1
 
 env:
-  UN_FOLDER_0_PATH: /downloads
-  UN_FOLDER_0_DELETE_AFTER: "0"
-  UN_FOLDER_0_MOVE_BACK: "true"
+  #UN_FOLDER_0_PATH: /downloads
+  #UN_FOLDER_0_DELETE_AFTER: "0"
+  #UN_FOLDER_0_MOVE_BACK: "true"
+
+  UN_SONARR_0_URL: http://sonarr.sonarr.svc.cluster.local:8989
+  UN_RADARR_0_URL: http://radarr.radarr.svc.cluster.local:7878
+  UN_LIDARR_0_URL: http://lidarr.lidarr.svc.cluster.local:8686
+
+  ## Via Secret:
+  # UN_LIDARR_0_API_KEY:
+  # UN_RADARR_0_API_KEY:
+  # UN_SONARR_0_API_KEY:
+
+envFrom:
+- secretRef:
+    name: unpackerr-config
 
 ingress:
   main:

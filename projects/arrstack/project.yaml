@@ -70,3 +70,9 @@ apps:
   - noRoot
   - tmpdirs
   - ingress-internal
+  secrets:
+    - name: unpackerr-config
+      keys:
+        - UN_LIDARR_0_API_KEY
+        - UN_RADARR_0_API_KEY
+        - UN_SONARR_0_API_KEY
