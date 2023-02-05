@@ -24,7 +24,13 @@ securityContext:
 persistence:
   config:
     enabled: true
-    #mountPath: /downloads
     storageClass: local-path
     accessMode: ReadWriteOnce
     size: 1Gi
+
+  watched:
+    enabled: true
+    type: hostPath
+    hostPath: /data/torrent/watched
+    readOnly: false
+
