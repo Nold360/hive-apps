@@ -36,9 +36,11 @@ persistence:
     type: hostPath
     mountPath: /movies
     hostPath: /data/media/movies
+    readOnly: false
   downloads:
     enabled: true
     type: hostPath
     mountPath: /downloads
     hostPath: /data/torrent
+    readOnly: false
     

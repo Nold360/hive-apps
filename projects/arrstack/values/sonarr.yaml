@@ -31,8 +31,10 @@ persistence:
     type: hostPath
     mountPath: /tvshows
     hostPath: /data/media/tvshows
+    readOnly: false
   downloads:
     enabled: true
     type: hostPath
     mountPath: /downloads
     hostPath: /data/torrent
+    readOnly: false
