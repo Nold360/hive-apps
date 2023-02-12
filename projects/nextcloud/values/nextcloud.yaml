@@ -101,7 +101,7 @@ externalDatabase:
   host: nextcloud-db-rw.nextcloud.svc.cluster.local
   existingSecret:
     enabled: true
-    secretName: nextcloud-db-app
+    secretName: nextcloud-db-superuser
     passwordKey: password
     usernameKey:  username
 
