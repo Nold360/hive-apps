@@ -2,6 +2,6 @@ config:
   description: Notification Service
 apps:
 - name: ntfy
-  repoURL: https://charts.truecharts.org
+  repoURL: https://charts.sarabsingh.com
   chart: ntfy
-  targetRevision: 4.0.11
+  targetRevision: 0.1.0
