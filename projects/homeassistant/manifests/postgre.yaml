@@ -9,7 +9,7 @@ spec:
 
   bootstrap:
     recovery:
-      backup: homeassistant-db
+      source: homeassistant
 
   backup:
     barmanObjectStore:
