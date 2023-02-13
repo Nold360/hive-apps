@@ -29,7 +29,7 @@ service:
 
 logs:
   general:
-    level: DEBUG
+    level: INFO
 
 metrics:
   ## It can be disabled by setting "prometheus: null"

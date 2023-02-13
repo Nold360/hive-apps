@@ -56,4 +56,4 @@ service:
 
 logs:
   general:
-    level: DEBUG
+    level: INFO
