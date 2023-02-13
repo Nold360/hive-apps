@@ -8,13 +8,8 @@ spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:15
 
   bootstrap:
-    initdb:
-      import:
-        type: microservice
-        databases:
-          - homeassistant
-        source:
-          externalCluster: homeassistant
+    recovery:
+      backup: homeassistant-db
 
   backup:
     barmanObjectStore:
@@ -33,13 +28,19 @@ spec:
 
   externalClusters:
     - name: homeassistant
-      connectionParameters:
-        host: homeassistant-postgresql.homeassistant.svc.cluster.local
-        user: homeassistant
-        dbname: nextcloud
-      password:
-        name: hass-postgres
-        key: postgresql-password
+      barmanObjectStore:
+        destinationPath: "s3://homeassistant-db/"
+        endpointURL: "http://minio.minio.svc.cluster.local:9000"
+        s3Credentials:
+          accessKeyId:
+            name: bucket
+            key: accesskey
+          secretAccessKey:
+            name: bucket
+            key: secretkey
+        wal:
+          maxParallel: 8
+
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup

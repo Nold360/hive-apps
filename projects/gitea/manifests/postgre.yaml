@@ -9,26 +9,26 @@ spec:
 
   bootstrap:
     recovery:
-      source: gitea
+      source: gitea-db
 
-  backup:
-    barmanObjectStore:
-      destinationPath: "s3://gitea-db/"
-      endpointURL: "http://minio.minio.svc.cluster.local:9000"
-      s3Credentials:
-        accessKeyId:
-          name: bucket
-          key: accesskey
-        secretAccessKey:
-          name: bucket
-          key: secretkey
-      wal:
-        compression: gzip
-        #encryption: AES256
-      data:
-        compression: gzip
-        #encryption: AES256
-    retentionPolicy: "90d"
+  # backup:
+  #   barmanObjectStore:
+  #     destinationPath: "s3://gitea-db/"
+  #     endpointURL: "http://minio.minio.svc.cluster.local:9000"
+  #     s3Credentials:
+  #       accessKeyId:
+  #         name: bucket
+  #         key: accesskey
+  #       secretAccessKey:
+  #         name: bucket
+  #         key: secretkey
+  #     wal:
+  #       compression: gzip
+  #       #encryption: AES256
+  #     data:
+  #       compression: gzip
+  #       #encryption: AES256
+  #   retentionPolicy: "90d"
 
   resources:
     requests:
@@ -42,14 +42,20 @@ spec:
     size: 10Gi
 
   externalClusters:
-    - name: gitea
-      connectionParameters:
-        host: gitea-postgresql.gitea.svc.cluster.local
-        user: gitea
-        dbname: gitea
-      password:
-        name: postgres
-        key: postgresql-password
+    - name: gitea-db
+      barmanObjectStore:
+        destinationPath: "s3://gitea-db/"
+        endpointURL: "http://minio.minio.svc.cluster.local:9000"
+        s3Credentials:
+          accessKeyId:
+            name: bucket
+            key: accesskey
+          secretAccessKey:
+            name: bucket
+            key: secretkey
+        wal:
+          maxParallel: 8
+
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup

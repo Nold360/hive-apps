@@ -9,26 +9,26 @@ spec:
 
   bootstrap:
     recovery:
-      source: clusterBackup
-
-  backup:
-    barmanObjectStore:
-      destinationPath: "s3://nextcloud-db/"
-      endpointURL: "http://minio.minio.svc.cluster.local:9000"
-      s3Credentials:
-        accessKeyId:
-          name: bucket
-          key: accesskey
-        secretAccessKey:
-          name: bucket
-          key: secretkey
-      wal:
-        compression: gzip
-        #encryption: AES256
-      data:
-        compression: gzip
-        #encryption: AES256
-    retentionPolicy: "90d"
+      source: nextcloud-db
+  #
+  # backup:
+  #   barmanObjectStore:
+  #     destinationPath: "s3://nextcloud-db/"
+  #     endpointURL: "http://minio.minio.svc.cluster.local:9000"
+  #     s3Credentials:
+  #       accessKeyId:
+  #         name: bucket
+  #         key: accesskey
+  #       secretAccessKey:
+  #         name: bucket
+  #         key: secretkey
+  #     wal:
+  #       compression: gzip
+  #       #encryption: AES256
+  #     data:
+  #       compression: gzip
+  #       #encryption: AES256
+  #   retentionPolicy: "90d"
 
   resources:
     requests:
@@ -42,7 +42,7 @@ spec:
     size: 10Gi
 
   externalClusters:
-    - name: clusterBackup
+    - name: nextcloud-db
       barmanObjectStore:
         destinationPath: "s3://nextcloud-db/"
         endpointURL: "http://minio.minio.svc.cluster.local:9000"
