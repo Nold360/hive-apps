@@ -6,7 +6,7 @@ trow:
   domain: reg.dc
   validation:
     enabled: false
-    allowDocker: false
+    allowDocker: true
     allowKubernetes: true
     proxyDockerHub: true
 
