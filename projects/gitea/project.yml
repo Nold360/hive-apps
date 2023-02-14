@@ -22,10 +22,6 @@ apps:
     - username
     - password
     - email
-  - name: postgres
-    keys:
-    - postgresql-password
-    - postgresql-postgres-password
   - name: bucket
     keys:
     - secretkey

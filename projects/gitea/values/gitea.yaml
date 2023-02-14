@@ -137,12 +137,12 @@ gitea:
     - name: ENV_TO_INI__DATABASE__PASSWD
       valueFrom:
         secretKeyRef:
-          name: gitea-db-app
+          name: gitea-db-superuser
           key: password
     - name: ENV_TO_INI__DATABASE__USER
       valueFrom:
         secretKeyRef:
-          name: gitea-db-app
+          name: gitea-db-superuser
           key: username
 
 memcached:
