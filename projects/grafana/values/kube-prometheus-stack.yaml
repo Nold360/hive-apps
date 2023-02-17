@@ -62,14 +62,6 @@ alertmanager:
   ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#alertmanagerspec
   ##
   alertmanagerSpec:
-    ## Image of Alertmanager
-    ##
-    image:
-      registry: quay.io
-      repository: prometheus/alertmanager
-      tag: v0.25.0
-      sha: ""
-
     ## If true then the user will be responsible to provide a secret with alertmanager configuration
     ## So when true the config part will be ignored (including templateFiles) and the one in the secret will be used
     ##
@@ -817,13 +809,7 @@ prometheusOperator:
 
   admissionWebhooks:
     patch:
-      enabled: true
-      image:
-        registry: k8s.gcr.io
-        repository: ingress-nginx/kube-webhook-certgen
-        tag: v1.3.0
-        sha: ""
-        pullPolicy: IfNotPresent
+      enabled: false
 
     # Use certmanager to generate webhook certs
     certManager:
@@ -883,30 +869,6 @@ prometheusOperator:
 
   ## Prometheus-operator image
   ##
-  image:
-    registry: quay.io
-    repository: prometheus-operator/prometheus-operator
-    tag: v0.63.0
-    sha: ""
-    pullPolicy: IfNotPresent
-
-  ## Prometheus-config-reloader
-  ##
-  prometheusConfigReloader:
-    # image to use for config and rule reloading
-    image:
-      registry: quay.io
-      repository: prometheus-operator/prometheus-config-reloader
-      tag: v0.63.0
-      sha: ""
-
-  ## Thanos side-car image when configured
-  ##
-  thanosImage:
-    registry: quay.io
-    repository: thanos/thanos
-    tag: v0.30.2
-    sha: ""
 
   ## Set a Field Selector to filter watched secrets
   ##
@@ -917,23 +879,19 @@ prometheusOperator:
 prometheus:
   enabled: true
 
-  image:
-    repository: quay.io/prometheus/prometheus
-    tag: v2.42.0
-
   strategy:
     type: Recreate
 
-  sidecarContainers:
-    smartctl:
-      name: smartctl-exporter
-      image: matusnovak/prometheus-smartctl:latest
-      securityContext:
-        runAsNonRoot: false
-        privileged: true
-      ports:
-        - name: metrics
-          containerPort: 9902
+  sidecarContainers: {}
+    # smartctl:
+    #   name: smartctl-exporter
+    #   image: matusnovak/prometheus-smartctl:latest
+    #   securityContext:
+    #     runAsNonRoot: false
+    #     privileged: true
+    #   ports:
+    #     - name: metrics
+    #       containerPort: 9902
 
   ## Annotations for Prometheus
   ##
@@ -1339,11 +1297,6 @@ prometheus:
 
     ## Image of Prometheus.
     ##
-    image:
-      registry: quay.io
-      repository: prometheus/prometheus
-      tag: v2.42.0
-      sha: ""
 
     ## Tolerations for use with node taints
     ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
