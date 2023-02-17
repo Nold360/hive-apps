@@ -89,26 +89,12 @@ rollOutCiliumPods: false
 # -- Agent container image.
 image:
   override: ~
-  repository: "quay.io/cilium/cilium"
-  tag: "v1.13.0"
+  repository: "quay.io/cilium/cilium-ci"
+  tag: "v1.13"
   pullPolicy: "IfNotPresent"
   # cilium-digest
   digest: ""
   useDigest: false
-
-# -- Security context to be added to agent pods
-securityContext:
-  # runAsUser: 0
-  privileged: false
-  extraCapabilities:
-    # Allow discretionary access control (e.g. required for package installation)
-    - DAC_OVERRIDE
-    # Allow to set Access Control Lists (ACLs) on arbitrary files (e.g. required for package installation)
-    - FOWNER
-    # Allow to execute program that changes GID (e.g. required for package installation)
-    - SETGID
-    # Allow to execute program that changes UID (e.g. required for package installation)
-    - SETUID
 
 # -- Cilium agent update strategy
 updateStrategy:
@@ -141,90 +127,6 @@ bgp:
 bgpControlPlane:
   # -- Enables the BGP control plane.
   enabled: false
-
-bpf:
-  # -- Configure the mount point for the BPF filesystem
-  root: /sys/fs/bpf
-
-  # -- Enable BPF clock source probing for more efficient tick retrieval.
-  clockProbe: false
-
-  # -- Enables pre-allocation of eBPF map values. This increases
-  # memory usage but can reduce latency.
-  preallocateMaps: false
-
-  # -- Configure the maximum number of entries in the TCP connection tracking
-  # table.
-  # ctTcpMax: '524288'
-
-  # -- Configure the maximum number of entries for the non-TCP connection
-  # tracking table.
-  # ctAnyMax: '262144'
-
-  # -- Configure the maximum number of service entries in the
-  # load balancer maps.
-  lbMapMax: 65536
-
-  # -- Configure the maximum number of entries for the NAT table.
-  # natMax: 524288
-
-  # -- Configure the maximum number of entries for the neighbor table.
-  # neighMax: 524288
-
-  # -- Configure the maximum number of entries in endpoint policy map (per endpoint).
-  policyMapMax: 16384
-
-  # -- Configure auto-sizing for all BPF maps based on available memory.
-  # ref: https://docs.cilium.io/en/stable/concepts/ebpf/maps/#ebpf-maps
-  #mapDynamicSizeRatio: 0.0025
-
-  # -- Configure the level of aggregation for monitor notifications.
-  # Valid options are none, low, medium, maximum.
-  monitorAggregation: medium
-
-  # -- Configure the typical time between monitor notifications for
-  # active connections.
-  monitorInterval: "5s"
-
-  # -- Configure which TCP flags trigger notifications when seen for the
-  # first time in a connection.
-  monitorFlags: "all"
-
-  # -- Allow cluster external access to ClusterIP services.
-  lbExternalClusterIP: false
-
-  # -- Enable native IP masquerade support in eBPF
-  #masquerade: false
-
-  # -- Deprecated in favor of bpf.hostLegacyRouting. To be removed in 1.13.
-  # Configure whether direct routing mode should route traffic via
-  # host stack (true) or directly and more efficiently out of BPF (false) if
-  # the kernel supports it.
-  #hostRouting: true
-
-  # -- Configure whether direct routing mode should route traffic via
-  # host stack (true) or directly and more efficiently out of BPF (false) if
-  # the kernel supports it. The latter has the implication that it will also
-  # bypass netfilter in the host namespace.
-  #hostLegacyRouting: false
-
-  # -- Configure the eBPF-based TPROXY to reduce reliance on iptables rules
-  # for implementing Layer 7 policy.
-  # tproxy: true
-
-  # -- Configure the FIB lookup bypass optimization for nodeport reverse
-  # NAT handling.
-  # lbBypassFIBLookup: true
-
-  # -- Configure explicitly allowed VLAN id's for bpf logic bypass.
-  # [0] will allow all VLAN id's without any filtering.
-  # vlanBypass: []
-
-# -- Wait for KUBE-PROXY-CANARY iptables rule to appear in "wait-for-kube-proxy"
-# init container before launching cilium-agent.
-# More context can be found in the commit message of below PR
-# https://github.com/cilium/cilium/pull/20123
-waitForKubeProxy: false
 
 cni:
   # -- Install the CNI configuration and binary files into the filesystem.
