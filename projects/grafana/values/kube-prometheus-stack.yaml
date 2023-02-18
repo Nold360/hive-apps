@@ -807,14 +807,11 @@ prometheus-node-exporter:
 prometheusOperator:
   enabled: true
 
-  admissionWebhooks:
-    patch:
-      enabled: false
+  tls:
+    enabled: true
 
-    # Use certmanager to generate webhook certs
-    certManager:
-      enabled: false
-  ##
+  admissionWebhooks:
+    enabled: true
 
   ## If true, the operator will create and maintain a service for scraping kubelets
   ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/helm/prometheus-operator/README.md
