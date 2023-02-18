@@ -43,6 +43,7 @@ service:
 
 ingress:
   enabled: true
+  className: ingress-internal-traefik
   labels:
     environment: external
   annotations:
