@@ -37,7 +37,7 @@ persistence:
     enabled: true
     type: hostPath
     mountPath: /music
-    hostPath: /data/media/music/lidarr
+    hostPath: /data/media/music/Lidarr
     readOnly: false
   torrent:
     enabled: true
