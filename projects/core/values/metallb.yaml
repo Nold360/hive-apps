@@ -14,7 +14,7 @@ prometheus:
 controller:
   image:
     repository: quay.io/metallb/controller
-    tag: v0.13.7
+    tag: v0.13.9
 
 speaker:
   image:
