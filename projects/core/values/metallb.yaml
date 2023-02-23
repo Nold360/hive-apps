@@ -19,4 +19,4 @@ controller:
 speaker:
   image:
     repository: quay.io/metallb/speaker
-    tag: v0.13.7
+    tag: v0.13.9
