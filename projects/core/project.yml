@@ -19,7 +19,7 @@ apps:
   repoURL: https://metallb.github.io/metallb
   chart: metallb
   namespace: metallb
-  targetRevision: 0.13.4
+  targetRevision: 0.13.9
   syncWave: '0'
 
 - name: ingress-internal

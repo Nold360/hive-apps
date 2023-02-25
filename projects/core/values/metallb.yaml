@@ -1,6 +1,9 @@
 psp:
   enabled: false
 
+rbac:
+  create: true
+
 prometheus:
   serviceMonitor:
     enabled: true
