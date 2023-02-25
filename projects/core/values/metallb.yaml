@@ -6,7 +6,7 @@ rbac:
 
 prometheus:
   serviceMonitor:
-    enabled: true
+    enabled: false
   prometheusRule:
     enabled: true
 
