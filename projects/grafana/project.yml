@@ -23,3 +23,8 @@ apps:
   syncPolicy:
     syncOptions:
       - Replace=true
+
+- name: loki-stack
+  repoURL: https://grafana.github.io/helm-charts
+  chart: loki-stack
+  targetRevision: 2.9.9

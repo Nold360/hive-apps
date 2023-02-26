@@ -14,62 +14,7 @@ fluent-bit:
     tag: 2.7.4-amd64
 
 grafana:
-  enabled: true
-  image:
-    repository: grafana/grafana
-    tag: 9.3.6
-
-  admin:
-    existingSecret: "loki-stack-grafana"
-
-  ingress:
-    enabled: true
-    annotations:
-      cert-manager.io/cluster-issuer: vault-issuer
-      traefik.ingress.kubernetes.io/router.tls: 'true'
-    hosts:
-      - grafana.dc
-    tls:
-     - secretName: grafana-tls
-       hosts:
-         - grafana.dc
-
-  sidecar:
-    datasources:
-      enabled: true
-    dashboards:
-      enabled: true
-      label: grafana_dashboard
-
-  persistence:
-    enabled: true
-
-  plugins:
-    - grafana-piechart-panel
-
-  dashboards:
-    default:
-      traefik:
-        gnetId: 11462
-        revision: 1
-
-  # For OAUTH Secret Token
-  envFromSecret: grafana-env
-
-  grafana.ini:
-    paths:
-      data: /var/lib/grafana/data
-      logs: /var/log/grafana
-      plugins: /var/lib/grafana/plugins
-      provisioning: /etc/grafana/provisioning
-    analytics:
-      check_for_updates: false
-    log:
-      mode: console
-    grafana_net:
-      url: https://grafana.net
-    server:
-      root_url: https://grafana.dc
+  enabled: false
 
 prometheus:
   enabled: false
