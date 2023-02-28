@@ -8,6 +8,7 @@ providers:
 
   kubernetesIngress:
     labelSelector: environment=external
+    ingressClass: external
     namespaces:
     - drone
     - nextcloud
