@@ -24,9 +24,9 @@ apps:
 
 - name: ingress-internal
   namespace: ingress-internal
-  repoURL: https://helm.traefik.io/traefik
-  chart: traefik
-  targetRevision: 21.1.0
+  repoURL: https://kubernetes.github.io/ingress-nginx
+  chart: ingress-nginx
+  targetRevision: 4.5.2
   syncWave: '0'
 
 - name: cilium

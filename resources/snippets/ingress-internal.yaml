@@ -3,4 +3,4 @@ ingress:
     annotations:
       cert-manager.io/cluster-issuer: vault-issuer
       traefik.ingress.kubernetes.io/router.tls: 'true'
-    ingressClassName: ingress-internal-traefik
+    ingressClassName: ingress-internal

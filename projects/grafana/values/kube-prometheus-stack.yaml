@@ -18,7 +18,7 @@ alertmanager:
 
     # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
     # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-    ingressClassName: ingress-internal-traefik
+    ingressClassName: ingress-internal
 
     annotations:
       cert-manager.io/cluster-issuer: vault-issuer
@@ -138,7 +138,7 @@ grafana:
     ## IngressClassName for Grafana Ingress.
     ## Should be provided if Ingress is enable.
     ##
-    ingressClassName: ingress-internal-traefik
+    ingressClassName: ingress-internal
 
     ## Annotations for Grafana Ingress
     ##
