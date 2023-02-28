@@ -4,16 +4,20 @@ ingressClass:
 
 providers:
   kubernetesCRD:
-    ingressClass: external
+    enabled: true
+    #ingressClass: external
 
   kubernetesIngress:
     labelSelector: environment=external
-    ingressClass: external
+    ingressClass: ingress-external
     namespaces:
-    - drone
+    - ingress-external
     - nextcloud
     - gitea
     - woodpecker
+
+    publishedService:
+      enabled: true
 
 ports:
   web:
@@ -23,8 +27,8 @@ ports:
       enabled: true
 
 globalArguments: []
-additionalArguments:
-  - "--providers.kubernetesingress.ingressclass=ingress-external"
+  #additionalArguments:
+  #- "--providers.kubernetesingress.ingressclass=ingress-external"
 
 ingressRoute:
   dashboard:
@@ -51,7 +55,6 @@ service:
   type: LoadBalancer
   annotations:
     metallb.universe.tf/address-pool: external
-
   externalIPs:
   - 192.168.1.12
 
