@@ -6,13 +6,13 @@ providers:
   kubernetesCRD:
     ingressClass: external
 
-kubernetesIngress:
-  labelSelector: environment=external
-  namespaces:
-  - drone
-  - nextcloud
-  - gitea
-  - woodpecker
+  kubernetesIngress:
+    labelSelector: environment=external
+    namespaces:
+    - drone
+    - nextcloud
+    - gitea
+    - woodpecker
 
 ports:
   web:
