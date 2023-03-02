@@ -18,7 +18,7 @@ ingress:
   enabled: true
   annotations:
     cert-manager.io/cluster-issuer: vault-issuer
-    traefik.ingress.kubernetes.io/router.tls: 'true'
+    nginx.ingress.kubernetes.io/proxy-body-size: "1G"
   hosts:
     - paths: ['/']
       host: reg.dc
