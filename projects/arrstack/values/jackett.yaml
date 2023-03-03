@@ -18,9 +18,6 @@ ingress:
       hosts:
       - jackett.dc
 
-securityContext:
-  privileged: false
-
 persistence:
   config:
     enabled: true
@@ -33,4 +30,3 @@ persistence:
     type: hostPath
     hostPath: /data/torrent/watched
     readOnly: false
-

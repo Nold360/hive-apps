@@ -22,10 +22,9 @@ apps:
 - name: jackett
   namespace: jackett
   chart: jackett
-  targetRevision: 11.2.0
+  repoURL: https://lib42.github.io/charts
+  targetRevision: 1.0.0
   include:
-  - noRoot
-  - tmpdirs
   - ingress-internal
 
 - name: sonarr
