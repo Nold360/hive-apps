@@ -51,16 +51,19 @@ service:
 
 ingress:
   enabled: true
-  ingressClassName: ingress-external-traefik
+  ingressClassName: ingress-external
   labels:
     environment: external
   annotations:
     kubernetes.io/tls-acme: "true"
     kubernetes.io/ingress.class: ingress-external
-    traefik.ingress.kubernetes.io/router.tls: 'true'
     cert-manager.io/cluster-issuer: letsencrypt
     external-dns.alpha.kubernetes.io/hostname: ci.nold.in
     external-dns.alpha.kubernetes.io/target: nold.in
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      location ~ \.js {
+        add_header Content-Type application/x-javascript;
+      }
   hosts:
     - host: ci.nold.in
       paths:
@@ -75,7 +78,7 @@ ingress:
 
 resources:
   limits:
-    cpu: 500m
+    cpu: 1000m
     memory: 512Mi
   requests:
     cpu: 100m
