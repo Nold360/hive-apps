@@ -1,6 +1,6 @@
 image:
   repository: lib42/jackett
-  tag: 0.20.3463
+  tag: 0.20.3486
 
 ingress:
   main:
