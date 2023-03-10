@@ -147,11 +147,6 @@ configmap:
             icon: "fas fa-download"
             items:
             - logo: assets/png/ombi.png
-              name: Conreq
-              subtitle: "Request / Discover Movies/Series"
-              url: https://conreq.dc
-              target: "_blank"
-            - logo: assets/png/ombi.png
               name: Ombi
               subtitle: "Request / Discover Movies/Series"
               url: https://ombi.dc
@@ -176,25 +171,22 @@ configmap:
               subtitle: "Subtitle Loadarr"
               url: https://bazarr.dc
               target: "_blank"
-            - logo: assets/png/jackett.png
-              name: Jackett
-              url: https://jackett.dc
+            - logo: assets/png/prowlarr.png
+              name: Prowlarr
+              subtitle: "API Collector"
+              url: https://prowlarr.dc
               target: "_blank"
 
           - name: "// Apps"
             icon: "fas fa-cloud"
             items:
             - logo: assets/png/drone.png
-              name: Drone.io
+              name: Woodpecker CI
               url: https://drone.nold.in
               target: "_blank"
             - logo: assets/png/gitea.png
               name: Gitea
               url: https://git.nold.in
-              target: "_blank"
-            - logo: assets/png/mealie.png
-              name: Recipes
-              url: https://cook.dc
               target: "_blank"
             - logo: assets/png/octoprint.png
               name: OctoPrint
@@ -211,10 +203,6 @@ configmap:
             - logo: assets/png/paperless-ng.png
               name: Paperless
               url: https://paperless.dc
-              target: "_blank"
-            - logo: https://machinaris.dc/static/machinaris.png
-              name: Chia Farm
-              url: https://machinaris.dc
               target: "_blank"
 
           - name: "// Loader"
