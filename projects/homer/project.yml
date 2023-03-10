@@ -2,9 +2,9 @@ config:
   description: Homer Hive Dashboard
 apps:
 - name: homer
-  repoURL: https://helm.samipsolutions.fi
+  repoURL: https://djjudas21.github.io/charts
   chart: homer
-  targetRevision: 10.0.0
+  targetRevision: 8.1.6
   include:
   - ingress-internal
   - noRoot
