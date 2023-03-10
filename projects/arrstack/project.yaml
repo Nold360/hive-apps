@@ -11,14 +11,6 @@ apps:
   include:
   - ingress-internal
 
-- name: jackett
-  namespace: jackett
-  chart: jackett
-  repoURL: https://lib42.github.io/charts
-  targetRevision: 1.0.0
-  include:
-  - ingress-internal
-
 - name: prowlarr
   chart: prowlarr
   namespace: prowlarr
