@@ -41,6 +41,6 @@ persistence:
     enabled: true
     type: hostPath
     mountPath: /downloads
-    hostPath: /data/torrent
+    hostPath: /data/media/torrent
     readOnly: false
     

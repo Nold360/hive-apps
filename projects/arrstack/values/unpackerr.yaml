@@ -32,4 +32,4 @@ persistence:
     enabled: true
     type: hostPath
     mountPath: /downloads
-    hostPath: /data/torrent/complete
+    hostPath: /data/media/torrent/complete
