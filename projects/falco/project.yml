@@ -1,0 +1,8 @@
+config:
+  description: Cloud Native Runtime Security
+
+apps:
+- name: falco
+  repoURL: https://falcosecurity.github.io/charts
+  chart: falco
+  targetRevision: 3.1.1
