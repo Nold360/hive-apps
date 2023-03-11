@@ -334,7 +334,7 @@ falcosidekick:
     # -- The image repository to pull from
     repository: falcosecurity/falcosidekick
     # -- The image tag to pull
-    tag: 2.27.0
+    tag: 99.99.99
 
   webui:
     # -- enable Falcosidekick-UI
