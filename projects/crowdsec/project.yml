@@ -1,0 +1,8 @@
+config:
+  description: IPS
+
+apps:
+- name: crowdsec
+  repoURL: https://crowdsecurity.github.io/helm-charts
+  chart: crowdsec
+  targetRevision: 0.9.5
