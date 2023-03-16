@@ -22,7 +22,8 @@ ingress:
       - radarr.dc
 
 securityContext:
-  privileged: false
+  privileged: true
+  allowPrivilegeEscalation: true
 
 persistence:
   config:
