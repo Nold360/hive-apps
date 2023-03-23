@@ -99,3 +99,9 @@ additionalContainers:
     env:
       - name: SSL_CERT_DIR
         value: /etc/ssl/certs
+
+    securityContext:
+      runAsUser: 1420
+      runAsGroup: 2420
+
+

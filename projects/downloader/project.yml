@@ -3,9 +3,12 @@ config:
 
 apps:
 - name: deluge
-  repoURL: https://lib42.github.io/charts
-  chart: deluge
-  targetRevision: 1.3.0
+  #  repoURL: https://lib42.github.io/charts
+  repoURL: https://github.com/lib42/charts
+  #chart: deluge
+  #targetRevision: 1.3.0
+  targetRevision: fix/deluge-user
+  path: charts/deluge
   secrets:
   - name: openvpn
     keys:
