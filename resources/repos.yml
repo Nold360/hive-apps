@@ -16,3 +16,5 @@ repos:
   heqet:
     url: https://git.nold.in/nold/heqet
     type: git
+  lib42:
+    url: https://lib42.github.io/charts
