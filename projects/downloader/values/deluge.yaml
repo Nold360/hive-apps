@@ -4,7 +4,11 @@ image:
   tag: "2.1.1"
 
 podSecurityContext:
-  fsGroup: 1000
+  fsGroup: 2420
+
+securityContext:
+  runAsUser: 1420
+  runAsGroup: 2420
 
 ingress:
   main:
@@ -31,8 +35,8 @@ service:
         port: 8112
 
 env:
-  PUID: 1000
-  GUID: 1000
+  PUID: 1429
+  GUID: 2420
   SSL_CERT_DIR: /etc/ssl/certs
 
 persistence:
