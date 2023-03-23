@@ -19,6 +19,14 @@ apps:
   include:
   - ingress-internal
 
+- name: flaresolverr
+  chart: flaresolverr
+  namespace: flaresolverr
+  repo: lib42
+  targetRevision: 1.0.0
+  include:
+  - ingress-internal
+
 - name: sonarr
   namespace: sonarr
   chart: sonarr
