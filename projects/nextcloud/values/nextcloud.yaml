@@ -71,7 +71,7 @@ ingress:
   labels:
     environment: external
   annotations:
-    #nginx.ingress.kubernetes.io/proxy-body-size: 4G
+    nginx.ingress.kubernetes.io/proxy-body-size: 20G
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt
     traefik.ingress.kubernetes.io/router.tls: 'true'
