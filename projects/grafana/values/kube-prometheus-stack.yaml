@@ -243,7 +243,7 @@ kubeApiServer:
 ## Component scraping the kubelet and kubelet-hosted cAdvisor
 ##
 kubelet:
-  enabled: true
+  enabled: false
   namespace: kube-system
 
   serviceMonitor:
@@ -368,7 +368,7 @@ kubeControllerManager:
     #   component: kube-controller-manager
 
   serviceMonitor:
-    enabled: true
+    enabled: false
     ## Scrape interval. If not set, the Prometheus default scrape interval is used.
     ##
     interval: ""
@@ -411,7 +411,7 @@ kubeControllerManager:
 ## Component scraping coreDns. Use either this or kubeDns
 ##
 coreDns:
-  enabled: true
+  enabled: false
   service:
     port: 9153
     targetPort: 9153
@@ -538,7 +538,7 @@ kubeEtcd:
   ##   keyFile: /etc/prometheus/secrets/etcd-client-cert/etcd-client-key
   ##
   serviceMonitor:
-    enabled: true
+    enabled: false
     ## Scrape interval. If not set, the Prometheus default scrape interval is used.
     ##
     interval: ""
@@ -597,7 +597,7 @@ kubeScheduler:
     #   component: kube-scheduler
 
   serviceMonitor:
-    enabled: true
+    enabled: false
     ## Scrape interval. If not set, the Prometheus default scrape interval is used.
     ##
     interval: ""
@@ -656,7 +656,7 @@ kubeProxy:
     #   k8s-app: kube-proxy
 
   serviceMonitor:
-    enabled: true
+    enabled: false
     ## Scrape interval. If not set, the Prometheus default scrape interval is used.
     ##
     interval: ""
@@ -943,7 +943,7 @@ prometheus:
   # ServiceMonitor to scrape Sidecar metrics
   # Needs thanosService to be enabled as well
   thanosServiceMonitor:
-    enabled: true
+    enabled: false
     interval: ""
 
     ## scheme: HTTP scheme to use for scraping. Can be used with `tlsConfig` for example if using istio mTLS.
@@ -1263,7 +1263,7 @@ prometheus:
     ## Defaults to 30s.
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/release-0.44/pkg/prometheus/promcfg.go#L180-L183
     ##
-    scrapeInterval: ""
+    scrapeInterval: "60s"
 
     ## Number of seconds to wait for target to respond before erroring
     ##
@@ -1623,6 +1623,7 @@ prometheus:
         - targets: ['192.168.1.2:9100']
 
       - job_name: 'kubernetes-services'
+        scrape_interval: 120s
         kubernetes_sd_configs:
         - role: service
         relabel_configs:
@@ -1648,6 +1649,7 @@ prometheus:
           target_label: kubernetes_service_name
 
       - job_name: 'kubernetes-pods'
+        scrape_interval: 120s
         kubernetes_sd_configs:
         - role: pod
         relabel_configs:
