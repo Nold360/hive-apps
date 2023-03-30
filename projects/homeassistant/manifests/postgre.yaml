@@ -11,10 +11,6 @@ spec:
     recovery:
       source: homeassistant
 
-  postgresql:
-    parameters:
-      full_page_writes: off
-
   backup:
     barmanObjectStore:
       destinationPath: "s3://homeassistant-db/"
