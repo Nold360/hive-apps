@@ -243,7 +243,7 @@ kubeApiServer:
 ## Component scraping the kubelet and kubelet-hosted cAdvisor
 ##
 kubelet:
-  enabled: false
+  enabled: true
   namespace: kube-system
 
   serviceMonitor:
