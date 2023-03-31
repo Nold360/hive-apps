@@ -5,4 +5,4 @@ apps:
 - name: core
   repoURL: https://neuvector.github.io/neuvector-helm/
   chart: core
-  targetRevision: 2.4.2
+  targetRevision: 2.4.3
