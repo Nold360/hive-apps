@@ -1,0 +1,7 @@
+config: {}
+  
+apps:
+- name: m9sweeper
+  repoURL: https://helm.m9sweeper.io/chartrepo/m9sweeper
+  chart: m9sweeper
+  targetRevision: 1.3.0
