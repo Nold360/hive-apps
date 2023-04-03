@@ -3,9 +3,9 @@ config:
 
 apps:
 - name: adguard
-  repoURL: https://k8s-at-home.com/charts
-  chart: adguard-home
-  targetRevision: 5.5.2
+  repoURL: https://github.com/lib42/charts
+  path: charts/adguard-home
+  targetRevision: add/adguard-home
     #include:
     #- noRoot
     #- tmpdirs
