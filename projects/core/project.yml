@@ -22,6 +22,17 @@ apps:
   targetRevision: 0.13.9
   syncWave: '0'
 
+  ignoreDiff:
+    - group: "*"
+      kind: CustomResourceDefinition
+      name: addresspools.metallb.io
+      jsonPointers:
+      - /spec/conversion/webhook/clientConfig/caBundle
+    - group: "*"
+      kind: Secret
+      name: metallb-memberlist
+
+
 - name: ingress-internal
   namespace: ingress-internal
   repoURL: https://kubernetes.github.io/ingress-nginx
