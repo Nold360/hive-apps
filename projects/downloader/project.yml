@@ -2,21 +2,6 @@ config:
   description: Tools for downloading linux isos
 
 apps:
-- name: deluge
-  #  repoURL: https://lib42.github.io/charts
-  repoURL: https://github.com/lib42/charts
-  #chart: deluge
-  #targetRevision: 1.3.0
-  targetRevision: fix/deluge-user
-  path: charts/deluge
-  secrets:
-  - name: openvpn
-    keys:
-    - VPN_AUTH
-    - vpnConfigfile
-  include:
-  - ingress-internal
-
 - name: qbittorrent
   #  repoURL: https://lib42.github.io/charts
   repoURL: https://github.com/lib42/charts
@@ -25,11 +10,12 @@ apps:
   targetRevision: add/qbittorrent
   path: charts/qbittorrent
   secrets:
-  - name: openvpn
-    fromApp: deluge
+  - name: vpn-config
     keys:
-    - VPN_AUTH
-    - vpnConfigfile
+    - SERVER_CITIES
+    - OPENVPN_USER
+    - WIREGUARD_PRIVATE_KEY
+
 
 - name: youtubedl
   repoURL: https://k8s-at-home.com/charts/
