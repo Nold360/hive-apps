@@ -17,6 +17,20 @@ apps:
   include:
   - ingress-internal
 
+- name: qbittorrent
+  #  repoURL: https://lib42.github.io/charts
+  repoURL: https://github.com/lib42/charts
+  #chart: deluge
+  #targetRevision: 1.3.0
+  targetRevision: add/qbittorrent
+  path: charts/qbittorrent
+  secrets:
+  - name: openvpn
+    fromApp: deluge
+    keys:
+    - VPN_AUTH
+    - vpnConfigfile
+
 - name: youtubedl
   repoURL: https://k8s-at-home.com/charts/
   chart: youtubedl-material
