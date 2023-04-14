@@ -1,6 +1,6 @@
 image:
   repository: adguard/adguardhome
-  tag: v0.107.28
+  tag: v0.107.27
 
 env:
   TZ: Europe/Amsterdam
