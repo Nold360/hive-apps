@@ -22,4 +22,4 @@ apps:
   namespace: cnpg-system
   repoURL: https://cloudnative-pg.github.io/charts
   chart: cloudnative-pg
-  targetRevision: 0.17.1
+  targetRevision: 0.17.2
