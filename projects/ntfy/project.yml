@@ -4,4 +4,4 @@ apps:
 - name: ntfy
   repoURL: https://charts.sarabsingh.com
   chart: ntfy
-  targetRevision: 0.1.4
+  targetRevision: 0.1.5
