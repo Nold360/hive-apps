@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/onedr0p/bazarr
-  tag: 1.2.0
+  tag: 1.2.1
 
 ingress:
   main:
