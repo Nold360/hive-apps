@@ -18,3 +18,5 @@ repos:
     type: git
   lib42:
     url: https://lib42.github.io/charts
+  bjw-s:
+    url: https://bjw-s.github.io/helm-charts
