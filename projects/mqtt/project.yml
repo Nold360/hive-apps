@@ -1,0 +1,8 @@
+config:
+  description: MQTT Broker
+
+apps:
+- name: mosquitto
+  repoURL: https://charts.billias.cc
+  chart: mosquitto
+  targetRevision: 2.5.0
