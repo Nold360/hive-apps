@@ -3,6 +3,6 @@ config:
 
 apps:
 - name: mosquitto
-  repoURL: https://charts.billias.cc
-  chart: mosquitto
-  targetRevision: 2.5.0
+  repo: bjw-s 
+  chart: app-template
+  targetRevision: 1.5.0

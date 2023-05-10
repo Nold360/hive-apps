@@ -1,0 +1,71 @@
+image:
+  repository: eclipse-mosquitto
+  tag: 2.0.15
+
+service:
+  main:
+    type: LoadBalancer
+    externalTrafficPolicy: Local
+    annotations:
+      #metallb.universe.tf/allow-shared-ip: adguard
+      metallb.universe.tf/address-pool: iot
+    ports:
+      http:
+        enabled: false
+        port: 9090
+      mqtt:
+        enabled: true
+        port: 1883
+
+configMaps:
+  config:
+    enabled: true
+    data:
+      mosquitto.conf: |
+        allow_anonymous true
+        connection_messages false
+        persistence true
+        persistence_location /mosquitto/data/
+        log_dest stdout
+        listener 1883
+        listener 9090
+        protocol websockets
+
+persistence:
+  data:
+    enabled: true
+    type: pvc
+    mountPath: /mosquitto/data
+    accessMode: ReadWriteOnce
+    size: 10Gi
+
+  config:
+    enabled: true
+    type: configMap
+    name: mosquitto-config
+    mountPath: /mosquitto/config/mosquitto.conf
+    subPath: mosquitto.conf
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 64Mi
+  requests:
+    cpu: 10m
+    memory: 32Mi
+
+podSecurityContext:
+  runAsUser: 1001
+  runAsGroup: 10000
+  fsGroup: 10000
+
+securityContext:
+  runAsUser: 1001
+  runAsGroup: 10000
+  runAsNonRoot: true
+  privileged: false
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
