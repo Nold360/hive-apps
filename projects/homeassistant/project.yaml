@@ -19,3 +19,8 @@ apps:
     - secretkey
   include:
   - ingress-internal
+
+- name: nodered
+  chart: node-red
+  repoURL: https://schwarzit.github.io/node-red-chart
+  targetRevision: 0.23.1
