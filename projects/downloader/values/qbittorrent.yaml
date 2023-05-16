@@ -87,6 +87,9 @@ addons:
       VPN_SERVICE_PROVIDER: mullvad
       VPN_TYPE: openvpn
       WIREGUARD_ADDRESSES: 10.67.135.224/32
+     
+      # Fix: https://github.com/qdm12/gluetun/issues/1569#issuecomment-1549992099
+      OPENVPN_CIPHERS: AES-256-GCM
 
       DNS_KEEP_NAMESERVER: "on"
       DOT: "on"
