@@ -74,9 +74,14 @@ metrics:
 persistence:
   config:
     enabled: true
+  # RF
   usb:
     enabled: true
     hostPath: /dev/ttyUSB0
+    type: hostPath
+  zigbee:
+    enabled: true
+    hostPath: /dev/ttyUSB1
     type: hostPath
   homegear-config:
     enabled: true
@@ -104,4 +109,4 @@ postgresql:
   postgresqlUsername: homeassistant
 
 securityContext:
-  privileged: false
+  privileged: true
