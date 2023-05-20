@@ -7,7 +7,7 @@ service:
     type: LoadBalancer
     externalTrafficPolicy: Local
     annotations:
-      #metallb.universe.tf/allow-shared-ip: adguard
+      metallb.universe.tf/allow-shared-ip: iot
       metallb.universe.tf/address-pool: iot
     ports:
       http:
