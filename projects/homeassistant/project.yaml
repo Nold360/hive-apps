@@ -8,11 +8,6 @@ apps:
   chart: home-assistant
   targetRevision: 11.2.1
   secrets:
-  - name: hass-postgres
-    keys:
-    - postgresql-username
-    - postgresql-password
-    - postgresql-postgres-password
   - name: bucket
     keys:
     - accesskey

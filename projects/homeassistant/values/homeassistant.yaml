@@ -106,13 +106,7 @@ persistence:
     readOnly: true
 
 postgresql:
-  enabled: true
-  existingSecret: hass-postgres
-  persistence:
-    enabled: true
-    size: 8Gi
-  postgresqlDatabase: homeassistant
-  postgresqlUsername: homeassistant
+  enabled: false
 
 securityContext:
   privileged: true
