@@ -48,7 +48,7 @@ ingress:
   main:
     annotations:
       cert-manager.io/cluster-issuer: vault-issuer
-      traefik.ingress.kubernetes.io/router.tls: 'true'
+      nginx.ingress.kubernetes.io/enable-cors: "false"
     enabled: true
     hosts:
     - host: hass.dc
