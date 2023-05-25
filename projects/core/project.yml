@@ -29,6 +29,11 @@ apps:
       jsonPointers:
       - /spec/conversion/webhook/clientConfig/caBundle
     - group: "*"
+      kind: CustomResourceDefinition
+      name: bgppeers.metallb.io
+      jsonPointers:
+      - /spec/conversion/webhook/clientConfig/caBundle
+    - group: "*"
       kind: Secret
       name: metallb-memberlist
 
