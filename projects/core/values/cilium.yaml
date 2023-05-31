@@ -1296,7 +1296,7 @@ operator:
   image:
     override: ~
     repository: "quay.io/cilium/operator"
-    tag: "v1.13.2"
+    tag: "v1.13.3"
     # operator-generic-digest
     genericDigest: ""
     # operator-azure-digest
