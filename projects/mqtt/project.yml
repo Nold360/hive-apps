@@ -1,8 +1,13 @@
 config:
-  description: MQTT Broker
+  description: MQTT Broker & Zigbee Bridge
 
 apps:
 - name: mosquitto
+  repo: bjw-s 
+  chart: app-template
+  targetRevision: 1.5.0
+
+- name: zigbee2mqtt
   repo: bjw-s 
   chart: app-template
   targetRevision: 1.5.0

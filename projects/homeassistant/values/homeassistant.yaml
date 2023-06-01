@@ -80,7 +80,7 @@ persistence:
     hostPath: /dev/ttyUSB0
     type: hostPath
   zigbee:
-    enabled: true
+    enabled: false
     hostPath: /dev/ttyUSB1
     type: hostPath
   homegear-config:

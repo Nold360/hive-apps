@@ -1,0 +1,92 @@
+image:
+  repository: koenkk/zigbee2mqtt
+  tag: 1.30.4
+
+service:
+  main:
+    type: ClusterIP
+    ports:
+      http:
+        enabled: true
+        port: 8080
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    hosts:
+    - host: zigbee.dc
+      paths:
+      - path: /
+        pathType: Prefix
+    tls:
+    - secretName: zigbee-tls
+      hosts:
+      - zigbee.dc
+
+env:
+  ZIGBEE2MQTT_DATA: /data
+
+configMaps:
+  config:
+    enabled: false
+    data:
+      configuration.yaml: |
+        permit_join: true
+
+        mqtt:
+          base_topic: zigbee2mqtt
+          server: mqtt://mosquitto.mqtt.svc.cluster.local:1883
+          include_device_information: true
+
+        serial:
+          port: /dev/ttyUSB1
+
+        frontend: true 
+        homeassistant: true
+        advanced:
+          network_key: GENERATE
+          log_output:
+            - console
+          log_level: info
+          homeassistant_discovery_topic: 'homeassistant'
+          homeassistant_status_topic: 'homeassistant/status'
+
+persistence:
+  data:
+    enabled: true
+    type: pvc
+    mountPath: /data
+    accessMode: ReadWriteOnce
+    readOnly: false
+    size: 10Gi
+
+  config:
+    enabled: false
+    type: configMap
+    name: zigbee2mqtt-config
+    mountPath: /data/configuration.yaml
+    subPath: configuration.yaml
+
+  usb:
+    enabled: true
+    type: hostPath
+    hostPath: /dev/ttyUSB1
+
+  runudev:
+    enabled: true
+    readOnly: true
+    type: hostPath
+    hostPath: /run/udev
+
+resources:
+  # limits:
+  #   cpu: 100m
+  #   memory: 64Mi
+  requests:
+    cpu: 10m
+    memory: 32Mi
+
+securityContext:
+  privileged: true
