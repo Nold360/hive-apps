@@ -1,6 +1,3 @@
-psp:
-  enabled: false
-
 rbac:
   create: true
 
@@ -8,18 +5,15 @@ prometheus:
   serviceMonitor:
     enabled: false
   prometheusRule:
-    enabled: true
+    enabled: false
 
   rbacProxy:
     repository: gcr.io/kubebuilder/kube-rbac-proxy
-    tag: v0.12.0
 
 controller:
   image:
     repository: quay.io/metallb/controller
-    tag: v0.13.10
 
 speaker:
   image:
     repository: quay.io/metallb/speaker
-    tag: v0.13.9
