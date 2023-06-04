@@ -84,27 +84,31 @@ addons:
     enabled: true
 
     env:
-      VPN_SERVICE_PROVIDER: custom
-      VPN_TYPE: wireguard
-      WIREGUARD_ADDRESSES: 10.2.0.2/32
-      VPN_ENDPOINT_IP: 89.39.104.173
-      VPN_ENDPOINT_PORT: 51820
+      VPN_SERVICE_PROVIDER: mullvad
+      VPN_TYPE: openvpn
+      WIREGUARD_ADDRESSES: 10.67.135.224/32
+     
+      # Fix: https://github.com/qdm12/gluetun/issues/1569#issuecomment-1549992099
+      OPENVPN_CIPHERS: AES-256-GCM
 
-      DNS_KEEP_NAMESERVER: "off"
+      DNS_KEEP_NAMESERVER: "on"
       DOT: "on"
       FIREWALL: "on"
       FIREWALL_INPUT_PORTS: "8080,8000"
+      FIREWALL_VPN_INPUT_PORTS: 61086
 
     envFrom:
     - secretRef:
-        name: wireguard
+        name: wireguard-config
 
     securityContext:
       capabilities:
         add:
           - NET_ADMIN
 
-additionalContainers:
-  qbittorrent-natmap:
-    name: qbittorrent-natmap
-    image: ghcr.io/soxfor/qbittorrent-natmap
+    livenessProbe:
+      httpGet:
+        path: /v1/openvpn/status
+        port: 8000
+      initialDelaySeconds: 30
+      periodSeconds: 30
