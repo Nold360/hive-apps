@@ -8,7 +8,7 @@ nodeExporter:
   enabled: true
   image:
     repository: quay.io/prometheus/node-exporter
-    tag: v1.5.0
+    tag: v1.6.0
 
   hostNetwork: true
   hostPID: true
