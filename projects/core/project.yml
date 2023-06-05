@@ -64,7 +64,7 @@ apps:
   namespace: cert-manager
   repoURL: https://charts.jetstack.io
   chart: cert-manager
-  targetRevision: v1.11.3
+  targetRevision: v1.12.1
   secrets:
   - name: cert-manager-vault-approle
     keys:
