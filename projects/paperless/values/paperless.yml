@@ -3,7 +3,7 @@ ingress:
     enabled: true
     annotations:
       cert-manager.io/cluster-issuer: vault-issuer
-      traefik.ingress.kubernetes.io/router.tls: "true"
+      nginx.ingress.kubernetes.io/proxy-body-size: 100m
     hosts:
     - host: paperless.dc
       paths:
