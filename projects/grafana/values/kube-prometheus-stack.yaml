@@ -94,7 +94,7 @@ grafana:
 
   image:
     repository: grafana/grafana
-    tag: 9.5.2
+    tag: 9.5.3
 
   persistence:
     enabled: true
