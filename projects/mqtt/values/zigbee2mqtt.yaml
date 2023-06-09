@@ -72,7 +72,7 @@ persistence:
   usb:
     enabled: true
     type: hostPath
-    hostPath: /dev/ttyUSB1
+    hostPath: /dev/zigbee
 
   runudev:
     enabled: true

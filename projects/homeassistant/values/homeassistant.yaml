@@ -77,11 +77,11 @@ persistence:
   # RF
   usb:
     enabled: true
-    hostPath: /dev/ttyUSB0
+    hostPath: /dev/culstick
     type: hostPath
   zigbee:
     enabled: false
-    hostPath: /dev/ttyUSB1
+    hostPath: /dev/zigbee
     type: hostPath
   homegear-config:
     enabled: true
