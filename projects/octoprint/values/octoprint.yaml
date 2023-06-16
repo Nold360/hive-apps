@@ -52,7 +52,7 @@ persistence:
 
   printer:
     enabled: true
-    hostPath: /dev/ttyACM0
+    hostPath: /dev/prusa
     type: hostPath
 
   #podAnnotations:
