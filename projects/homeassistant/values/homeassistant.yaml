@@ -2,36 +2,6 @@ image:
   repository: homeassistant/home-assistant
   tag: 2023.5.4
 
-additionalContainers:
-  addon-homematic:
-    name: addon-homematic
-    #image: homeassistant/i386-addon-homematic:latest
-    image: reg.dc/homematic-addon:latest
-    volumeMounts:
-    - name: data
-      mountPath: /data
-    - name: config
-      mountPath: /config
-
-  homegear:
-    name: homegear
-    image: homegear/homegear:stable
-    volumeMounts:
-    - name: homegear-config
-      mountPath: /etc/homegear
-    - name: homegear-lib
-      mountPath: /var/lib/homegear
-    env:
-    - name: HOST_USER_ID
-      value: "1000"
-    - name: HOST_USER_GID
-      value: "1000"
-    ports:
-    - name: homegear
-      containerPort: 2001
-    securityContext:
-      privileged: true
-
 env:
   TZ: UTC
 
@@ -74,25 +44,6 @@ metrics:
 persistence:
   config:
     enabled: true
-  # RF
-  usb:
-    enabled: true
-    hostPath: /dev/culstick
-    type: hostPath
-  zigbee:
-    enabled: false
-    hostPath: /dev/zigbee
-    type: hostPath
-  homegear-config:
-    enabled: true
-    storageClass: local-path
-    accessMode: ReadWriteOnce
-    size: 1Gi
-  homegear-lib:
-    enabled: true
-    storageClass: local-path
-    accessMode: ReadWriteOnce
-    size: 1Gi
   data:
     enabled: true
     storageClass: local-path
@@ -109,4 +60,4 @@ postgresql:
   enabled: false
 
 securityContext:
-  privileged: true
+  privileged: false
