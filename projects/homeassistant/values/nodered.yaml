@@ -18,9 +18,10 @@ npmrc:
     # Custom npmrc config
 
 # -- node-red env, see more environment variables in the [node-red documentation](https://nodered.org/docs/getting-started/docker)
-env: []
+env:
   # Possible Values:
-  # TZ:
+  - name: TZ
+    value: "Europe/Berlin"
   # NODE_OPTIONS:
   # NODE_RED_ENABLE_PROJECTS:
   # NODE_RED_ENABLE_SAFE_MODE:
@@ -119,7 +120,7 @@ ingress:
 # -- CPU/Memory resource requests/limits
 resources:
   limits:
-    cpu: 500m
+    cpu: 1000m
     memory: 1024Mi
   requests:
     cpu: 50m
