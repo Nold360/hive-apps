@@ -90,7 +90,7 @@ rollOutCiliumPods: false
 image:
   override: ~
   repository: "quay.io/cilium/cilium-ci"
-  tag: "v1.14"
+  tag: "v1.13"
   pullPolicy: "IfNotPresent"
   # cilium-digest
   digest: ""
