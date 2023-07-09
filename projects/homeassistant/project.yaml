@@ -1,17 +1,24 @@
 config:
   description: Home Automation
   syncWave: 100
-  repo: k8s-at-home
 
 apps:
 - name: homeassistant
   chart: home-assistant
-  targetRevision: 11.2.1
+  repoURL: https://charts.pree.dev
+  targetRevision: 1.21.1
   secrets:
   - name: bucket
     keys:
     - accesskey
     - secretkey
+  - name: influx
+    keys:
+      - admin-user-password
+      - admin-user-token
+      - user-password
+      - read-user-password
+      - write-user-password
   include:
   - ingress-internal
 

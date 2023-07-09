@@ -3,13 +3,22 @@ image:
   tag: 2023.7.1
 
 env:
-  TZ: UTC
+  TZ: Europe/Berlin
 
 influxdb:
-  architecture: standalone
-  authEnabled: false
-  database: home_assistant
   enabled: true
+  auth:
+    createUserToken: true
+    user:
+      username: homeassistant
+      org: primary
+      bucket: primary
+    readUser:
+      username: grafana
+    writeUser:
+      username: homeassistant
+    existingSecret: influx
+  database: home_assistant
   persistence:
     enabled: true
     size: 8Gi
@@ -61,3 +70,9 @@ postgresql:
 
 securityContext:
   privileged: false
+
+service:
+  main:
+    ports:
+      http:
+        port: 8123
