@@ -12,15 +12,18 @@ apps:
     keys:
     - accesskey
     - secretkey
-  - name: influx
-    keys:
-      - admin-user-password
-      - admin-user-token
-      - user-password
-      - read-user-password
-      - write-user-password
   include:
   - ingress-internal
+
+- name: influx
+  chart: influxdb2
+  repoURL: https://helm.influxdata.com
+  targetRevision: 2.1.1
+  secrets:
+  - name: influx
+    keys:
+      - admin-password
+      - admin-token
 
 - name: nodered
   chart: node-red

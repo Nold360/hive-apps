@@ -1,0 +1,94 @@
+image:
+  repository: influxdb
+  tag: 2.3.0-alpine
+  pullPolicy: IfNotPresent
+  ## If specified, use these secrets to access the images
+  # pullSecrets:
+  #   - registry-secret
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+
+securityContext: {}
+env: {}
+
+## Create default user through docker entrypoint
+## Defaults indicated below
+##
+adminUser:
+  organization: "influxdata"
+  bucket: "default"
+  user: "admin"
+  retention_policy: "0s"
+
+  ## The password and token are obtained from an existing secret. The expected
+  ## keys are `admin-password` and `admin-token`.
+  ## If set, the password and token values above are ignored.
+  existingSecret: influx
+
+## Persist data to a persistent volume
+##
+persistence:
+  enabled: true
+  storageClass: "ssd"
+  accessMode: ReadWriteOnce
+  size: 50Gi
+  mountPath: /var/lib/influxdb2
+  subPath: ""
+
+## Add custom volume and volumeMounts
+##
+# volumes:
+#   - name: influxdb2-templates
+#     hostPath:
+#       path: /data/influxdb2-templates
+#       type: Directory
+# mountPoints:
+#   - name: influxdb2-templates
+#     mountPath: /influxdb2-templates
+#     readOnly: true
+
+## Allow executing custom init scripts
+## If the container finds any files with the .sh extension inside of the
+## /docker-entrypoint-initdb.d folder, it will execute them.
+## When multiple scripts are present, they will be executed in lexical sort order by name.
+## For more details see Custom Initialization Scripts in https://hub.docker.com/_/influxdb
+initScripts:
+  enabled: false
+  scripts:
+    init.sh: |+
+      #!/bin/bash
+      influx apply --force yes -u https://raw.githubusercontent.com/influxdata/community-templates/master/influxdb2_operational_monitoring/influxdb2_operational_monitoring.yml
+
+## Specify a service type
+## ref: http://kubernetes.io/docs/user-guide/services/
+##
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8086
+  annotations: {}
+  labels: {}
+  portName: http
+
+ingress:
+  enabled: true
+  className: ingress-internal
+  tls: true
+  secretName: influx-tls
+  hostname: influxdb.dc
+  annotations:
+    cert-manager.io/cluster-issuer: vault-issuer
+  path: /
+
+pdb:
+  create: false

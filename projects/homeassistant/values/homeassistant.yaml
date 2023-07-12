@@ -6,7 +6,7 @@ env:
   TZ: Europe/Berlin
 
 influxdb:
-  enabled: true
+  enabled: false
   auth:
     createUserToken: true
     user:
