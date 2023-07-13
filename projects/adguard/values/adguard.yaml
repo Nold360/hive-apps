@@ -5,6 +5,8 @@ image:
 env:
   TZ: Europe/Amsterdam
 
+args: []
+
 ingress:
   main:
     enabled: true
