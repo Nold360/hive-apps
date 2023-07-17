@@ -1,7 +1,7 @@
 # Gitea
 image:
   repository: gitea/gitea
-  tag: "1.19"
+  tag: "1.20"
   rootless: true
 
 #statefulset:
