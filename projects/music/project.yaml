@@ -1,0 +1,9 @@
+config:
+  desc: Music Streaming
+
+apps:
+  - name: navidrome
+    repo: bjw-s
+    chart: app-template
+    targetRevision: 1.5.1
+
