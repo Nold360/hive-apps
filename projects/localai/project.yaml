@@ -6,4 +6,4 @@ apps:
     #repoURL: https://go-skynet.github.io/helm-charts/
     repoURL: https://cowboysysop.github.io/charts/
     chart: local-ai
-    targetRevision: 1.5.0
+    targetRevision: 1.6.0
