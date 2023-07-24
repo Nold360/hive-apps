@@ -227,7 +227,7 @@ configmap:
             - logo: assets/png/valetudo.png
               name: Vacuum Robot
               subtitle: "My Valetudo Vacuum Bot"
-              url: https://vacuum.lan
+              url: http://vacuum.lan
               target: "_blank"
               
           - name: "// Loader"
