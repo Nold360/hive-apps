@@ -138,12 +138,12 @@ gitea:
       PROXY_HOSTS: "github.com"
 
   additionalConfigFromEnvs:
-    - name: ENV_TO_INI__DATABASE__PASSWD
+    - name: GITEA__DATABASE__PASSWD
       valueFrom:
         secretKeyRef:
           name: gitea-db-superuser
           key: password
-    - name: ENV_TO_INI__DATABASE__USER
+    - name: GITEA__DATABASE__USER
       valueFrom:
         secretKeyRef:
           name: gitea-db-superuser
