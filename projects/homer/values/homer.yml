@@ -142,6 +142,16 @@ configmap:
               name: MinIO
               url: https://minio.dc
               target: "_blank"
+            - logo: assets/png/google-mail.png
+              name: Ntfy
+              subtitle: "Send/Receive Notifications"
+              url: https://notify.dc
+              target: "_blank"
+            - logo: assets/png/bookstack.png
+              name: Scan Server
+              subtitle: "Scan Documents to Paperless"
+              url: https://scan.dc
+              target: "_blank"
 
           - name: "// Arrrrrr"
             icon: "fas fa-download"
@@ -182,7 +192,7 @@ configmap:
             items:
             - logo: assets/png/drone.png
               name: Woodpecker CI
-              url: https://drone.nold.in
+              url: https://ci.nold.in
               target: "_blank"
             - logo: assets/png/gitea.png
               name: Gitea
@@ -192,24 +202,34 @@ configmap:
               name: OctoPrint
               url: https://octo.dc
               target: "_blank"
-            - logo: assets/png/kodi.png
-              name: Kodi
-              url: http://libreelec.lan:8080
-              target: "_blank"
-            - logo: assets/png/home-assistant.png
-              name: Home-Assistant
-              url: https://hass.dc
-              target: "_blank"
             - logo: assets/png/paperless-ng.png
               name: Paperless
               url: https://paperless.dc
               target: "_blank"
-
+            - logo: assets/png/nodered.png
+              name: NodeRed
+              subtitle: "Home Automation"
+              target: "_blank"
+            - logo: assets/png/home-assistant.png
+              name: Home Assistant
+              url: https://hass.dc
+              target: "_blank"
+            - logo: assets/png/navidrome.png
+              name: Navidrome
+              subtitle: "Music Streaming"
+              url: https://music.dc
+              target: "_blank"
+            - logo: assets/png/kodi.png
+              name: Kodi
+              subtitle: "Mediacenter"
+              url: https://libreelec.lan:8080
+              target: "_blank"
+              
           - name: "// Loader"
             icon: "fas fa-download"
             items:
-            - logo: assets/png/deluge.png
-              name: Deluge
+            - logo: assets/png/qbittorrent.png
+              name: Torrent
               subtitle: "Torrents"
               url: https://torrent.dc
               target: "_blank"
