@@ -1,0 +1,12 @@
+apiVersion: databases.spotahome.com/v1
+kind: RedisFailover
+metadata:
+  name: gitea-redis
+  namespace: gitea
+spec:
+  sentinel:
+    replicas: 1
+  redis:
+    replicas: 1
+  auth:
+    secretPath: redis-auth

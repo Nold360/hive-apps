@@ -136,6 +136,8 @@ gitea:
       PROXY_ENABLED: true
       PROXY_URL: "http://proxy-squid.proxy.svc.cluster.local:3128"
       PROXY_HOSTS: "github.com"
+    queue:
+      CONN_STR: "redis+cluster://rfs-gitea-redis.gitea.svc.cluster.local:6379/0"
 
   additionalConfigFromEnvs:
     - name: GITEA__DATABASE__PASSWD
