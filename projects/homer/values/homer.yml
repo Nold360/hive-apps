@@ -224,6 +224,11 @@ configmap:
               subtitle: "Mediacenter"
               url: https://libreelec.lan:8080
               target: "_blank"
+            - logo: assets/png/valetudo.png
+              name: Vacuum Robot
+              subtitle: "My Valetudo Vacuum Bot"
+              url: https://vacuum.lan
+              target: "_blank"
               
           - name: "// Loader"
             icon: "fas fa-download"
