@@ -23,3 +23,8 @@ apps:
   repoURL: https://cloudnative-pg.github.io/charts
   chart: cloudnative-pg
   targetRevision: 0.18.1
+
+- name: redis-operator
+  repoURL: https://spotahome.github.io/redis-operator
+  chart: redis-operator
+  targetRevision: 3.2.8
