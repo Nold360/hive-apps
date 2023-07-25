@@ -1,7 +1,10 @@
 # Gitea
 image:
-  repository: gitea/gitea
-  tag: "1.20"
+  registry: "codeberg.org"
+  repository: forgejo/forgejo
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+  pullPolicy: Always
   rootless: true
 
 #statefulset:
@@ -19,7 +22,7 @@ image:
   #  - name: no_proxy
   #    value: argocd-server.argocd.svc.cluster.local,10.43.0.0/16
 
-securityContext:
+containerSecurityContext:
   allowPrivilegeEscalation: false
   capabilities:
     drop:
@@ -29,9 +32,12 @@ securityContext:
       - SYS_CHROOT
   privileged: false
   readOnlyRootFilesystem: true
-  runAsGroup: 1000
   runAsNonRoot: true
+
+podSecurityContext:
   runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
 
 service:
   http:
@@ -47,10 +53,8 @@ ingress:
   labels:
     environment: external
   annotations:
-  #  kubernetes.io/ingress.class: ingress-external
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt
-    traefik.ingress.kubernetes.io/router.tls: 'true'
     external-dns.alpha.kubernetes.io/hostname: git.nold.in
     external-dns.alpha.kubernetes.io/target: nold.in
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
@@ -64,14 +68,10 @@ ingress:
       hosts:
         - git.nold.in
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
+resources:
+  limits:
+    cpu: 4000m
+    memory: 2048Mi
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
@@ -136,16 +136,14 @@ gitea:
       PROXY_ENABLED: true
       PROXY_URL: "http://proxy-squid.proxy.svc.cluster.local:3128"
       PROXY_HOSTS: "github.com"
-    queue:
-      CONN_STR: "redis+cluster://rfs-gitea-redis.gitea.svc.cluster.local:6379/0"
 
   additionalConfigFromEnvs:
-    - name: GITEA__DATABASE__PASSWD
+    - name: FORGEJO__DATABASE__PASSWD
       valueFrom:
         secretKeyRef:
           name: gitea-db-superuser
           key: password
-    - name: GITEA__DATABASE__USER
+    - name: FORGEJO__DATABASE__USER
       valueFrom:
         secretKeyRef:
           name: gitea-db-superuser
