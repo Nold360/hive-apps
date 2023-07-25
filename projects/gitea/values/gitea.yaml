@@ -3,7 +3,7 @@ image:
   registry: "codeberg.org"
   repository: forgejo/forgejo
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "1.20.1-0"
   pullPolicy: Always
   rootless: true
 
@@ -105,7 +105,7 @@ gitea:
     #customEmailUrl:
 
   config:
-    APP_NAME: "Git with a lot of coffee"
+    APP_NAME: "Let's forge some forks"
     webhook:
       ALLOWED_HOST_LIST: argocd-server.argocd.svc.cluster.local
     ui:

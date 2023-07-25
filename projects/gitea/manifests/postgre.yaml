@@ -8,28 +8,29 @@ spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:15
 
   bootstrap:
-    recovery:
-      source: gitea-db
+    initdb:
+      database: app
+      owner: app
 
-  # backup:
-  #   barmanObjectStore:
-  #     destinationPath: "s3://gitea-db/"
-  #     endpointURL: "http://minio.minio.svc.cluster.local:9000"
-  #     s3Credentials:
-  #       accessKeyId:
-  #         name: bucket
-  #         key: accesskey
-  #       secretAccessKey:
-  #         name: bucket
-  #         key: secretkey
-  #     wal:
-  #       compression: gzip
-  #       #encryption: AES256
-  #     data:
-  #       compression: gzip
-  #       #encryption: AES256
-  #   retentionPolicy: "90d"
-
+  backup:
+    barmanObjectStore:
+      destinationPath: "s3://gitea-db/"
+      endpointURL: "http://minio.minio.svc.cluster.local:9000"
+      s3Credentials:
+        accessKeyId:
+          name: bucket
+          key: accesskey
+        secretAccessKey:
+          name: bucket
+          key: secretkey
+      wal:
+        compression: gzip
+        #encryption: AES256
+      data:
+        compression: gzip
+        #encryption: AES256
+    retentionPolicy: "90d"
+  #
   resources:
     requests:
       memory: "64Mi"
@@ -55,7 +56,6 @@ spec:
             key: secretkey
         wal:
           maxParallel: 8
-
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
