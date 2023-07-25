@@ -13,9 +13,9 @@ config:
 
 apps:
 - name: gitea
-  repoURL: https://dl.gitea.io/charts/
-  chart: gitea
-  targetRevision: 9.0.4
+  repoURL: oci://codeberg.org/forgejo-contrib/forgejo
+  chart: forgejo
+  targetRevision: 0.9.2
   secrets:
   - name: admin
     keys:
@@ -26,6 +26,3 @@ apps:
     keys:
     - secretkey
     - accesskey
-  - name: redis-auth
-    keys:
-      - password
