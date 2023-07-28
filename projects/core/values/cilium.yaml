@@ -1529,7 +1529,7 @@ preflight:
   image:
     override: ~
     repository: "quay.io/cilium/cilium"
-    tag: "v1.13.4"
+    tag: "v1.13.5"
     # cilium-digest
     digest: ""
     useDigest: false
