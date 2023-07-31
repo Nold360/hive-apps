@@ -1,10 +1,9 @@
-replicaCount: 3
+replicaCount: 2
 
 image:
   registry: docker.io
   repository: woodpeckerci/woodpecker-agent
   pullPolicy: Always
-  # Overrides the image tag whose default is the chart appVersion.
   tag: "next"
 
 env:

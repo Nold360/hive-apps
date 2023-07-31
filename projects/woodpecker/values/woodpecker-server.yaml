@@ -7,6 +7,9 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "next"
 
+dind:
+  enabled: false
+
 env:
   WOODPECKER_OPEN: "false"
   WOODPECKER_ADMIN: "Nold360"
@@ -18,8 +21,8 @@ env:
   HTTPS_PROXY: http://proxy-squid.proxy.svc.cluster.local:3128
   http_proxy: http://proxy-squid.proxy.svc.cluster.local:3128
   https_proxy: http://proxy-squid.proxy.svc.cluster.local:3128
-  NO_PROXY: localhost,.cluster.local
-  no_proxy: localhost,.cluster.local
+  NO_PROXY: localhost,.cluster.local,10.43.0.1
+  no_proxy: localhost,.cluster.local,10.43.0.1
 
 
 extraSecretNamesForEnvFrom:
@@ -31,8 +34,6 @@ persistentVolume:
   size: 10Gi
   mountPath: "/var/lib/woodpecker"
   storageClass: "local-path"
-
-podAnnotations: {}
 
 podSecurityContext:
   fsGroup: 2000
@@ -51,13 +52,11 @@ service:
 
 ingress:
   enabled: true
-  ingressClassName: ingress-external-traefik
+  ingressClassName: ingress-external
   labels:
     environment: external
   annotations:
     kubernetes.io/tls-acme: "true"
-    kubernetes.io/ingress.class: ingress-external
-    traefik.ingress.kubernetes.io/router.tls: 'true'
     cert-manager.io/cluster-issuer: letsencrypt
     external-dns.alpha.kubernetes.io/hostname: ci.nold.in
     external-dns.alpha.kubernetes.io/target: nold.in

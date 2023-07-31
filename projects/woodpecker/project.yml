@@ -1,7 +1,7 @@
 config:
   description: Woodpecker-CI
-  repoURL: https://woodpecker-ci.org
-  targetRevision: v0.15.5
+  repoURL: https://github.com/woodpecker-ci/helm
+  targetRevision: main
 
   networkPolicy:
     groups:
@@ -13,7 +13,7 @@ config:
 
 apps:
   - name: woodpecker-server
-    chart: woodpecker-server
+    path: charts/server
     secrets:
       - name: github-oauth
         keys:
@@ -25,9 +25,9 @@ apps:
 
   - name: woodpecker-agent
     namespace: woodpecker-agent
-    chart: woodpecker-agent
+    path: charts/agent
     secrets:
       - name: woodpecker-secret
         fromApp: woodpecker-server
         keys:
-        - WOODPECKER_AGENT_SECRET
+          - WOODPECKER_AGENT_SECRET
