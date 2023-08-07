@@ -10,8 +10,6 @@ securityContext:
 worker:
   # -- worker replicas
   replicas: 1
-  # -- Custom priority class for different treatment by the scheduler
-  priorityClassName:
   # -- worker securityContext
   securityContext:
     runAsUser: 1000
@@ -91,11 +89,9 @@ authentik:
     user: "app"
     #password: ""
     port: 5432
+
   redis:
-    # -- set the redis hostname to talk to
-    # @default -- `{{ .Release.Name }}-redis-master`
-    host: '{{ .Release.Name }}-redis-master'
-    password: ""
+    host: 'rfs-authentik-redis.auth.svc.cluster.local'
 
 # -- List of config maps to mount blueprints from. Only keys in the
 # configmap ending with ".yaml" wil be discovered and applied
@@ -118,6 +114,10 @@ envValueFrom:
     secretKeyRef:
       key: secret_key
       name: authentik
+  AUTHENTIK_REDIS__PASSWORD:
+    secretKeyRef:
+      key: password
+      name: redis
 
 
 resources:
