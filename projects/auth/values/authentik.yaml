@@ -23,19 +23,11 @@ image:
   repository: ghcr.io/goauthentik/server
   tag: 2022.11.3
 
-# -- See https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common#values
-initContainers: {}
-
-# -- See https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common#values
-additionalContainers: {}
-
 ingress:
   enabled: true
-  ingressClassName: "ingress-internal-traefik"
+  ingressClassName: "ingress-internal"
   annotations:
     cert-manager.io/cluster-issuer: "vault-issuer"
-    traefik.ingress.kubernetes.io/router.tls: 'true'
-  labels: {}
   hosts:
     - host: auth.dc
       paths:
@@ -90,7 +82,7 @@ authentik:
     # -- set the postgresql hostname to talk to
     # if unset and .Values.postgresql.enabled == true, will generate the default
     # @default -- `{{ .Release.Name }}-postgresql`
-    host: 'authentik-db-rw.authentik.svc.cluster.local'
+    host: 'authentik-db-rw.auth.svc.cluster.local'
     # -- postgresql Database name
     # @default -- `authentik`
     name: "app"
@@ -128,41 +120,15 @@ envValueFrom:
       name: authentik
 
 
-service:
-  # -- Service that is created to access authentik
-  enabled: true
-  type: ClusterIP
-  port: 80
-  name: http
-  protocol: TCP
-  labels: {}
-  annotations: {}
-
-volumes: []
-
-volumeMounts: []
-
 resources:
   server: {}
   worker: {}
-
-serviceAccount:
-  # -- Service account is needed for managed outposts
-  create: true
-
-prometheus:
-  serviceMonitor:
-    create: false
-    interval: 30s
-    scrapeTimeout: 3s
-  rules:
-    create: false
 
 postgresql:
   enabled: false
 
 redis:
-  enabled: true
+  enabled: false
   architecture: standalone
   auth:
     enabled: false
