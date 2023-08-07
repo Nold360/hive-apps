@@ -26,3 +26,6 @@ apps:
     keys:
     - secretkey
     - accesskey
+  - name: redis-auth
+    keys:
+    - password
