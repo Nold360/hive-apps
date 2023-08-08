@@ -1,11 +1,19 @@
 config:
   description: Vault Secret Managemet
+
 apps:
 - name: vault
   repoURL: https://helm.releases.hashicorp.com
   chart: vault
   targetRevision: 0.25.0
   syncWave: '-3'
+  ignoreDiff:
+    - group: "*"
+      kind: MutatingWebhookConfiguration
+      name: vault-agent-injector-cfg
+      jsonPointers:
+      - /webhooks/0/clientConfig/caBundle
+
 - name: vault-secrets-operator
   namespace: vault-secrets-operator
   repoURL: https://ricoberger.github.io/helm-charts

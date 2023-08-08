@@ -2,10 +2,10 @@ global:
   enabled: true
   tlsDisable: true
   psp:
-    enable: true
+    enable: false
 
 injector:
-  enabled: false
+  enabled: true
 
 server:
   enabled: true
