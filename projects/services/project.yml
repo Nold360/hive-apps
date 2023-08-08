@@ -28,9 +28,3 @@ apps:
   repoURL: https://spotahome.github.io/redis-operator
   chart: redis-operator
   targetRevision: 3.2.8
-
-- name: crossplane
-  namespace: crossplane-system
-  repoURL: https://charts.crossplane.io/stable
-  chart: crossplane
-  targetRevision: 1.13.1 
