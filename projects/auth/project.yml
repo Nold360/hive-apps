@@ -17,3 +17,6 @@ apps:
     - name: redis
       keys:
         - password
+    - name: terraform
+      keys:
+        - AUTHENTIK_TOKEN
