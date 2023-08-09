@@ -114,7 +114,7 @@ server:
       type: oidc
       id: authentik
       issuer: https://auth.dc/application/o/argocd/
-      clientID: 3793eb413f1d568b9e9cf82fd4d8d596b2867ec5
+      clientID: "1080104731533290513674458574364055869568731613048916978401072612100150376072438332692042842646474"
       clientSecret: $dex.authentik.clientSecret
       scopes:
           - openid
