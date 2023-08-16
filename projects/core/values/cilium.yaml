@@ -559,7 +559,7 @@ hubble:
     image:
       override: ~
       repository: "quay.io/cilium/hubble-relay"
-      tag: "v1.14.1"
+      tag: "v1.13.6"
        # hubble-relay-digest
       digest: ""
       useDigest: false
@@ -1536,7 +1536,7 @@ preflight:
   image:
     override: ~
     repository: "quay.io/cilium/cilium"
-    tag: "v1.14.1"
+    tag: "v1.13.6"
     # cilium-digest
     digest: ""
     useDigest: false
@@ -1673,7 +1673,7 @@ clustermesh:
     image:
       override: ~
       repository: "quay.io/cilium/clustermesh-apiserver"
-      tag: "v1.14.1"
+      tag: "v1.13.6"
       # clustermesh-apiserver-digest
       digest: ""
       useDigest: false
