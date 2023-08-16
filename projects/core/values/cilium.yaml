@@ -1673,7 +1673,7 @@ clustermesh:
     image:
       override: ~
       repository: "quay.io/cilium/clustermesh-apiserver"
-      tag: "v1.13.6"
+      tag: "v1.14.1"
       # clustermesh-apiserver-digest
       digest: ""
       useDigest: false
