@@ -7,10 +7,3 @@ apps:
   repoURL: https://charts.crossplane.io/stable
   chart: crossplane
   targetRevision: 1.13.2
-
-- name: ess-plugin-vault
-  repoURL: xpkg.upbound.io/crossplane-contrib
-  chart: ess-plugin-vault
-  targetRevision: 0.1.0
-
-
