@@ -27,4 +27,4 @@ apps:
 - name: redis-operator
   repoURL: https://spotahome.github.io/redis-operator
   chart: redis-operator
-  targetRevision: 3.2.9
+  targetRevision: 3.3.0
