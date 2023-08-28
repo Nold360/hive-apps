@@ -8,6 +8,6 @@ apps:
   chart: crossplane
   targetRevision: 1.13.2
   secrets:
-  - name: s3
+  - name: terraform
     keys:
-    - key-file
+    - secret.tfvars
