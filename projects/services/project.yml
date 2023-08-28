@@ -18,6 +18,17 @@ apps:
     - root-user
     - root-password
 
+- name: s3
+  namespace: s3
+  repoURL: https://charts.min.io
+  chart: minio
+  targetRevision: 5.0.13
+  secrets:
+  - name: minio-root
+    keys:
+    - rootUser
+    - rootPassword
+
 - name: cnpg
   namespace: cnpg-system
   repoURL: https://cloudnative-pg.github.io/charts
