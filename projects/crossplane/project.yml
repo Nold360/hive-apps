@@ -7,3 +7,7 @@ apps:
   repoURL: https://charts.crossplane.io/stable
   chart: crossplane
   targetRevision: 1.13.2
+  secrets:
+  - name: s3
+    keys:
+    - key-file
