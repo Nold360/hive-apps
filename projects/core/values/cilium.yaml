@@ -4,7 +4,7 @@ cni:
   install: true
 
 ipam:
-  mode: "multi-pool"
+  mode: "cluster"
 
 ingressController:
   enabled: false
@@ -64,9 +64,9 @@ ipv4:
 ipv6:
   enabled: false
 
-kubeProxyReplacement: true
+kubeProxyReplacement: strict
 l2NeighDiscovery:
-  enabled: true
+  enabled: false
   refreshPeriod: "30s"
 l7Proxy: true
 
@@ -83,9 +83,9 @@ operator:
   replicas: 1
 
   prometheus:
-    enabled: true
+    enabled: false
     serviceMonitor:
-      enabled: true
+      enabled: false
 
 preflight:
   enabled: false
