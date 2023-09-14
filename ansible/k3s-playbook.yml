@@ -5,7 +5,7 @@
     ansible_become_method: su
     ansible_become: true
 
-    k3s_release_version: v1.22
+    k3s_release_version: v1.27
     k3s_debug: false
     k3s_registration_address: 192.168.1.111
     k3s_become: true
@@ -21,6 +21,13 @@
           tls:
             ca_file: /etc/ssl/vault_ca.crt
     k3s_server:
+      kube-proxy-args:
+        "enable-health-check-nodeport=true"
+      kubelet-arg:
+        - "kube-reserved=cpu=500m,memory=1Gi,ephemeral-storage=2Gi"
+        - "system-reserved=cpu=500m, memory=500Mi,ephemeral-storage=1Gi"
+        - "eviction-hard=memory.available<100Mi,nodefs.available<1%"
+        - "allowed-unsafe-sysctls=net.ipv6.*"
       cluster-cidr: 10.0.0.0/8
       flannel-backend: "none"
       default-local-storage-path: /data/kubernetes/storage
