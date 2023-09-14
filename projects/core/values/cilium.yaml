@@ -4,7 +4,7 @@ cni:
   install: true
 
 ipam:
-  mode: "cluster"
+  mode: "cluster-pool"
 
 ingressController:
   enabled: false
