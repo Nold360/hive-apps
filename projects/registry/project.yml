@@ -2,6 +2,6 @@ config:
   description: Container Image Registry
 apps:
 - name: trow
-  repoURL: https://github.com/ContainerSolutions/trow/
+  repoURL: https://github.com/Trow-Registry/trow
   path: charts/trow
   targetRevision: main

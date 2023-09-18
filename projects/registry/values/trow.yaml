@@ -1,14 +1,29 @@
 image:
-  repository: containersol/trow
-  tag: "0.3.5"
+  tag: latest
+#   #repository: ghcr.io/trow-registry/trow
+#   repository: containersol/trow
 
 trow:
+  logLevel: info
   domain: reg.dc
   validation:
     enabled: false
     allowDocker: true
     allowKubernetes: true
     proxyDockerHub: true
+
+  # proxyConfig:
+  #   enableWebhook: false
+  #   ## Ignore or Fail
+  #   onWebhookFailure: Ignore
+  #   config:
+  #     offline: false
+  #     registries:
+  #       - alias: docker
+  #         host: registry-1.docker.io
+  #       - alias: quay
+  #         host: quay.io
+  #
 
 service:
   type: ClusterIP
@@ -34,10 +49,3 @@ resources:
   requests:
     cpu: 100m
     memory: 64Mi
-    
-automountServiceAccountToken: false
-podSecurityContext:
-  runAsUser: 333333
-  runAsGroup: 333333
-  fsGroup: 333333
-containerSecurityContext: {}
