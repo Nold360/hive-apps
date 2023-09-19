@@ -1,5 +1,6 @@
 image:
   tag: latest
+  repository: nold360/trow
 #   #repository: ghcr.io/trow-registry/trow
 #   repository: containersol/trow
 
