@@ -31,10 +31,11 @@ podSecurityContext:
   sysctls:
     - name: net.ipv6.conf.all.disable_ipv6
       value: "1"
-  fsGroup: 568
+  fsGroup: 2420
   fsGroupChangePolicy: "OnRootMismatch"
   supplementalGroups:
-    - 100
+    - 1000
+    - 568
 
 persistence:
   config:
