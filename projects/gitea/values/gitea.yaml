@@ -3,7 +3,7 @@ image:
   registry: "codeberg.org"
   repository: forgejo/forgejo
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.20.4-0"
+  tag: "1.20.5-0"
   pullPolicy: Always
   rootless: true
 
