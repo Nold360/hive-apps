@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/navidrome/navidrome
-  tag: 0.49.3
+  tag: 0.50.0
 
 env:
   TZ: "Europe/Amsterdam"
