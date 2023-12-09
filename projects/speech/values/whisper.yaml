@@ -15,11 +15,11 @@ env:
 
 service:
   main:
-    type: ClusterIP
-    #externalTrafficPolicy: Local
-    # annotations:
-    #   metallb.universe.tf/allow-shared-ip: iot
-    #   metallb.universe.tf/address-pool: iot
+    type: LoadBalancer
+    externalTrafficPolicy: Local
+    annotations:
+       metallb.universe.tf/allow-shared-ip: iot
+       metallb.universe.tf/address-pool: iot
     ports:
       http:
         enabled: false
