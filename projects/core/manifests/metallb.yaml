@@ -29,6 +29,8 @@ metadata:
 spec:
   addresses:
     - 192.168.1.20/32
+    - 192.168.1.21/32
+    - 192.168.1.22/32
 ---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
