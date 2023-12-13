@@ -6,8 +6,3 @@ apps:
     repo: bjw-s
     chart: app-template
     targetRevision: 1.5.1
-
-  - name: snapcast
-    repoURL: https://charts.buvis.net
-    chart: snapserver
-    targetRevision: 0.1.6
