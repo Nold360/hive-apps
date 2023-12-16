@@ -9,7 +9,7 @@ image:
   # -- image repository
   repository: ghcr.io/onedr0p/prowlarr-develop
   # @default -- chart.appVersion
-  tag:
+  tag: "1.11"
   # -- image pull policy
   pullPolicy: IfNotPresent
 
