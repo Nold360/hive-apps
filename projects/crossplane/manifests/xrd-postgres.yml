@@ -13,7 +13,7 @@ spec:
     kind: XPostgres
     plural: xpostgres
   versions:
-  - name: v1alpha2
+  - name: v1alpha1
     referenceable: true
     schema:
       openAPIV3Schema:
