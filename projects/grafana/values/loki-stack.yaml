@@ -2,7 +2,7 @@ loki:
   enabled: true
   image:
     repository: grafana/loki
-    tag: 2.9.2
+    tag: 2.9.3
 
 promtail:
   enabled: true
