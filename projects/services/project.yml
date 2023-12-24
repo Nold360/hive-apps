@@ -33,7 +33,7 @@ apps:
   namespace: cnpg-system
   repoURL: https://cloudnative-pg.github.io/charts
   chart: cloudnative-pg
-  targetRevision: 0.19.1
+  targetRevision: 0.20.0
 
 - name: redis-operator
   repoURL: https://spotahome.github.io/redis-operator
