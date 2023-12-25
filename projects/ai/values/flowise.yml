@@ -1,0 +1,77 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: flowiseai/flowise
+          tag: 1.4.7
+        command:
+          - flowise
+          - start
+
+env:
+  FLOWISE_USERNAME: nold
+  PORT: "3000"
+  DATABASE_PATH: /data/.flowise
+  APIKEY_PATH: /data/.flowise
+  SECRETKEY_PATH: /data/.flowise
+  LOG_PATH: /data/.flowise/logs
+
+  # NUMBER_OF_PROXIES= 1
+
+  # DATABASE_TYPE=postgres
+  # DATABASE_PORT=""
+  # DATABASE_HOST=""
+  # DATABASE_NAME="flowise"
+  # DATABASE_USER=""
+  # DATABASE_PASSWORD=""
+
+  # FLOWISE_USERNAME=user
+  # FLOWISE_PASSWORD=1234
+  # FLOWISE_SECRETKEY_OVERWRITE=myencryptionkey
+  # DEBUG=true
+  # LOG_LEVEL=debug (error | warn | info | verbose | debug)
+  # TOOL_FUNCTION_BUILTIN_DEP=crypto,fs
+  # TOOL_FUNCTION_EXTERNAL_DEP=moment,lodash
+
+  # LANGCHAIN_TRACING_V2=true
+  # LANGCHAIN_ENDPOINT=https://api.smith.langchain.com
+  # LANGCHAIN_API_KEY=your_api_key
+  # LANGCHAIN_PROJECT=your_project
+
+ingress:
+  main:
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    enabled: true
+    hosts:
+    - host: flowise.dc
+      paths:
+      - path: /
+        service:
+          name: main
+          port: http
+    tls:
+    - hosts:
+      - flowise.dc
+      secretName: flowise-tls
+
+persistence:
+  data:
+    accessMode: ReadWriteOnce
+    enabled: true
+    mountPath: /data
+    readOnly: false
+    size: 10Gi
+    type: persistentVolumeClaim
+
+securityContext:
+  privileged: false
+
+service:
+  main:
+    ports:
+      http:
+        enabled: true
+        port: 3000
+    type: ClusterIP

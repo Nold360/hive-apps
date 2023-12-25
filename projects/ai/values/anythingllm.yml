@@ -1,0 +1,47 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: mintplexlabs/anythingllm
+          tag: master
+
+env:
+  STORAGE_DIR: /data
+
+ingress:
+  main:
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    enabled: true
+    hosts:
+    - host: chat.dc
+      paths:
+      - path: /
+        service:
+          name: main
+          port: http
+    tls:
+    - hosts:
+      - chat.dc
+      secretName: anythingllm-tls
+
+persistence:
+  data:
+    accessMode: ReadWriteOnce
+    enabled: true
+    mountPath: /data
+    readOnly: false
+    size: 10Gi
+    type: persistentVolumeClaim
+
+securityContext:
+  privileged: false
+
+service:
+  main:
+    ports:
+      http:
+        enabled: true
+        port: 3001
+    type: ClusterIP

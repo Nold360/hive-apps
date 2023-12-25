@@ -1,0 +1,18 @@
+config:
+  description: LocalAI & LLM Stuff
+
+apps:
+- name: localai
+  repoURL: https://go-skynet.github.io/helm-charts
+  chart: local-ai
+  targetRevision: 2.1.2
+
+- name: anythingllm
+  repo: bjw-s 
+  chart: app-template
+  targetRevision: 2.4.0
+
+- name: flowise
+  repo: bjw-s 
+  chart: app-template
+  targetRevision: 2.4.0
