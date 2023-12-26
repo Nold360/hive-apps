@@ -6,8 +6,36 @@ controllers:
           repository: mintplexlabs/anythingllm
           tag: master
 
-env:
-  STORAGE_DIR: /data
+        env:
+          STORAGE_DIR: /data
+          # SERVER_PORT=3001
+          # STORAGE_DIR="/app/server/storage"
+          # UID='1000'
+          # GID='1000'
+          # # JWT_SECRET="my-random-string-for-seeding" # Only needed if AUTH_TOKEN is set. Please generate random string at least 12 chars long.
+          #
+          ###########################################
+          ######## LLM API SElECTION ################
+          ###########################################
+          LLM_PROVIDER: 'localai'
+          LOCAL_AI_BASE_PATH: 'http://localai-local-ai.ai.svc.cluster.local/v1'
+          # LOCAL_AI_MODEL_PREF: 'luna-ai-llama2'
+          LOCAL_AI_MODEL_TOKEN_LIMIT: 1024
+          # LOCAL_AI_API_KEY="sk-123abc"
+
+          ###########################################
+          ######## Embedding API SElECTION ##########
+          ###########################################
+          EMBEDDING_ENGINE: 'localai'
+          EMBEDDING_BASE_PATH: 'http://localai-local-ai.ai.svc.cluster.local/v1'
+          EMBEDDING_MODEL_PREF: 'text-embedding-ada-002'
+          # EMBEDDING_MODEL_MAX_CHUNK_LENGTH=1000 # The max chunk size in chars a string to embed can be
+
+          ###########################################
+          ######## Vector Database Selection ########
+          ###########################################
+          # Enable all below if you are using vector database: LanceDB.
+          VECTOR_DB: "lancedb"
 
 ingress:
   main:
