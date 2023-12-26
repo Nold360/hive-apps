@@ -82,9 +82,10 @@ models:
   persistence:
     pvc:
       enabled: true
-      size: 6Gi
+      size: 100Gi
       accessModes:
         - ReadWriteOnce
+      storageClass: "ssd"
 
 service:
   type: ClusterIP
