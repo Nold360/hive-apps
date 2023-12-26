@@ -1617,10 +1617,10 @@ prometheus:
         static_configs:
         - targets: ['192.168.1.1:9100']
 
-      - job_name: 'openwrt-bridge'
+      - job_name: 'hive-ipmi'
         scrape_interval: 60s
         static_configs:
-        - targets: ['192.168.1.2:9100']
+        - targets: ['192.168.1.111:9290']
 
       - job_name: 'kubernetes-services'
         scrape_interval: 120s
