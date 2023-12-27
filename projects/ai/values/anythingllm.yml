@@ -7,34 +7,26 @@ controllers:
           tag: master
 
         env:
-          STORAGE_DIR: /data
+          STORAGE_DIR: /app/server/storage
           # SERVER_PORT=3001
           # STORAGE_DIR="/app/server/storage"
           # UID='1000'
           # GID='1000'
           # # JWT_SECRET="my-random-string-for-seeding" # Only needed if AUTH_TOKEN is set. Please generate random string at least 12 chars long.
           #
-          ###########################################
           ######## LLM API SElECTION ################
-          ###########################################
           LLM_PROVIDER: 'localai'
           LOCAL_AI_BASE_PATH: 'http://localai-local-ai.ai.svc.cluster.local/v1'
-          # LOCAL_AI_MODEL_PREF: 'luna-ai-llama2'
+          LOCAL_AI_MODEL_PREF: 'thebloke__dolphin-2.2.1-mistral-7b-gguf__dolphin-2.2.1-mistral-7b.q5_k_m.gguf'
           LOCAL_AI_MODEL_TOKEN_LIMIT: 1024
           # LOCAL_AI_API_KEY="sk-123abc"
 
-          ###########################################
           ######## Embedding API SElECTION ##########
-          ###########################################
           EMBEDDING_ENGINE: 'localai'
           EMBEDDING_BASE_PATH: 'http://localai-local-ai.ai.svc.cluster.local/v1'
           EMBEDDING_MODEL_PREF: 'text-embedding-ada-002'
-          # EMBEDDING_MODEL_MAX_CHUNK_LENGTH=1000 # The max chunk size in chars a string to embed can be
-
-          ###########################################
+          EMBEDDING_MODEL_MAX_CHUNK_LENGTH: 1000
           ######## Vector Database Selection ########
-          ###########################################
-          # Enable all below if you are using vector database: LanceDB.
           VECTOR_DB: "lancedb"
 
 ingress:
@@ -58,10 +50,21 @@ persistence:
   data:
     accessMode: ReadWriteOnce
     enabled: true
-    mountPath: /data
     readOnly: false
     size: 10Gi
     type: persistentVolumeClaim
+    globalMounts:
+      - path: /app/server/storage
+  collector:
+    enabled: true
+    type: emptyDir
+    globalMounts:
+      - path: /app/collector/hotdir
+  outputs:
+    enabled: true
+    type: emptyDir
+    globalMounts:
+      - path: /app/collector/outputs
 
 securityContext:
   privileged: false
