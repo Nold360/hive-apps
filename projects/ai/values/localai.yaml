@@ -1,10 +1,10 @@
 replicaCount: 1
 
 deployment:
-  image: quay.io/go-skynet/local-ai:master
+  image: quay.io/go-skynet/local-ai:master-ffmpeg-core
   env:
-    THREADS: 16
-    CONTEXT_SIZE: 512
+    threads: 16
+    context_size: 512
     DEBUG: "true"
 
     ## Specify a different bind address (defaults to ":8080")
@@ -58,7 +58,10 @@ deployment:
   imagePullSecrets: []
     # - name: secret-names
 
-# Prompt templates to include
+resources:
+  limits:
+    memory: 64Gi
+
 # Note: the keys of this map will be the names of the prompt template files
 promptTemplates:
   {}
