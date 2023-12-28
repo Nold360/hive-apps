@@ -99,6 +99,7 @@ ingress:
   className: "ingress-internal"
   annotations:
     cert-manager.io/cluster-issuer: vault-issuer
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
   hosts:
     - host: ai.dc
       paths:
