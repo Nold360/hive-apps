@@ -4,7 +4,7 @@ deployment:
   image: quay.io/go-skynet/local-ai:master-ffmpeg-core
   env:
     threads: 16
-    context_size: 512
+    context_size: 2048
     DEBUG: "true"
 
     ## Specify a different bind address (defaults to ":8080")
