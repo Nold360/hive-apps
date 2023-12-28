@@ -29,3 +29,8 @@ apps:
   chart: node-red
   repoURL: https://schwarzit.github.io/node-red-chart
   targetRevision: 0.23.1
+
+- name: wmbusmeters
+  chart: app-template
+  repo: bjw-s
+  targetRevision: 2.4.0

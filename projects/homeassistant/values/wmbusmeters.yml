@@ -1,0 +1,95 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: wmbusmeters/wmbusmeters
+          tag: latest
+        command:
+          - /wmbusmeters/wmbusmeters
+          - --useconfig=/etc
+          - --verbose
+
+        securityContext:
+          privileged: true
+
+        probes:
+          liveness:
+            enabled: false
+          readiness:
+            enabled: false
+          startup:
+            enabled: false
+
+
+configMaps:
+  config:
+    enabled: true
+    data:
+      wmbusmeters.conf: |
+        loglevel=normal
+        device=rtl433
+        logtelegrams=false
+        format=json
+        logfile=/dev/stdout
+        donotprobe=/dev/ttyACM0
+        shell=/usr/bin/mosquitto_pub -h mqtt.lan -t wmbusmeters/"$METER_ID" -m "$METER_JSON"
+        ignoreduplicates=false
+
+  meters:
+    enabled: true
+    data:
+      meter1: |
+        name=WashingMachine
+        id=22267173
+        key=
+        driver=waterstarm
+      meter2: |
+        name=Water
+        id=22270064
+        key=
+        driver=waterstarm
+
+persistence:
+  data:
+    accessMode: ReadWriteOnce
+    enabled: true
+    readOnly: false
+    size: 10Gi
+    type: persistentVolumeClaim
+    globalMounts:
+      - path: /wmbusmeters_data
+
+  config:
+    enabled: true
+    type: configMap
+    name: wmbusmeters-config
+    advancedMounts:
+      main: # the controller with the "main" identifier
+        main: # the container with the "main" identifier
+          - path: /etc/wmbusmeters.conf
+            readOnly: true
+            subPath: wmbusmeters.conf
+
+  meters:
+    enabled: true
+    type: configMap
+    name: wmbusmeters-meters
+    advancedMounts:
+      main: # the controller with the "main" identifier
+        main: # the container with the "main" identifier
+          - path: /etc/wmbusmeters.d
+            readOnly: true
+ 
+  dev:
+    enabled: true
+    type: hostPath
+    hostPath: /dev
+
+service:
+  main:
+    ports:
+      http:
+        enabled: true
+        port: 3001
+    type: ClusterIP
