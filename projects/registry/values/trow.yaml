@@ -15,7 +15,8 @@ trow:
       offline: false
       registries:
         - alias: docker
-          host: registry-1.docker.io
+          #host: registry-1.docker.io
+          host: mirror.gcr.io
         - alias: nvcr
           host: https://nvcr.io
         - alias: quay
