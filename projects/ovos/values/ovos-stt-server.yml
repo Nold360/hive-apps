@@ -1,0 +1,68 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: smartgic/ovos-stt-server-fasterwhisper
+          tag: alpha
+          pullPolicy: Always
+
+        env:
+          ## VECTOR_DB: "lancedb"
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    hosts:
+    - host: ovos-stt-server.dc
+      paths:
+      - path: /
+        service:
+          name: main
+          port: http
+    tls:
+    - hosts:
+      - ovos-stt-server.dc
+      secretName: ovos-stt-server-tls
+
+configMaps:
+  config:
+    enabled: true
+    data: 
+      mycroft.conf: |
+        {
+          "stt": {
+            "module": "ovos-stt-plugin-fasterwhisper",
+            "ovos-stt-plugin-fasterwhisper": {
+                "model": "medium",
+                "cpu_threads": 8
+            }
+          }
+        }
+
+
+persistence:
+  config:
+    type: configMap
+    enabled: true
+    name: ovos-stt-server-config
+    advancedMounts:
+      main: 
+        main: 
+          - path: /home/ovos/.config/mycroft/mycroft.conf
+            readOnly: true
+            subPath: mycroft.conf
+
+
+securityContext:
+  privileged: false
+
+service:
+  main:
+    ports:
+      http:
+        enabled: true
+        port: 8080
+    type: ClusterIP
