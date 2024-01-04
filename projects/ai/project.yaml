@@ -16,3 +16,8 @@ apps:
   repo: bjw-s 
   chart: app-template
   targetRevision: 2.4.0
+
+- name: dify
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 2.4.0
