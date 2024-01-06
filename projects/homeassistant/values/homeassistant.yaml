@@ -1,27 +1,13 @@
-image:
-  repository: homeassistant/home-assistant
-  tag: 2024.1
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: homeassistant/home-assistant
+          tag: "2024.1"
 
-env:
-  TZ: Europe/Berlin
-
-influxdb:
-  enabled: false
-  auth:
-    createUserToken: true
-    user:
-      username: homeassistant
-      org: primary
-      bucket: primary
-    readUser:
-      username: grafana
-    writeUser:
-      username: homeassistant
-    existingSecret: influx
-  database: home_assistant
-  persistence:
-    enabled: true
-    size: 8Gi
+        env:
+          TZ: Europe/Berlin
 
 ingress:
   main:
@@ -33,40 +19,27 @@ ingress:
     - host: hass.dc
       paths:
       - path: /
-        pathType: Prefix
+        service:
+          name: main
+          port: http
     tls:
     - hosts:
       - hass.dc
       secretName: hass-tls
 
-metrics:
-  enabled: false
-  prometheusRule:
-    enabled: false
-    labels: {}
-    rules: []
-  serviceMonitor:
-    interval: 1m
-    labels: {}
-    scrapeTimeout: 30s
-
 persistence:
   config:
     enabled: true
-  data:
-    enabled: true
+    type: persistentVolumeClaim
     storageClass: local-path
     accessMode: ReadWriteOnce
     size: 1Gi
+  
   media:
     enabled: true
     type: hostPath
-    mountPath: /media
     hostPath: /data/media
     readOnly: true
-
-postgresql:
-  enabled: false
 
 securityContext:
   privileged: false

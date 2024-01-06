@@ -4,9 +4,9 @@ config:
 
 apps:
 - name: homeassistant
-  chart: home-assistant
-  repoURL: https://charts.pree.dev
-  targetRevision: 1.21.1
+  chart: app-template
+  repo: bjw-s
+  targetRevision: 2.4.0
   secrets:
   - name: bucket
     keys:
