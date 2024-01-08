@@ -1,6 +1,6 @@
 image:
   repository: koenkk/zigbee2mqtt
-  tag: v1.35.0
+  tag: 1.35.1
 
 service:
   main:
