@@ -22,7 +22,7 @@ apps:
   namespace: s3
   repoURL: https://charts.min.io
   chart: minio
-  targetRevision: 5.0.14
+  targetRevision: 5.0.15
   secrets:
   - name: minio-root
     keys:
