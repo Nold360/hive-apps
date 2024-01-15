@@ -16,8 +16,3 @@ apps:
   repo: bjw-s 
   chart: app-template
   targetRevision: 2.4.0
-
-- name: dify
-  repoURL: https://borispolonsky.github.io/dify-helm
-  chart: dify
-  targetRevision: 0.16.1
