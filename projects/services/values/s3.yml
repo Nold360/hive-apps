@@ -54,7 +54,7 @@ tls:
 persistence:
   enabled: true
 
-  storageClass: "ssd"
+  storageClass: "local-path"
   accessMode: ReadWriteOnce
   size: 200Gi
 
