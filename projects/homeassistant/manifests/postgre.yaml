@@ -13,8 +13,8 @@ spec:
 
   backup:
     barmanObjectStore:
-      destinationPath: "s3://homeassistant-db/"
-      endpointURL: "http://minio.minio.svc.cluster.local:9000"
+      destinationPath: "s3://homeassistant-backup/"
+      endpointURL: "http://s3-minio.s3.svc.cluster.local:9000"
       s3Credentials:
         accessKeyId:
           name: bucket
@@ -29,8 +29,8 @@ spec:
   externalClusters:
     - name: homeassistant
       barmanObjectStore:
-        destinationPath: "s3://homeassistant-db/"
-        endpointURL: "http://minio.minio.svc.cluster.local:9000"
+        destinationPath: "s3://homeassistant-backup/"
+        endpointURL: "http://s3-minio.s3.svc.cluster.local:9000"
         s3Credentials:
           accessKeyId:
             name: bucket
@@ -51,4 +51,4 @@ spec:
   schedule: "0 0 0 * * *"
   backupOwnerReference: self
   cluster:
-    name: homeassistant-db
+    name: homeassistant
