@@ -63,6 +63,7 @@ ingress:
   ingressClassName: ~
   annotations:
     cert-manager.io/cluster-issuer: vault-issuer
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
   path: /
   hosts:
     - s3.dc
