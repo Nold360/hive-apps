@@ -3,19 +3,20 @@ kind: Cluster
 metadata:
   name: gitea-db
   namespace: gitea
+  annotations:
+    cnpg.io/skipEmptyWalArchiveCheck: enabled
 spec:
   instances: 1
   imageName: ghcr.io/cloudnative-pg/postgresql:15
 
   bootstrap:
-    initdb:
-      database: app
-      owner: app
+    recovery:
+      source: gitea-db
 
   backup:
     barmanObjectStore:
-      destinationPath: "s3://gitea-db/"
-      endpointURL: "http://minio.minio.svc.cluster.local:9000"
+      destinationPath: "s3://forgejo/"
+      endpointURL: "http://s3-minio.s3.svc.cluster.local:9000"
       s3Credentials:
         accessKeyId:
           name: bucket
@@ -45,8 +46,8 @@ spec:
   externalClusters:
     - name: gitea-db
       barmanObjectStore:
-        destinationPath: "s3://gitea-db/"
-        endpointURL: "http://minio.minio.svc.cluster.local:9000"
+        destinationPath: "s3://forgejo/"
+        endpointURL: "http://s3-minio.s3.svc.cluster.local:9000"
         s3Credentials:
           accessKeyId:
             name: bucket
