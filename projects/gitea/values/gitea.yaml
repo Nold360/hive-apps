@@ -138,12 +138,12 @@ gitea:
       PROXY_HOSTS: "github.com"
 
   additionalConfigFromEnvs:
-    - name: FORGEJO__DATABASE__PASSWD
+    - name: FORGEJO__database__PASSWD
       valueFrom:
         secretKeyRef:
           name: gitea-db-app
           key: password
-    - name: FORGEJO__DATABASE__USER
+    - name: FORGEJO__database__USER
       valueFrom:
         secretKeyRef:
           name: gitea-db-app
