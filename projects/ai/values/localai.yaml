@@ -59,6 +59,8 @@ deployment:
     # - name: secret-names
 
 resources:
+  requests:
+    memory: 100Mi
   limits:
     memory: 64Gi
 
