@@ -12,6 +12,9 @@ controller:
   containerPort:
     http: 80
     https: 443
+  service:
+    annotations:
+      metallb.universe.tf/address-pool: external
   # -- Will add custom configuration options to Nginx https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
   config: {}
   # -- Annotations to be added to the controller config configuration configmap.
