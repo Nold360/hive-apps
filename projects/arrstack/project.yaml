@@ -23,7 +23,7 @@ apps:
   chart: flaresolverr
   namespace: flaresolverr
   repo: lib42
-  targetRevision: 1.0.0
+  targetRevision: 1.1.0
   include:
   - ingress-internal
 
