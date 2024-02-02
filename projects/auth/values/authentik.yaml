@@ -19,7 +19,7 @@ worker:
 
 image:
   repository: ghcr.io/goauthentik/server
-  tag: 2023.6.1
+  tag: 2023.10.7
 
 ingress:
   enabled: true
