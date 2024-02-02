@@ -9,9 +9,9 @@ promtail:
 
 fluent-bit:
   enabled: true
-  image:
-    repository: grafana/fluent-bit-plugin-loki
-    tag: 2.9.4-amd64
+  # image:
+  #   repository: grafana/fluent-bit-plugin-loki
+  #   tag: 2.9.4-amd64
 
 grafana:
   enabled: false
