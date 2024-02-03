@@ -34,6 +34,7 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: vault-issuer
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: '4200'
   hosts:
     - paths: ['/']
       host: reg.dc
