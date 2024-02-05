@@ -11,9 +11,10 @@ image:
 env:
   # -- Set the container timezone
   TZ: UTC
-  # SANED_NET_HOSTS: 127.0.0.1
+  SANED_NET_HOSTS: 192.168.1.0/24
   # OCR_LANG: "eng"
-  # AIRSCAN_DEVICES:
+  AIRSCAN_DEVICES: 192.168.1.117 #printer.lan
+  PIXMA_HOSTS: 192.168.1.117 #printer.lan
   # DELIMITER:
   # DEVICES:
   # SCANIMAGE_LIST_IGNORE:
