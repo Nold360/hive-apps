@@ -81,7 +81,7 @@ networkPolicy:
       - to:
         - namespaceSelector:
             matchLabels:
-              app.heqet.gnu.one/name: gitea
+              app.heqet.gnu.one/name: forgejo
         ports:
         - port: 2222
           protocol: TCP
@@ -108,7 +108,7 @@ networkPolicy:
         to:
         - namespaceSelector:
             matchLabels:
-              app.heqet.gnu.one/name: minio
+              app.heqet.gnu.one/name: s3
 
     allow-ingress-traffic:
       podSelector: {}

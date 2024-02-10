@@ -1,0 +1,196 @@
+global:
+  hostAliases: []
+  # - ip: 192.168.137.2
+  #   hostnames:
+  #   - example.com
+
+strategy:
+  type: 'RollingUpdate'
+  rollingUpdate:
+    maxSurge: '100%'
+    maxUnavailable: 0
+
+image:
+  registry: codeberg.org
+  repository: forgejo/forgejo
+  tag: "1.21"
+  rootless: true
+
+podSecurityContext:
+  fsGroup: 1000
+
+## @param containerSecurityContext Security context
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  # Add the SYS_CHROOT capability for root and rootless images if you intend to
+  # run pods on nodes that use the container runtime cri-o. Otherwise, you will
+  # get an error message from the SSH server that it is not possible to read from
+  # the repository.
+  # https://gitea.com/gitea/helm-chart/issues/161
+    add:
+      - SYS_CHROOT
+  privileged: false
+  readOnlyRootFilesystem: true
+  runAsGroup: 1000
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  ssh:
+    type: LoadBalancer
+    port: 2222
+    annotations:
+      metallb.universe.tf/address-pool: git
+
+ingress:
+  enabled: true
+  className: ingress-external
+  labels:
+    environment: external
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt
+    external-dns.alpha.kubernetes.io/hostname: git.nold.in
+    external-dns.alpha.kubernetes.io/target: nold.in
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+  hosts:
+    - host: git.nold.in
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: gitea-tls
+      hosts:
+        - git.nold.in
+
+
+## @section deployment
+#
+## @param resources Kubernetes resources
+resources:
+  {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+## @param signing.enabled Enable commit/action signing
+## @param signing.gpgHome GPG home directory
+## @param signing.privateKey Inline private gpg key for signed Forgejo actions
+## @param signing.existingSecret Use an existing secret to store the value of `signing.privateKey`
+signing:
+  enabled: false
+  gpgHome: /data/git/.gnupg
+  privateKey: ''
+  # privateKey: |-
+  #   -----BEGIN PGP PRIVATE KEY BLOCK-----
+  #   ...
+  #   -----END PGP PRIVATE KEY BLOCK-----
+  existingSecret: ''
+
+## @section Gitea
+#
+gitea:
+  admin:
+    existingSecret: admin
+
+  metrics:
+    enabled: false
+    serviceMonitor:
+      enabled: false
+      #  additionalLabels:
+      #    prometheus-release: prom1
+
+  # Either specify inline `key` and `secret` or refer to them via `existingSecret`
+  ## @param gitea.oauth OAuth configuration
+  oauth:
+    []
+    # - name: 'OAuth 1'
+    #   provider:
+    #   key:
+    #   secret:
+    #   existingSecret:
+    #   autoDiscoverUrl:
+    #   useCustomUrls:
+    #   customAuthUrl:
+    #   customTokenUrl:
+    #   customProfileUrl:
+    #   customEmailUrl:
+
+  ## @param gitea.config.server.SSH_PORT SSH port for rootlful Forgejo image
+  ## @param gitea.config.server.SSH_LISTEN_PORT SSH port for rootless Forgejo image
+
+  config:
+    APP_NAME: "Let's forge some forks"
+    webhook:
+      ALLOWED_HOST_LIST: argocd-server.argocd.svc.cluster.local
+    ui:
+      DEFAULT_THEME: arc-green
+    repository:
+      DEFAULT_BRANCH: main
+    server:
+      LFS_START_SERVER: true
+      PROTOCOL: http
+      DOMAIN: git.nold.in
+      ROOT_URL: https://git.nold.in
+    database:
+      DB_TYPE: postgres
+      NAME: app
+      HOST: forgejo-db-rw.forgejo.svc.cluster.local:5432
+    service:
+      DISABLE_REGISTRATION: true
+    lfs:
+      STORAGE_TYPE: local
+    picture:
+      DISABLE_GRAVATAR: true
+    metrics:
+      ENABLED: false
+    api:
+      ENABLE_SWAGGER: false
+    oauth:
+      ENABLE: false
+    proxy:
+      PROXY_ENABLED: true
+      PROXY_URL: "http://proxy-squid.proxy.svc.cluster.local:3128"
+      PROXY_HOSTS: "github.com"
+    actions:
+      DEFAULT_ACTIONS_URL: self
+
+  additionalConfigFromEnvs:
+    - name: FORGEJO__database__PASSWD
+      valueFrom:
+        secretKeyRef:
+          name: forgejo-db-app
+          key: password
+    - name: FORGEJO__database__USER
+      valueFrom:
+        secretKeyRef:
+          name: forgejo-db-app
+          key: username
+
+  ## @param gitea.ssh.logLevel Configure OpenSSH's log level. Only available for root-based Forgejo image.
+  ssh:
+    logLevel: 'INFO'
+
+redis-cluster:
+  enabled: true
+  usePassword: false
+  cluster:
+    nodes: 3 # default: 6
+    replicas: 0 # default: 1
+
+postgresql-ha:
+  enabled: false
+postgresql:
+  enabled: false
+## @param test.enabled Set it to false to disable test-connection Pod.
+## @param test.image.name Image name for the wget container used in the test-connection Pod.
+## @param test.image.tag Image tag for the wget container used in the test-connection Pod.
+checkDeprecation: true
+test:
+  enabled: false

@@ -1,5 +1,5 @@
 config:
-  description: Gitea public Git Server
+  description: Forgejo Public Git Server
   networkPolicy:
     groups:
     - internet
@@ -12,10 +12,10 @@ config:
     environment: external
 
 apps:
-- name: gitea
+- name: forgejo
   repoURL: codeberg.org/forgejo-contrib
   chart: forgejo
-  targetRevision: 0.12.0
+  targetRevision: 3.0.0
   secrets:
   - name: admin
     keys:
@@ -28,4 +28,4 @@ apps:
     - accesskey
   - name: redis-auth
     keys:
-    - password
+      - password
