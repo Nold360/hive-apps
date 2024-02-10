@@ -15,7 +15,7 @@ spec:
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
-  name: minetest
+  name: git
   namespace: metallb
 spec:
   addresses:
@@ -60,6 +60,15 @@ spec:
     - 192.168.1.11/32
 ---
 apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: virt
+  namespace: metallb
+spec:
+  addresses:
+    - 192.168.1.64/26 #192.168.1.65 - 192.168.1.78
+---
+apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
   name: l2advertisement
@@ -71,3 +80,5 @@ spec:
       - external
       - internal
       - iot
+      - virt
+      - git

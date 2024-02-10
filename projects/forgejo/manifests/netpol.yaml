@@ -1,0 +1,16 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-cnpg-kubeapi
+  namespace: forgejo
+spec:
+  endpointSelector:
+    matchLabels:
+      cnpg.io/cluster: forgejo-db
+  egress:
+  - toEntities:
+    - kube-apiserver
+  - toPorts:
+    - ports:
+      - port: "6443"
+        protocol: TCP
