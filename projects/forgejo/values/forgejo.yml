@@ -146,6 +146,14 @@ gitea:
       DISABLE_REGISTRATION: true
     lfs:
       STORAGE_TYPE: local
+    queue:
+      TYPE: persistable-channel
+      #CONN_STR: redis://redis.forgejo.svc.cluster.local:6379/0
+    cache:
+      ADAPTER: memory
+      #HOST: redis://redis.forgejo.svc.cluster.local:6379/0?pool_size=100&idle_timeout=180s
+    session:
+      PROVIDER: memory
     picture:
       DISABLE_GRAVATAR: true
     metrics:
@@ -178,7 +186,7 @@ gitea:
     logLevel: 'INFO'
 
 redis-cluster:
-  enabled: true
+  enabled: false
   usePassword: false
   cluster:
     nodes: 3 # default: 6

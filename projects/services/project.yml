@@ -25,6 +25,6 @@ apps:
   targetRevision: 0.20.1
 
 - name: redis-operator
-  repoURL: https://spotahome.github.io/redis-operator
+  repoURL: https://ot-container-kit.github.io/helm-charts
   chart: redis-operator
-  targetRevision: 3.3.0
+  targetRevision: 0.15.9
