@@ -30,13 +30,13 @@ spec:
         #encryption: AES256
     retentionPolicy: "90d"
 
-  resources:
-    requests:
-      memory: "64Mi"
-      cpu: "50m"
-    limits:
-      memory: "1Gi"
-      cpu: "1"
+  # resources:
+  #   requests:
+  #     memory: "64Mi"
+  #     cpu: "50m"
+  #   limits:
+  #     memory: "1Gi"
+  #     cpu: "1"
 
   storage:
     size: 10Gi
