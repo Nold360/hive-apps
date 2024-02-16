@@ -5,12 +5,7 @@ image:
 trow:
   logLevel: info
   domain: reg.dc
-  validation:
-    enabled: false
-    allowDocker: true
-    allowKubernetes: true
-    proxyDockerHub: true
-  proxyConfig:
+  proxyRegistries:
     config:
       offline: false
       registries:
