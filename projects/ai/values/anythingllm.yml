@@ -5,6 +5,7 @@ controllers:
         image:
           repository: mintplexlabs/anythingllm
           tag: master
+          pullPolicy: Always
 
         env:
           STORAGE_DIR: /app/server/storage
@@ -17,7 +18,7 @@ controllers:
           ######## LLM API SElECTION ################
           LLM_PROVIDER: 'localai'
           LOCAL_AI_BASE_PATH: 'http://localai-local-ai.ai.svc.cluster.local/v1'
-          LOCAL_AI_MODEL_PREF: 'thebloke__dolphin-2.2.1-mistral-7b-gguf__dolphin-2.2.1-mistral-7b.q5_k_m.gguf'
+          LOCAL_AI_MODEL_PREF: main
           LOCAL_AI_MODEL_TOKEN_LIMIT: 1024
           # LOCAL_AI_API_KEY="sk-123abc"
 
@@ -28,6 +29,8 @@ controllers:
           EMBEDDING_MODEL_MAX_CHUNK_LENGTH: 1000
           ######## Vector Database Selection ########
           VECTOR_DB: "lancedb"
+
+          DISABLE_TELEMETRY: "true"
 
 ingress:
   main:
