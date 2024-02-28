@@ -1,0 +1,21 @@
+controllers:
+  main:
+    containers:
+      main:
+        image: 
+          repository:  browserless/chrome
+          tag: latest
+          pullPolicy: Always
+        env:
+          MAX_CONCURRENT_SESSIONS: 10
+
+securityContext:
+  privileged: false
+
+service:
+  main:
+    ports:
+      http:
+        enabled: true
+        port: 3000
+    type: ClusterIP
