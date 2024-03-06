@@ -30,3 +30,8 @@ apps:
   repo: bjw-s
   chart: app-template
   targetRevision: 2.4.0
+
+- name: qdrant
+  repoURL: https://qdrant.to/helm
+  chart: qdrant
+  targetRevision: 0.8.0

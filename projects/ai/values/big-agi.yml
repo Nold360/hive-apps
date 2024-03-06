@@ -9,6 +9,18 @@ controllers:
         command: [ "next", "start", "-p", "3001" ]
         env:
           PUPPETEER_WSS_ENDPOINT: ws://browserless.browserless.svc.cluster.local:3000
+          # ANTHROPIC_API_HOST: ""
+          # ANTHROPIC_API_KEY: ""
+          # ELEVENLABS_API_HOST: ""
+          # ELEVENLABS_API_KEY: ""
+          # ELEVENLABS_VOICE_ID: ""
+          # GOOGLE_CLOUD_API_KEY: ""
+          # GOOGLE_CSE_ID: ""
+          # HELICONE_API_KEY: ""
+          OPENAI_API_HOST: "localai-local-ai.ai.svc.cluster.local"
+          # OPENAI_API_KEY: "sk-xxxxxxxxxxxx"
+          # OPENAI_API_ORG_ID: ""
+          # PRODIA_API_KEY: ""
 
 ingress:
   main:

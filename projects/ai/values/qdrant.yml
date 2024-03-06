@@ -1,0 +1,49 @@
+image:
+  repository: docker.io/qdrant/qdrant
+  pullPolicy: IfNotPresent
+  tag: "v1.8.0"
+  useUnprivilegedImage: true
+
+env:
+  - name: QDRANT__TELEMETRY_DISABLED
+    value: "true"
+
+ingress:
+  enabled: false
+  ingressClassName: ""
+  additionalLabels: {}
+  annotations: {}
+    # kubernetes.io/ingress.class: alb
+  hosts:
+    - host: example-domain.com
+      paths:
+        - path: /
+          pathType: Prefix
+          servicePort: 6333
+  tls: []
+    # - hosts:
+    #    - example-domain.com
+    #   secretName: tls-secret-name
+
+updateVolumeFsOwnership: false
+
+persistence:
+  accessModes: ["ReadWriteOnce"]
+  size: 10Gi
+  storageClassName: ssd
+
+# modification example for configuration to overwrite defaults
+config:
+  cluster:
+    enabled: false
+
+# api key for authentication at qdrant
+# false: no api key will be configured
+# true: an api key will be auto-generated
+# string: the given string will be set as an apikey
+apiKey: true
+# read-only api key for authentication at qdrant
+# false: no read-only api key will be configured
+# true: an read-only api key will be auto-generated
+# string: the given string will be set as a read-only apikey
+readOnlyApiKey: true
