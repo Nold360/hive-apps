@@ -94,7 +94,7 @@ grafana:
 
   image:
     repository: grafana/grafana
-    tag: 10.3.4
+    tag: 10.4.0
 
   persistence:
     enabled: true
