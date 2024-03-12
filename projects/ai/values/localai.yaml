@@ -12,10 +12,10 @@ deployment:
     context_size: 4096
     DEBUG: "true"
     #
-    SINGLE_ACTIVE_BACKEND: "true"
-    PYTHON_GRPC_MAX_WORKERS: "1"
-    LLAMACPP_PARALLEL: "1"
-    PARALLEL_REQUESTS: "false"
+    # SINGLE_ACTIVE_BACKEND: "true"
+    # PYTHON_GRPC_MAX_WORKERS: "1"
+    # LLAMACPP_PARALLEL: "1"
+    # PARALLEL_REQUESTS: "false"
 
     ## Specify a different bind address (defaults to ":8080")
     # ADDRESS=127.0.0.1:8080
