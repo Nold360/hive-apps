@@ -1,0 +1,26 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: reg.dc/bibot
+          tag: latest
+          pullPolicy: Always
+
+        #env:
+          #
+        probes:
+          liveness: 
+            enabled: false
+          readiness: 
+            enabled: false
+          startup: 
+            enabled: false
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: 3001
+    type: ClusterIP
+

@@ -35,3 +35,9 @@ apps:
   repoURL: https://qdrant.to/helm
   chart: qdrant
   targetRevision: 0.8.1
+
+- name: bibot
+  namespace: bibot
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 2.4.0
