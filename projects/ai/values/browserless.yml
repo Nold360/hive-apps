@@ -9,6 +9,25 @@ controllers:
         env:
           MAX_CONCURRENT_SESSIONS: 10
 
+ingress:
+  main:
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    enabled: true
+    hosts:
+    - host: browserless.dc
+      paths:
+      - path: /
+        service:
+          name: main
+          port: http
+    tls:
+    - hosts:
+      - browserless.dc
+      secretName: browserless-tls
+
+
+
 securityContext:
   privileged: false
 
