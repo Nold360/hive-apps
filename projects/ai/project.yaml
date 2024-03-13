@@ -41,3 +41,9 @@ apps:
   repo: bjw-s
   chart: app-template
   targetRevision: 2.4.0
+  secrets:
+    - name: bibot
+      keys:
+        - discord-token
+        - ombi-api-key
+        - prompt-template

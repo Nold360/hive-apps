@@ -7,8 +7,23 @@ controllers:
           tag: latest
           pullPolicy: Always
 
-        #env:
-          #
+        env:
+          BIBOT_PROMPT_FILE: /config/prompt-template
+          BROWSERLESS_URL: http://browserless.browserless.svc.cluster.local:3000
+          OPENAI_API_URL: http://localai-local-ai.ai.svc.cluster.local/v1
+          OPENAI_MODEL: mixtral-8x7b-instruct
+          OMBI_API_URL: http://ombi.ombi.svc.cluster.local:3575/api/v1
+          DISCORD_CHANNELS: "1216440541064200192"
+          OMBI_API_TOKEN:
+            valueFrom:
+              secretKeyRef:
+                name: bibot
+                key: ombi-api-key
+          DISCORD_TOKEN:
+            valueFrom:
+              secretKeyRef:
+                name: bibot
+                key: discord-token
         probes:
           liveness: 
             enabled: false
@@ -16,6 +31,13 @@ controllers:
             enabled: false
           startup: 
             enabled: false
+
+persistence:
+  config:
+    name: bibot
+    enabled: true
+    type: secret
+
 service:
   main:
     controller: main
