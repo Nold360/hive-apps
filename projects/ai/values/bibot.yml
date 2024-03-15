@@ -12,7 +12,7 @@ controllers:
           BROWSERLESS_URL: http://browserless.browserless.svc.cluster.local:3000
           OPENAI_API_URL: http://localai-local-ai.ai.svc.cluster.local/v1
           OPENAI_MODEL: mixtral-8x7b-instruct
-          OMBI_API_URL: http://ombi.ombi.svc.cluster.local:3575/api/v1
+          OMBI_API_URL: http://ombi.ombi.svc.cluster.local:3579/api/v1
           DISCORD_CHANNELS: "1216440541064200192"
           OMBI_API_TOKEN:
             valueFrom:
