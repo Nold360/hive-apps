@@ -47,3 +47,4 @@ apps:
         - discord-token
         - ombi-api-key
         - prompt-template
+        - instruct-template
