@@ -8,13 +8,9 @@ controllers:
           pullPolicy: Always
 
         env:
-          BIBOT_PROMPT_FILE: /config/prompt-template
-          # BIBOT_INSTRUCT_PROMPT_FILE: /config/instruct-template
+          BIBOT_CONFIG: /config/bibot.yml
           BROWSERLESS_URL: http://browserless.browserless.svc.cluster.local:3000
-          OPENAI_API_URL: http://localai-local-ai.ai.svc.cluster.local/v1
-          OPENAI_MODEL: command-r
           OMBI_API_URL: http://ombi.ombi.svc.cluster.local:3579/api/v1
-          DISCORD_CHANNELS: "1216440541064200192"
           OMBI_API_TOKEN:
             valueFrom:
               secretKeyRef:
@@ -33,11 +29,44 @@ controllers:
           startup: 
             enabled: false
 
-persistence:
+configMaps:
   config:
+    enabled: true
+    data:
+      bibot.yml: |-
+        prompt_template: /secret/prompt-template
+        instruct_template: /secret/instruct-template
+
+        context:
+          - name: "Your name is"
+            value: "Bi"
+          - name: "Your master is"
+            value: "noldtronics"
+
+        discord:
+          channels: [ '1216440541064200192' ]
+
+        tools:
+          ombi:
+            url: http://ombi.ombi.svc.cluster.local:3579/api/v1
+          browserless:
+            url: http://browserless.browserless.svc.cluster.local:3000
+
+        openai:
+          url: http://localai-local-ai.ai.svc.cluster.local/v1
+          model: command-r
+          temperature: 0.2
+
+persistence:
+  secret:
     name: bibot
     enabled: true
     type: secret
+
+  config:
+    name: bibot-config
+    enabled: true
+    type: configMap
 
 service:
   main:
