@@ -26,20 +26,26 @@ service:
 ingress:
   main:
     enabled: true
-    ingressClassName: "ingress-internal"
+    ingressClassName: "ingress-external"
+    labels:
+      environment: external
     annotations:
-      cert-manager.io/cluster-issuer: vault-issuer
-      traefik.ingress.kubernetes.io/router.tls: 'true'
+      #cert-manager.io/cluster-issuer: vault-issuer
+      nginx.ingress.kubernetes.io/proxy-body-size: 20G
+      kubernetes.io/tls-acme: "true"
+      cert-manager.io/cluster-issuer: letsencrypt
+      external-dns.alpha.kubernetes.io/hostname: music.nold.in
+      external-dns.alpha.kubernetes.io/target: nold.in
+      external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     hosts:
-    - host: music.dc
+    - host: music.nold.in
       paths:
       - path: /
         pathType: Prefix
     tls:
-    - secretName: music-tls
+    - secretName: music-ext-tls
       hosts:
-      - music.dc
-
+      - music.nold.in
 
 podSecurityContext:
   runAsUser: 568

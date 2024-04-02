@@ -1,5 +1,11 @@
 config:
   desc: Music Streaming
+  networkPolicy:
+    groups:
+    - internet
+
+  labels:
+    environment: external
 
 apps:
   - name: navidrome
