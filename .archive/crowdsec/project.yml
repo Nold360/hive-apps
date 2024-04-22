@@ -5,4 +5,4 @@ apps:
 - name: crowdsec
   repoURL: https://crowdsecurity.github.io/helm-charts
   chart: crowdsec
-  targetRevision: 0.9.12
+  targetRevision: 0.10.0
