@@ -1,6 +1,6 @@
 image:
   repository: b4bz/homer
-  tag: v23.10.1
+  tag: v24.04.1
 
 initContainers:
   clone-assets:
