@@ -22,7 +22,7 @@ deployment:
 
     ## Define galleries.
     ## models will to install will be visible in `/models/available`
-    GALLERIES: '[{"name":"model-gallery", "url":"github:go-skynet/model-gallery/index.yaml"}, {"url": "github:go-skynet/model-gallery/huggingface.yaml","name":"huggingface"}]'
+    #GALLERIES: '[{"name":"model-gallery", "url":"github:go-skynet/model-gallery/index.yaml"}, {"url": "github:go-skynet/model-gallery/huggingface.yaml","name":"huggingface"}]'
 
     ## Default path for models
     #MODELS_PATH=/models
