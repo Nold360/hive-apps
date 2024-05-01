@@ -34,7 +34,7 @@ apps:
 - name: qdrant
   repoURL: https://qdrant.to/helm
   chart: qdrant
-  targetRevision: 0.8.4
+  targetRevision: 0.8.5
 
 - name: bibot
   namespace: bibot
