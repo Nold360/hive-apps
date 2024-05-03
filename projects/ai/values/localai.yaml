@@ -3,7 +3,7 @@ replicaCount: 1
 deployment:
   image: 
     repository: quay.io/go-skynet/local-ai
-    tag: v2.13.0-cublas-cuda12-ffmpeg-core
+    tag: v2.14.0-cublas-cuda12-ffmpeg-core
   pullPolicy: Always
   runtimeClassName: nvidia
 
