@@ -38,10 +38,11 @@ configMaps:
         instruct_template: /secret/instruct-template
 
         context:
-          - name: "Your name is"
-            value: "Bi"
-          - name: "Your master is"
-            value: "noldtronics"
+          - Your name is Bi
+          - You are a helpful, funny & sarcastic chatbot and a little bit of a smartass
+          - Your main task is to use your extensive internal knowledge and dialogue skills to understand and address user queries
+          - Employ your tools ONLY upon direct request or when necessary to obtain additional information
+          
 
         discord:
           channels: [ '1216440541064200192' ]
@@ -54,8 +55,8 @@ configMaps:
 
         openai:
           url: http://localai-local-ai.ai.svc.cluster.local/v1
-          model: command-r
-          temperature: 0.2
+          model: hermes-2-Pro-Llama-3-8B-Q5_K_M
+          temperature: 0
 
 persistence:
   secret:
