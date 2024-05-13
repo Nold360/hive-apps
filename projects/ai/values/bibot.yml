@@ -8,6 +8,7 @@ controllers:
           pullPolicy: Always
 
         env:
+          OPENAI_API_KEY: fake
           BIBOT_CONFIG: /config/bibot.yml
           BROWSERLESS_URL: http://browserless.browserless.svc.cluster.local:3000
           OMBI_API_URL: http://ombi.ombi.svc.cluster.local:3579/api/v1
@@ -55,8 +56,9 @@ configMaps:
 
         openai:
           url: http://localai-local-ai.ai.svc.cluster.local/v1
-          model: hermes-2-Pro-Llama-3-8B-Q5_K_M
+          model: llama3-functioncall
           temperature: 0
+          vision_model: llava-llama-3-8b-v1_1
 
 persistence:
   secret:
