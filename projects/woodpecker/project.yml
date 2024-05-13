@@ -12,22 +12,13 @@ config:
 
 
 apps:
-  - name: woodpecker-server
-    path: charts/server
+  - name: woodpecker
+    path: charts/woodpecker
     secrets:
       - name: github-oauth
         keys:
         - WOODPECKER_GITHUB_CLIENT
         - WOODPECKER_GITHUB_SECRET
       - name: woodpecker-secret
-        keys:
-          - WOODPECKER_AGENT_SECRET
-
-  - name: woodpecker-agent
-    namespace: woodpecker-agent
-    path: charts/agent
-    secrets:
-      - name: woodpecker-secret
-        fromApp: woodpecker-server
         keys:
           - WOODPECKER_AGENT_SECRET
