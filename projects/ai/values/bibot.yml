@@ -32,7 +32,7 @@ controllers:
 
 configMaps:
   config:
-    enabled: true
+    enabled: false
     data:
       bibot.yml: |-
         prompt_template: /secret/prompt-template
