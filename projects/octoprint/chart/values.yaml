@@ -9,7 +9,7 @@ image:
   # -- image repository
   repository: octoprint/octoprint
   # -- image tag
-  tag: 1.10.0-minimal
+  tag: 1.10.1-minimal
   # -- image pull policy
   pullPolicy: IfNotPresent
 
