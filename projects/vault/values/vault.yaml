@@ -5,7 +5,7 @@ global:
     enable: false
 
 injector:
-  enabled: true
+  enabled: false
 
 server:
   enabled: true
