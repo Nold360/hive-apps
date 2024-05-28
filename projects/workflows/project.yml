@@ -5,7 +5,7 @@ apps:
 - name: argo-workflows
   repoURL: https://argoproj.github.io/argo-helm
   chart: argo-workflows
-  targetRevision: 0.41.6
+  targetRevision: 0.41.7
   # secrets:
   # - name: argocd-secret
   #   keys:
