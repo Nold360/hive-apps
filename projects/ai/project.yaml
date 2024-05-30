@@ -48,3 +48,8 @@ apps:
         - ombi-api-key
         - prompt-template
         - instruct-template
+  ignoreDiff:
+  - group: apps
+    kind: Deployment
+    jsonPointers:
+    - /spec/replicas
