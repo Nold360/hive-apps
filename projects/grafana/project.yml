@@ -5,26 +5,17 @@ apps:
 - name: kube-prometheus-stack
   repoURL: https://prometheus-community.github.io/helm-charts
   chart: kube-prometheus-stack
-  targetRevision: 55.11.0
+  targetRevision: 60.0.0
   secrets:
     - name: grafana
       keys:
         - admin-password
         - admin-user
-  helm:
-    skipCrds: true
-
-- name: kube-prometheus-crds
-  repoURL: https://github.com/prometheus-community/helm-charts.git
-  path: charts/kube-prometheus-stack/crds/
-  targetRevision: kube-prometheus-stack-46.8.0
-  directory:
-    recurse: true
   syncPolicy:
     syncOptions:
-      - Replace=true
+      - ServerSideApply=true
 
-- name: loki-stack
-  repoURL: https://grafana.github.io/helm-charts
-  chart: loki-stack
-  targetRevision: 2.10.2
+# - name: loki-stack
+#   repoURL: https://grafana.github.io/helm-charts
+#   chart: loki-stack
+#   targetRevision: 2.10.2
