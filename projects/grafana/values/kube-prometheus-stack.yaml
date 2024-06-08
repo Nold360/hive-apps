@@ -78,6 +78,11 @@ prometheus:
     scrapeInterval: "60s"
     retention: 90d
     replicas: 1
+
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelector: {}
+    serviceMonitorNamespaceSelector: {}
+
     storageSpec:
       volumeClaimTemplate:
         spec:
