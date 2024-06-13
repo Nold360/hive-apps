@@ -8,7 +8,11 @@ apps:
   # targetRevision: 3.1.0
   repoURL: https://github.com/nold360/localai-charts.git
   path: charts/local-ai
-  targetRevision: feat/runtimeclass
+  targetRevision: feat/envsecret
+  secrets:
+    - name: localai
+      keys:
+        - hf-token
 
 - name: anythingllm
   repo: bjw-s 
@@ -48,6 +52,7 @@ apps:
         - ombi-api-key
         - prompt-template
         - instruct-template
+        - OPENWEATHERMAP_API_KEY
   ignoreDiff:
   - group: apps
     kind: Deployment

@@ -56,6 +56,14 @@ deployment:
     # UPLOAD_LIMIT
 
     # HUGGINGFACEHUB_API_TOKEN=Token here
+  # Inject Secrets into Environment:
+  secretEnv:
+  - name: HF_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: localai
+        key: hf-token
+
 
   modelsPath: "/models"
   download_model:
