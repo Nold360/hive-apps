@@ -1,0 +1,97 @@
+controllers:
+  app:
+    replicas: 1
+    strategy: RollingUpdate
+    containers:
+      app:
+        image:
+          repository: searxng/searxng
+          tag: 2024.5.16-2f2d93b29
+
+        env:
+          BASE_URL: https://search.dc
+          AUTOCOMPLETE: "false"
+          INSTANCE_NAME: "HiveSearch"
+
+        envFrom:
+          - secretRef:
+              name: searxng
+
+        # probes:
+        #   liveness: 
+        #     enabled: true
+        #     custom: true
+        #     spec:
+        #       httpGet:
+        #         path: /stats
+        #         port: 8080
+        #       initialDelaySeconds: 0
+        #       periodSeconds: 10
+        #       timeoutSeconds: 1
+        #       failureThreshold: 3
+        #   readiness:
+        #     enabled: true
+        #     custom: true
+        #     spec:
+        #       httpGet:
+        #         path: /stats
+        #         port: 8080
+        #       initialDelaySeconds: 0
+        #       periodSeconds: 10
+        #       timeoutSeconds: 1
+        #       failureThreshold: 3
+
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          capabilities:
+            drop:
+              - ALL
+            add:
+              - CHOWN
+              - SETGID
+              - SETUID
+              - DAC_OVERRIDE
+        resources:
+          requests:
+            cpu: 10m
+          limits:
+            memory: 3Gi
+
+service:
+  app:
+    controller: app
+    ports:
+      http:
+        port: 8080
+
+persistence:
+  config:
+    type: configMap
+    name: searxng-config
+    advancedMounts:
+      app:
+        app:
+          - path: /etc/searxng/settings.yml
+            subPath: settings.yml
+            readOnly: true
+          - path: /etc/searxng/limiter.toml
+            subPath: limiter.toml
+            readOnly: true
+
+ingress:
+  app:
+    # className: ingress-internal
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    hosts:
+      - host: search.dc
+        paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
+    tls:
+      - hosts:
+        - search.dc
+        secretName: searxng-tls

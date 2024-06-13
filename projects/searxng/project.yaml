@@ -1,0 +1,13 @@
+config:
+  description: Local Meta Search
+
+apps:
+- name: searxng
+  repo: bjw-s 
+  chart: app-template
+  targetRevision: 3.2.1
+  secrets:
+    - name: searxng 
+      keys:
+        - SEARXNG_SECRET
+
