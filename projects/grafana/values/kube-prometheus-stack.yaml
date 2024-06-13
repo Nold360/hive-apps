@@ -11,7 +11,7 @@ grafana:
 
   image:
     repository: grafana/grafana
-    tag: 10.4.3
+    tag: 10.4.4
 
   persistence:
     enabled: true
