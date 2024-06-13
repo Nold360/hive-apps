@@ -22,6 +22,11 @@ controllers:
               secretKeyRef:
                 name: bibot
                 key: discord-token
+          OPENWEATHERMAP_API_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: bibot
+                key: OPENWEATHERMAP_API_KEY
         probes:
           liveness: 
             enabled: false
