@@ -4,7 +4,7 @@
 
 image:
   repository: k8s.gcr.io/external-dns/external-dns
-  tag: "v0.13.4"
+  tag: "v0.13.6"
   pullPolicy: IfNotPresent
 
 shareProcessNamespace: false
