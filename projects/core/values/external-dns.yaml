@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 image:
-  repository: k8s.gcr.io/external-dns/external-dns
+  repository: registry.k8s.io/external-dns/external-dns
   tag: "v0.14.2"
   pullPolicy: IfNotPresent
 
