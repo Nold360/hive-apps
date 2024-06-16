@@ -24,10 +24,10 @@ apps:
 #   chart: app-template
 #   targetRevision: 2.4.0
 
-- name: big-agi
-  repo: bjw-s
-  chart: app-template
-  targetRevision: 2.4.0
+# - name: big-agi
+#   repo: bjw-s
+#   chart: app-template
+#   targetRevision: 2.4.0
 
 - name: browserless
   namespace: browserless
