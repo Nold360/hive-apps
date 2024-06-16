@@ -12,6 +12,8 @@ controllers:
           BIBOT_CONFIG: /config/bibot.yml
           BROWSERLESS_URL: http://browserless.browserless.svc.cluster.local:3000
           OMBI_API_URL: http://ombi.ombi.svc.cluster.local:3579/api/v1
+          PHOENIX_COLLECTOR_ENDPOINT: http://phoenix.phoenix.svc.cluster.local:6006
+          PHOENIX_PROJECT_NAME: bi
           OMBI_API_TOKEN:
             valueFrom:
               secretKeyRef:
