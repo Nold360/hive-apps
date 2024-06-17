@@ -35,16 +35,16 @@ apps:
   chart: app-template
   targetRevision: 2.4.0
 
-- name: qdrant
-  repoURL: https://qdrant.to/helm
-  chart: qdrant
-  targetRevision: 0.9.1
+# - name: qdrant
+#   repoURL: https://qdrant.to/helm
+#   chart: qdrant
+#   targetRevision: 0.9.1
 
 - name: bibot
   namespace: bibot
   repo: bjw-s
   chart: app-template
-  targetRevision: 2.4.0
+  targetRevision: 3.2.1
   secrets:
     - name: bibot
       keys:
