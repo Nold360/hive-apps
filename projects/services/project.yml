@@ -28,4 +28,4 @@ apps:
   repoURL: https://ot-container-kit.github.io/helm-charts
   namespace: redis-operator
   chart: redis-operator
-  targetRevision: 0.15.9
+  targetRevision: 0.16.4
