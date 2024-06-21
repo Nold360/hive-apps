@@ -112,6 +112,7 @@ ingress:
 
 nginx:
   enabled: true
+  containerPort: 8080
 
 cronjob:
   enabled: false
