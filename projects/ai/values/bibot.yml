@@ -34,6 +34,7 @@ controllers:
         args: ["-u", "discord_bot/main.py"]
 
         env:
+          OPENAI_API_KEY: fake
           BIBOT_DISCORD_TOKEN:
             valueFrom:
               secretKeyRef:
