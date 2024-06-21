@@ -5,6 +5,7 @@ config:
     - internet
     rules:
     - allow-minio
+    - allow-localai
 
   labels:
     environment: external

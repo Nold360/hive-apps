@@ -141,3 +141,22 @@ networkPolicy:
         - namespaceSelector:
             matchLabels:
               app.heqet.gnu.one/project: argocd
+
+    # Allow access to internet proxy
+    allow-localai:
+      podSelector: {}
+      policyTypes:
+      - Egress
+      egress:
+      - ports:
+        - port: 80
+          protocol: TCP
+        - port: 8080
+          protocol: TCP
+        to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: local-ai
+        - namespaceSelector:
+            matchLabels:
+              app.heqet.gnu.one/project: ai
