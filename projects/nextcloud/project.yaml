@@ -11,12 +11,9 @@ config:
 
 apps:
 - name: nextcloud
-  #repoURL: https://nextcloud.github.io/helm
-  #chart: nextcloud
-  #targetRevision: 3.1.0
-  repoURL: https://github.com/Nold360/nextcloud-helm
-  targetRevision: f/multifix
-  path: charts/nextcloud
+  repoURL: https://nextcloud.github.io/helm
+  chart: nextcloud
+  targetRevision: 5.0.0
   secrets:
   - name: nextcloud-user
     keys:
