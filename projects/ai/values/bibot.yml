@@ -1,51 +1,56 @@
 controllers:
+  # main agent
   main:
     containers:
       main:
         image:
-          repository: reg.dc/bibot
+          repository: reg.dc/bi
           tag: latest
           pullPolicy: Always
-
         env:
-          OPENAI_API_KEY: fake
           BIBOT_CONFIG: /config/bibot.yml
+          BIBOT_KAFKA__BROKER: kafka://bi-cluster-kafka-bootstrap:9092
           PHOENIX_COLLECTOR_ENDPOINT: http://phoenix.phoenix.svc.cluster.local:6006
           PHOENIX_PROJECT_NAME: bi
-          OMBI_API_TOKEN:
-            valueFrom:
-              secretKeyRef:
-                name: bibot
-                key: ombi-api-key
-          OPENWEATHERMAP_API_KEY:
-            valueFrom:
-              secretKeyRef:
-                name: bibot
-                key: OPENWEATHERMAP_API_KEY
-  bot:
+        command: ["python3"]
+        args: ["/app/bi/agents/main/app.py", "worker", "-l", "info"]
+
+  controller:
     containers:
       main:
         image:
-          repository: reg.dc/bibot
+          repository: reg.dc/bi
+          tag: latest
+          pullPolicy: Always
+        env:
+          BIBOT_CONFIG: /config/bibot.yml
+          BIBOT_KAFKA__BROKER: kafka://bi-cluster-kafka-bootstrap:9092
+        command: ["python3"]
+        args: ["/app/bi/controller.py", "worker", "-l", "info"]
+
+  discord:
+    containers:
+      main:
+        image:
+          repository: reg.dc/bi
           tag: latest
           pullPolicy: Always
     
         command: ["python3"]
-        args: ["-u", "discord_bot/main.py"]
+        args: ["/app/bi/connectors/discord/app.py", "worker", "-l", "info"]
 
         env:
+          BIBOT_KAFKA__BROKER: bi-cluster-kafka-bootstrap:9092
           OPENAI_API_KEY: fake
-          BIBOT_DISCORD_TOKEN:
+          BIBOT_DISCORD__TOKEN:
             valueFrom:
               secretKeyRef:
                 name: bibot
                 key: discord-token
           ## Prod:
-          BIBOT_DISCORD_CHANNELS: "1216440541064200192"
-
+          BIBOT_DISCORD__CHANNELS: "1216440541064200192"
           # Dev:
           # BIBOT_DISCORD_CHANNELS: "1217418069693960223"
-          BIBOT_API_URL: "http://{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local:8000/v1"
         probes:
           liveness: 
             enabled: false
@@ -70,10 +75,10 @@ persistence:
     type: persistentVolumeClaim
     accessMode: ReadWriteOnce
 
-service:
-  main:
-    controller: main
-    ports:
-      http:
-        port: 8000
-    type: ClusterIP
+# service:
+#   main:
+#     controller: main
+#     ports:
+#       http:
+#         port: 8000
+#     type: ClusterIP
