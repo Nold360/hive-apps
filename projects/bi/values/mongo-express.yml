@@ -1,0 +1,50 @@
+ingress:
+  enabled: true
+  ingressClassName: "ingress-internal"
+  pathType: ImplementationSpecific
+
+  annotations:
+    cert-manager.io/cluster-issuer: vault-issuer
+
+  hosts:
+    - host: mongo.dc
+      paths:
+        - /
+
+  tls:
+    - secretName: mongo-express-tls
+      hosts:
+        - mongo.dc
+
+## @param mongodbServer MongoDB host name or IP address
+mongodbServer: bi-mongo-svc.bi.svc.cluster.local
+
+## @param mongodbPort MongoDB port
+mongodbPort: 27017
+
+## @param mongodbEnableAdmin Enable administrator access
+mongodbEnableAdmin: true
+
+## @param mongodbAdminUsername Administrator username
+mongodbAdminUsername: admin
+
+## @param mongodbAdminPassword Administrator password
+# mongodbAdminPassword: ""
+
+## @param siteBaseUrl Set the express baseUrl to ease mounting at a subdirectory
+siteBaseUrl: /
+
+## @param basicAuthUsername Mongo Express web login name
+basicAuthUsername: ""
+
+## @param basicAuthPassword Mongo Express web login password
+basicAuthPassword: ""
+
+## @param existingSecret Name of existing Secret to use
+existingSecret: "mongo-express"
+
+## @param existingSecretKeyMongodbAdminPassword Key in existing Secret that contains administrator password
+# existingSecretKeyMongodbAdminPassword: bi-mongo-admin-admin
+
+## @param existingSecretKeyMongodbAuthPassword Key in existing Secret that contains database password
+# existingSecretKeyMongodbAuthPassword: bi-mongo-admin-admin

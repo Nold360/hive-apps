@@ -1,0 +1,33 @@
+config:
+  description: Bi Agent Framework
+
+apps:
+- name: bi
+  namespace: bi
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 3.2.1
+  secrets:
+    - name: bibot
+      keys:
+        - discord-token
+        - ombi-api-key
+        - prompt-template
+        - instruct-template
+        - OPENWEATHERMAP_API_KEY
+  ignoreDiff:
+  - group: apps
+    kind: Deployment
+    jsonPointers:
+    - /spec/replicas
+
+- name: mongo-express
+  repoURL: https://cowboysysop.github.io/charts/
+  chart: mongo-express
+  targetRevision: 6.5.2
+  secrets:
+    - name: mongo-express
+      keys:
+        - mongodb-admin-password
+        - site-cookie-secret
+        - site-session-secret

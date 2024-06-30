@@ -2,7 +2,7 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: bi-cluster
-  namespace: bibot
+  namespace: bi
 spec:
   kafka:
     version: 3.7.0
@@ -44,7 +44,7 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
   name: bi-input
-  namespace: bibot
+  namespace: bi
   labels:
     strimzi.io/cluster: bi-cluster
 spec:
@@ -58,7 +58,7 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
   name: bi-output
-  namespace: bibot
+  namespace: bi
   labels:
     strimzi.io/cluster: bi-cluster
 spec:
@@ -72,11 +72,11 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
   name: agent-registry
-  namespace: bibot
+  namespace: bi
   labels:
     strimzi.io/cluster: bi-cluster
 spec:
-  partitions: 1
+  partitions: 24
   replicas: 1
   config:
     retention.ms: 7200000
@@ -86,7 +86,7 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
   name: agent-main-input
-  namespace: bibot
+  namespace: bi
   labels:
     strimzi.io/cluster: bi-cluster
 spec:
@@ -100,7 +100,7 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
   name: discord-input
-  namespace: bibot
+  namespace: bi
   labels:
     strimzi.io/cluster: bi-cluster
 spec:
