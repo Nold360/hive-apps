@@ -14,12 +14,12 @@ controllers:
           BIBOT_MONGODB__USER:
             valueFrom:
               secretKeyRef:
-                name: bi-mongo-admin-admin
+                name: bi-mongo-bi-bi
                 key: username
           BIBOT_MONGODB__PASSWORD:
             valueFrom:
               secretKeyRef:
-                name: bi-mongo-admin-admin
+                name: bi-mongo-bi-bi
                 key: password
           PHOENIX_COLLECTOR_ENDPOINT: http://phoenix.phoenix.svc.cluster.local:6006
           PHOENIX_PROJECT_NAME: bi
@@ -40,12 +40,12 @@ controllers:
           BIBOT_MONGODB__USER:
             valueFrom:
               secretKeyRef:
-                name: bi-mongo-admin-admin
+                name: bi-mongo-bi-bi
                 key: username
           BIBOT_MONGODB__PASSWORD:
             valueFrom:
               secretKeyRef:
-                name: bi-mongo-admin-admin
+                name: bi-mongo-bi-bi
                 key: password
         command: ["python3"]
         args: ["/app/bi/controller.py", "worker", "-l", "info"]
@@ -67,12 +67,12 @@ controllers:
           BIBOT_MONGODB__USER:
             valueFrom:
               secretKeyRef:
-                name: bi-mongo-admin-admin
+                name: bi-mongo-bi-bi
                 key: username
           BIBOT_MONGODB__PASSWORD:
             valueFrom:
               secretKeyRef:
-                name: bi-mongo-admin-admin
+                name: bi-mongo-bi-bi
                 key: password
 
           OPENAI_API_KEY: fake

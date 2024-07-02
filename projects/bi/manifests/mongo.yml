@@ -12,15 +12,11 @@ spec:
     authentication:
       modes: ["SCRAM"]
   users:
-    - name: admin
-      db: admin
+    - name: bi
+      db: bi
       passwordSecretRef:
         name: bi-mongo-password
       roles:
-        - name: clusterAdmin
-          db: admin
-        - name: userAdminAnyDatabase
-          db: admin
+        - name: dbOwner
+          db: bi
       scramCredentialsSecretName: bi
-  additionalMongodConfig:
-    storage.wiredTiger.engineConfig.journalCompressor: zlib
