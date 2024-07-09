@@ -125,6 +125,19 @@ controllers:
         command: ["python3"]
         args: ["/app/bi/agents/researcher/app.py", "worker", "-l", "info"]
 
+  mongoui:
+    containers:
+      main:
+        image:
+          repository: ugleiton/mongo-gui
+          tag: latest
+          pullPolicy: Always
+        env:
+          MONGO_URL:
+            valueFrom:
+              secretKeyRef:
+                name: bi-mongo-bi-bi
+                key: connectionString.standardSrv
 
 persistence:
   secret:
@@ -142,10 +155,28 @@ persistence:
     type: persistentVolumeClaim
     accessMode: ReadWriteOnce
 
-# service:
-#   main:
-#     controller: main
-#     ports:
-#       http:
-#         port: 8000
-#     type: ClusterIP
+service:
+  main:
+    controller: mongoui
+    ports:
+      http:
+        port: 4321
+    type: ClusterIP
+
+ingress:
+  main:
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    enabled: true
+    hosts:
+    - host: mongo.dc
+      paths:
+      - path: /
+        service:
+          # name: main
+          identifier: main
+          port: 4321
+    tls:
+    - hosts:
+      - mongo.dc
+      secretName: mongo-tls
