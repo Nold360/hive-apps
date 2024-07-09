@@ -74,7 +74,6 @@ controllers:
               secretKeyRef:
                 name: bi-mongo-bi-bi
                 key: password
-
           OPENAI_API_KEY: fake
           BIBOT_DISCORD__TOKEN:
             valueFrom:
@@ -93,6 +92,39 @@ controllers:
             enabled: false
           startup: 
             enabled: false
+
+  researcher:
+    containers:
+      main:
+        image:
+          repository: reg.dc/bi
+          tag: latest
+          pullPolicy: Always
+        env:
+          BIBOT_CONFIG: /config/bibot.yml
+          BIBOT_OPENAI__TEMPERATURE: "0.0"
+          BIBOT_KAFKA__BROKER: kafka://bi-cluster-kafka-bootstrap:9092
+          BIBOT_MONGODB__URI: mongodb://bi-mongo-svc:27017/
+          BIBOT_MONGODB__USER:
+            valueFrom:
+              secretKeyRef:
+                name: bi-mongo-bi-bi
+                key: username
+          BIBOT_MONGODB__PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: bi-mongo-bi-bi
+                key: password
+          OPENWEATHERMAP_API_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: bibot
+                key: OPENWEATHERMAP_API_KEY
+          PHOENIX_COLLECTOR_ENDPOINT: http://phoenix.phoenix.svc.cluster.local:6006
+          PHOENIX_PROJECT_NAME: bi
+        command: ["python3"]
+        args: ["/app/bi/agents/researcher/app.py", "worker", "-l", "info"]
+
 
 persistence:
   secret:

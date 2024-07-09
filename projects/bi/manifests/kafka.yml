@@ -109,3 +109,31 @@ spec:
   config:
     retention.ms: 7200000
     segment.bytes: 1073741824
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: agent-researcher-input
+  namespace: bi
+  labels:
+    strimzi.io/cluster: bi-cluster
+spec:
+  partitions: 1
+  replicas: 1
+  config:
+    retention.ms: 7200000
+    segment.bytes: 1073741824
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: agent-researcher-config
+  namespace: bi
+  labels:
+    strimzi.io/cluster: bi-cluster
+spec:
+  partitions: 1
+  replicas: 1
+  config:
+    retention.ms: 7200000
+    segment.bytes: 1073741824
