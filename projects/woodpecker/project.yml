@@ -6,19 +6,33 @@ config:
   networkPolicy:
     groups:
     - internet
+    rules:
+    - allow-agent
 
   labels:
     environment: external
 
 
 apps:
-  - name: woodpecker
-    path: charts/woodpecker
+  - name: woodpecker-server
+    path: charts/woodpecker/charts/server
     secrets:
       - name: github-oauth
         keys:
         - WOODPECKER_GITHUB_CLIENT
         - WOODPECKER_GITHUB_SECRET
       - name: woodpecker-secret
+        keys:
+          - WOODPECKER_AGENT_SECRET
+
+  - name: woodpecker-agent
+    path: charts/woodpecker/charts/agent
+    namespace: woodpecker-agent
+    networkPolicy:
+      rules:
+      - allow-agent
+    secrets:
+      - name: woodpecker-secret
+        fromApp: woodpecker-server
         keys:
           - WOODPECKER_AGENT_SECRET

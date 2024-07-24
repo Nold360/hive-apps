@@ -1,0 +1,84 @@
+statefulSet:
+  replicaCount: 1
+
+updateStrategy:
+  type: RollingUpdate
+
+image:
+  registry: docker.io
+  repository: woodpeckerci/woodpecker-server
+  pullPolicy: Always
+  tag: 'next'
+
+# -- Add environment variables for the server component
+env:
+  WOODPECKER_OPEN: "false"
+  WOODPECKER_ADMIN: "Nold360"
+  WOODPECKER_HOST: https://ci.nold.in
+  WOODPECKER_GITHUB: "true"
+  #WOODPECKER_REPO_OWNERS: "nold360"
+
+  HTTP_PROXY: http://proxy-squid.proxy.svc.cluster.local:3128
+  HTTPS_PROXY: http://proxy-squid.proxy.svc.cluster.local:3128
+  http_proxy: http://proxy-squid.proxy.svc.cluster.local:3128
+  https_proxy: http://proxy-squid.proxy.svc.cluster.local:3128
+  NO_PROXY: localhost,.cluster.local,10.43.0.1
+  no_proxy: localhost,.cluster.local,10.43.0.1
+
+
+# -- Add extra environment variables from the secrets list
+extraSecretNamesForEnvFrom:
+  - woodpecker-secret
+  - github-oauth
+
+# -- Create a generic secret to store things in, e.g. env values
+secrets:
+  - name: woodpecker-store
+
+persistentVolume:
+  enabled: true
+  size: 10Gi
+  mountPath: '/var/lib/woodpecker'
+  storageClass: ''
+
+podSecurityContext:
+  fsGroup: 2000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+ingress:
+  enabled: true
+  ingressClassName: ingress-external
+  labels:
+    environment: external
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt
+    external-dns.alpha.kubernetes.io/hostname: ci.nold.in
+    external-dns.alpha.kubernetes.io/target: nold.in
+  hosts:
+    - host: ci.nold.in
+      paths:
+      - path: /
+        backend:
+          serviceName: server
+          servicePort: 80
+  tls:
+    - secretName: ci-nold-in-tls
+      hosts:
+        - ci.nold.in
+
+# -- Specifies the ressources for the server component
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
