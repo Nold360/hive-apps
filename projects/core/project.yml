@@ -60,6 +60,17 @@ apps:
     keys:
     - CF_API_TOKEN
 
+- name: external-dns-adguard
+  repoURL: https://kubernetes-sigs.github.io/external-dns
+  chart: external-dns
+  targetRevision: 1.14.5
+  secrets:
+  - name: adguard-config
+    keys:
+    - ADGUARD_URL
+    - ADGUARD_USER
+    - ADGUARD_PASSWORD
+
 - name: cert-manager
   namespace: cert-manager
   repoURL: https://charts.jetstack.io

@@ -1,0 +1,104 @@
+# Default values for external-dns.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: registry.k8s.io/external-dns/external-dns
+  tag: "v0.14.2"
+  pullPolicy: IfNotPresent
+
+shareProcessNamespace: false
+
+podSecurityContext:
+  fsGroup: 65534
+
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 65534
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop: ["ALL"]
+
+# Defaults to `ClusterFirst`.
+# Valid values are: `ClusterFirstWithHostNet`, `ClusterFirst`, `Default` or `None`.
+dnsPolicy:
+
+serviceMonitor:
+  enabled: false
+  additionalLabels: {}
+  interval: 1m
+  scrapeTimeout: 10s
+
+resources:
+  limits:
+    memory: 50Mi
+    cpu: 200m
+  requests:
+    memory: 50Mi
+    cpu: 10m
+
+logLevel: info
+logFormat: text
+
+interval: 1m
+triggerLoopOnEvent: false
+
+sources:
+  - ingress
+#  - service
+
+policy: upsert-only
+
+registry: txt
+txtOwnerId: ""
+txtPrefix: ""
+txtSuffix: ""
+
+domainFilters:
+  - dc
+
+#extraArgs:
+
+deploymentStrategy:
+  type: Recreate
+
+provider:
+    name: webhook
+    webhook:
+      image: 
+        repository: ghcr.io/muhlba91/external-dns-provider-adguard
+        tag: latest
+      livenessProbe:
+        httpGet:
+          path: /healthz
+          port: 8888
+        initialDelaySeconds: 10
+        timeoutSeconds: 5
+      readinessProbe:
+        httpGet:
+          path: /healthz
+          port: 8888
+        initialDelaySeconds: 10
+        timeoutSeconds: 5
+      env:
+        - name: LOG_LEVEL
+          value: debug
+        - name: ADGUARD_URL
+          valueFrom:
+            secretKeyRef:
+              name: adguard-config
+              key: ADGUARD_URL
+        - name: ADGUARD_USER
+          valueFrom:
+            secretKeyRef:
+              name: adguard-config
+              key: ADGUARD_USER
+        - name: ADGUARD_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: adguard-config
+              key: ADGUARD_PASSWORD
+        - name: SERVER_HOST
+          value: "0.0.0.0" 
+        - name: DRY_RUN
+          value: "false"  
