@@ -98,20 +98,11 @@ prometheus:
       #  scrape_interval: 60s
       #  static_configs:
       #   - targets: ['127.0.0.1:9902']
-      - job_name: 'openwrt-router'
-        scrape_interval: 60s
-        static_configs:
-        - targets: ['192.168.1.1:9100']
 
       - job_name: 'hive-ipmi'
         scrape_interval: 60s
         static_configs:
         - targets: ['192.168.1.111:9290']
-
-      - job_name: 'esplant'
-        scrape_interval: 60s
-        static_configs:
-        - targets: ['esplant.lan:80']
 
       - job_name: 'kubernetes-services'
         scrape_interval: 120s
