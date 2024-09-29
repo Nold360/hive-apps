@@ -33,7 +33,7 @@ certificate:
   secretName: redis-operator-tls
 
 certmanager:
-  enabled: true
+  enabled: false
 
 monitoring:
   # Enable Prometheus PodMonitor to monitor the operator.
