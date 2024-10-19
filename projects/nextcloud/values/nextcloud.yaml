@@ -3,7 +3,7 @@ image:
   pullPolicy: Always
 
 nextcloud:
-  host: share.gnu.one
+  host: share.nold.in
   extraEnv:
     - name: HTTP_PROXY
       value: http://proxy-squid.proxy.svc.cluster.local:3128
@@ -76,8 +76,8 @@ ingress:
     cert-manager.io/cluster-issuer: letsencrypt
     traefik.ingress.kubernetes.io/router.tls: 'true'
     kubernetes.io/ingress.class: ingress-external
-    external-dns.alpha.kubernetes.io/hostname: share.gnu.one
-    external-dns.alpha.kubernetes.io/target: gnu.one
+    external-dns.alpha.kubernetes.io/hostname: share.nold.in
+    external-dns.alpha.kubernetes.io/target: nold.in
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
 
     nginx.ingress.kubernetes.io/server-snippet: |-
@@ -108,7 +108,7 @@ ingress:
   tls:
     - secretName: nextcloud-tls
       hosts:
-      - share.gnu.one
+      - share.nold.in
 
 nginx:
   enabled: true
