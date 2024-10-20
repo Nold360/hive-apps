@@ -11,7 +11,7 @@ server:
   enabled: true
   image:
     repository: "hashicorp/vault"
-    tag: "1.17.6"
+    tag: "1.18.0"
   auditStorage:
     accessMode: ReadWriteOnce
     annotations: {}
