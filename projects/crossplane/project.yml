@@ -6,7 +6,7 @@ apps:
 - name: crossplane
   repoURL: https://charts.crossplane.io/stable
   chart: crossplane
-  targetRevision: 1.16.0
+  targetRevision: 1.17.1
   secrets:
   - name: terraform
     keys:
