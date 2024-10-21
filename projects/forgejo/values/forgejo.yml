@@ -13,7 +13,7 @@ strategy:
 image:
   registry: codeberg.org
   repository: forgejo/forgejo
-  tag: "7.0"
+  tag: "9.0"
   rootless: true
 
 podSecurityContext:
