@@ -64,7 +64,7 @@ ipv4:
 ipv6:
   enabled: false
 
-kubeProxyReplacement: strict
+kubeProxyReplacement: true
 l2NeighDiscovery:
   enabled: false
   refreshPeriod: "30s"
