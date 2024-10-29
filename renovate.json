@@ -1,101 +1,178 @@
 {
-    "enabled": true,
-    "timezone": "Europe/Berlin",
-    "dependencyDashboard": true,
-    "dependencyDashboardTitle": "Renovate Dashboard",
-    "commitMessageSuffix": "",
-    "commitBody": "",
-    "suppressNotifications": ["prIgnoreNotification"],
-    "rebaseWhen": "conflicted",
-    "assignees": ["@nold360"],
-    "helm-values": {
-      "fileMatch": ["projects/.*/values/.+\\.ya?ml$"]
-    },
-    "kubernetes": {
-      "fileMatch": ["\\.ya?ml$"],
-      "ignorePaths": [
-        "projects",
-        "ansible",
-        "scripts",
-        ".github"
+  "enabled": true,
+  "timezone": "Europe/Berlin",
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "Renovate Dashboard",
+  "commitMessageSuffix": "",
+  "commitBody": "",
+  "suppressNotifications": [
+    "prIgnoreNotification"
+  ],
+  "rebaseWhen": "conflicted",
+  "assignees": [
+    "@nold360"
+  ],
+  "helm-values": {
+    "fileMatch": [
+      "projects/.*/values/.+\\.ya?ml$"
+    ]
+  },
+  "kubernetes": {
+    "fileMatch": [
+      "\\.ya?ml$"
+    ],
+    "ignorePaths": [
+      "projects",
+      "ansible",
+      "scripts",
+      ".github"
+    ]
+  },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "project.ya?ml$"
+      ],
+      "matchStrings": [
+        "repoURL: (?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *targetRevision: (?<currentValue>.*)\n"
+      ],
+      "datasourceTemplate": "helm"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchPackageNames": [
+        "app-template",
+        "common"
+      ],
+      "registryUrls": [
+        "https://bjw-s.github.io/helm-charts"
       ]
     },
-    "regexManagers": [
-      {
-        "fileMatch": ["project.ya?ml$"],
-        "matchStrings": [
-          "repoURL: (?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *targetRevision: (?<currentValue>.*)\n"
-        ],
-        "datasourceTemplate": "helm"
-      }
-    ],
-    "packageRules": [
-      {
-      	"datasources": ["helm"],
-      	"managers": ["regex"],
-      	"packageNames": [
-					"app-template",
-          "common"
-      	],
-      	"registryUrls": ["https://bjw-s.github.io/helm-charts"]
-      },
-      {
-        "datasources": ["helm"],
-        "commitMessageTopic": "Helm chart {{depName}}",
-        "separateMinorPatch": true
-      },
-      {
-        "datasources": ["docker"],
-        "commitMessageTopic": "Docker image {{depName}}",
-        "commitMessageExtra": "to {{#if isSingleVersion}}v{{{toVersion}}}{{else}}{{{newValue}}}{{/if}}",
-        "enabled": true,
-        "separateMinorPatch": true
-      },
-      {
-        "datasources": ["docker"],
-        "updateTypes": ["major"],
-        "labels": ["renovate/image-release", "dependency/major"]
-      },
-      {
-        "datasources": ["docker"],
-        "updateTypes": ["minor"],
-        "labels": ["renovate/image-release", "dependency/minor"]
-      },
-      {
-        "datasources": ["docker"],
-        "updateTypes": ["patch"],
-        "labels": ["renovate/image-release", "dependency/patch"]
-      },
-      {
-        "datasources": ["helm"],
-        "updateTypes": ["major"],
-        "labels": ["renovate/helm-release", "dependency/major"]
-      },
-      {
-        "datasources": ["helm"],
-        "updateTypes": ["minor"],
-        "labels": ["renovate/helm-release", "dependency/minor"]
-      },
-      {
-        "datasources": ["helm"],
-        "updateTypes": ["patch"],
-        "labels": ["renovate/helm-release", "dependency/patch"]
-      },
-      {
-        "datasources": ["docker"],
-        "automerge": true,
-        "requiredStatusChecks": null,
-        "schedule": "after 1am and before 5am",
-        "updateTypes": ["minor", "patch"],
-        "excludePackagePatterns": [ ".*cilium.*", ".*hubble.*", ".*cilium/operator"]
-      },
-      {
-        "datasources": ["helm"],
-        "automerge": true,
-        "requiredStatusChecks": null,
-        "schedule": "after 1am and before 5am",
-        "updateTypes": ["minor", "patch"],
-        "excludePackageNames": []
-      }
-    ]
-  }
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "commitMessageTopic": "Helm chart {{depName}}",
+      "separateMinorPatch": true
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "commitMessageTopic": "Docker image {{depName}}",
+      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
+      "enabled": true,
+      "separateMinorPatch": true
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "labels": [
+        "renovate/image-release",
+        "dependency/major"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "labels": [
+        "renovate/image-release",
+        "dependency/minor"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "labels": [
+        "renovate/image-release",
+        "dependency/patch"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "labels": [
+        "renovate/helm-release",
+        "dependency/major"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "labels": [
+        "renovate/helm-release",
+        "dependency/minor"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "labels": [
+        "renovate/helm-release",
+        "dependency/patch"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "automerge": true,
+      "ignoreTests": true,
+      "schedule": "after 1am and before 5am",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "matchPackageNames": [
+        "!/.*cilium.*/",
+        "!/.*hubble.*/",
+        "!/.*cilium/operator/"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "automerge": true,
+      "ignoreTests": true,
+      "schedule": "after 1am and before 5am",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "matchPackageNames": []
+    }
+  ]
+}
