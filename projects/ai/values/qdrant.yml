@@ -1,7 +1,7 @@
 image:
   repository: docker.io/qdrant/qdrant
   pullPolicy: IfNotPresent
-  tag: "v1.12.1"
+  tag: "v1.12.2"
   useUnprivilegedImage: true
 
 env:
