@@ -5,7 +5,7 @@ apps:
 - name: vault
   repoURL: https://helm.releases.hashicorp.com
   chart: vault
-  targetRevision: 0.28.1
+  targetRevision: 0.29.0
   syncWave: '-3'
   ignoreDiff:
     - group: "*"
