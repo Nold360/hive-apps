@@ -5,6 +5,7 @@
   "dependencyDashboardTitle": "Renovate Dashboard",
   "commitMessageSuffix": "",
   "commitBody": "",
+  "prHourlyLimit": 20,
   "suppressNotifications": [
     "prIgnoreNotification"
   ],
