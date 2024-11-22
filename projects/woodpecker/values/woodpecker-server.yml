@@ -31,10 +31,6 @@ extraSecretNamesForEnvFrom:
   - woodpecker-secret
   - github-oauth
 
-# -- Create a generic secret to store things in, e.g. env values
-secrets:
-  - name: woodpecker-store
-
 persistentVolume:
   enabled: true
   size: 10Gi
