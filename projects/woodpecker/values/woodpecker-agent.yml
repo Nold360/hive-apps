@@ -19,6 +19,7 @@ env:
   WOODPECKER_BACKEND_K8S_POD_ANNOTATIONS: ''
   WOODPECKER_CONNECT_RETRY_COUNT: '1'
 
+mapAgentSecret: false
 # -- Add extra secret that is contains environment variables
 extraSecretNamesForEnvFrom:
   - woodpecker-secret
