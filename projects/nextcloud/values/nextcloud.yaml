@@ -1,5 +1,5 @@
 image:
-  tag: 29-fpm
+  tag: 30-fpm
   pullPolicy: Always
 
 nextcloud:
