@@ -6,6 +6,13 @@
   "commitMessageSuffix": "",
   "commitBody": "",
   "prHourlyLimit": 20,
+  "hostRules": [
+    {
+      "matchHost": "api.github.com",
+      "concurrentRequestLimit": 1,
+      "maxRequestsPerSecond": 8
+    }
+  ],
   "suppressNotifications": [
     "prIgnoreNotification"
   ],
