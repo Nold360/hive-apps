@@ -23,6 +23,7 @@ controllers:
                 key: password
           PHOENIX_COLLECTOR_ENDPOINT: http://phoenix.phoenix.svc.cluster.local:6006
           PHOENIX_PROJECT_NAME: bi
+          OPENAI_API_KEY: fake
         command: ["python3"]
         args: ["/app/bi/agents/main/app.py", "worker", "-l", "info"]
 
@@ -122,6 +123,7 @@ controllers:
                 key: OPENWEATHERMAP_API_KEY
           PHOENIX_COLLECTOR_ENDPOINT: http://phoenix.phoenix.svc.cluster.local:6006
           PHOENIX_PROJECT_NAME: bi
+          OPENAI_API_KEY: fake
         command: ["python3"]
         args: ["/app/bi/agents/researcher/app.py", "worker", "-l", "info"]
 
