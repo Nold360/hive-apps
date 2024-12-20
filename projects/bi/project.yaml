@@ -21,6 +21,12 @@ apps:
     jsonPointers:
     - /spec/replicas
 
+- name: qdrant
+  namespace: bi
+  repoUR: https://qdrant.github.io/qdrant-helm
+  chart: qdrant
+  targetRevision: 1.12.5
+
 # - name: mongo-express
 #   repoURL: https://cowboysysop.github.io/charts/
 #   chart: mongo-express

@@ -1,6 +1,5 @@
 image:
   repository: docker.io/qdrant/qdrant
-  pullPolicy: IfNotPresent
   tag: "v1.12.5"
   useUnprivilegedImage: true
 
@@ -9,28 +8,27 @@ env:
     value: "true"
 
 ingress:
-  enabled: false
-  ingressClassName: ""
-  additionalLabels: {}
-  annotations: {}
-    # kubernetes.io/ingress.class: alb
+  enabled: true
+  ingressClassName: "ingress-internal"
+  annotations:
+    cert-manager.io/cluster-issuer: vault-issuer
   hosts:
-    - host: example-domain.com
+    - host: qdrant.dc
       paths:
         - path: /
           pathType: Prefix
           servicePort: 6333
-  tls: []
-    # - hosts:
-    #    - example-domain.com
-    #   secretName: tls-secret-name
+  tls:
+    - hosts:
+      - qdrant.dc
+      secretName: tls-qdrant
 
 updateVolumeFsOwnership: false
 
 persistence:
   accessModes: ["ReadWriteOnce"]
   size: 10Gi
-  storageClassName: ssd
+  # storageClassName:
 
 # modification example for configuration to overwrite defaults
 config:
