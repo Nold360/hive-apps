@@ -23,7 +23,7 @@ apps:
 
 - name: qdrant
   namespace: bi
-  repoUR: https://qdrant.github.io/qdrant-helm
+  repoURL: https://qdrant.github.io/qdrant-helm
   chart: qdrant
   targetRevision: 1.12.5
 
