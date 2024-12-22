@@ -12,6 +12,7 @@ spec:
       source: homeassistant
 
   backup:
+    retentionPolicy: "90d"
     barmanObjectStore:
       destinationPath: "s3://homeassistant-backup/"
       endpointURL: "http://s3-minio.s3.svc.cluster.local:9000"

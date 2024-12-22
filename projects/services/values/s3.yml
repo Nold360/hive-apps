@@ -1,13 +1,15 @@
 image:
   repository: quay.io/minio/minio
-  pullPolicy: IfNotPresent
+  tag: latest
+  pullPolicy: Always
 
 ## Set default image, imageTag, and imagePullPolicy for the `mc` (the minio
 ## client used to create a default bucket).
 ##
 mcImage:
   repository: quay.io/minio/mc
-  pullPolicy: IfNotPresent
+  tag: latest
+  pullPolicy: Always
 
 ## minio mode, i.e. standalone or distributed
 mode: standalone ## other supported values are "standalone"
@@ -77,11 +79,11 @@ consoleIngress:
     cert-manager.io/cluster-issuer: vault-issuer
   path: /
   hosts:
-    - minio-console.dc
+    - minio.dc
   tls:
   - secretName: minio-console-tls
     hosts:
-      - minio-console.dc
+      - minio.dc
 
 securityContext:
   enabled: true
@@ -271,7 +273,7 @@ makeBucketJob:
 ## Use this field to add environment variables relevant to MinIO server. These fields will be passed on to MinIO container(s)
 ## when Chart is deployed
 environment:
-  MINIO_BROWSER_REDIRECT_URL: "https://s3.dc"
+  MINIO_BROWSER_REDIRECT_URL: "https://minio.dc"
   ## Please refer for comprehensive list https://min.io/docs/minio/linux/reference/minio-server/minio-server.html
   ## MINIO_SUBNET_LICENSE: "License key obtained from https://subnet.min.io"
   ## MINIO_BROWSER: "off"

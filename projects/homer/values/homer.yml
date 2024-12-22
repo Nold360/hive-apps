@@ -140,7 +140,7 @@ configmap:
               target: "_blank"
             - logo: assets/png/minio.png
               name: MinIO
-              url: https://s3.dc
+              url: https://minio.dc
               target: "_blank"
             - logo: assets/png/google-mail.png
               name: Ntfy
