@@ -3,8 +3,8 @@ replicaCount: 1
 deployment:
   image: 
     repository: quay.io/go-skynet/local-ai
-    #tag: latest-aio-gpu-nvidia-cuda-12
-    tag: v2.24.2-cublas-cuda12-ffmpeg
+    tag: master-cublas-cuda12-ffmpeg-core
+    #tag: v2.24.2-cublas-cuda12-ffmpeg
   pullPolicy: Always
   runtimeClassName: nvidia
 
