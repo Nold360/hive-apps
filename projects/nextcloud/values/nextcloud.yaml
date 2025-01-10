@@ -68,6 +68,7 @@ securityContext:
 
 ingress:
   enabled: true
+  className: ingress-external
   labels:
     environment: external
   annotations:
@@ -75,7 +76,7 @@ ingress:
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt
     traefik.ingress.kubernetes.io/router.tls: 'true'
-    kubernetes.io/ingress.class: ingress-external
+    # kubernetes.io/ingress.class: ingress-external
     external-dns.alpha.kubernetes.io/hostname: share.nold.in
     external-dns.alpha.kubernetes.io/target: nold.in
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
