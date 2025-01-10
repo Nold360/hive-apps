@@ -1,6 +1,6 @@
 image:
   repository: docker.io/qdrant/qdrant
-  tag: "v1.12.5"
+  tag: "v1.12.6"
   useUnprivilegedImage: true
 
 env:
