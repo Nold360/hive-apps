@@ -25,7 +25,7 @@ apps:
   namespace: bi
   repoURL: https://qdrant.github.io/qdrant-helm
   chart: qdrant
-  targetRevision: 1.12.5
+  targetRevision: 1.12.6
 
 # - name: mongo-express
 #   repoURL: https://cowboysysop.github.io/charts/
