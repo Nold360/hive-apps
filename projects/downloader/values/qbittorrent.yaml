@@ -83,6 +83,10 @@ persistence:
 addons:
   vpn:
     enabled: true
+    gluetun:
+      image:
+        repository: ghcr.io/qdm12/gluetun
+        tag: v3.40.0
 
     env:
       VPN_SERVICE_PROVIDER: mullvad
@@ -103,6 +107,7 @@ addons:
         name: wireguard-config
 
     securityContext:
+      privileged: true
       capabilities:
         add :
           - NET_ADMIN
