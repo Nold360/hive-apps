@@ -104,8 +104,9 @@ addons:
 
     securityContext:
       capabilities:
-        add:
+        add :
           - NET_ADMIN
+          - NET_RAW
 
     livenessProbe:
       httpGet:
