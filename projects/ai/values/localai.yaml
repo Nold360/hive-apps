@@ -4,7 +4,7 @@ deployment:
   image: 
     repository: quay.io/go-skynet/local-ai
     #tag: master-cublas-cuda12-ffmpeg
-    tag: v2.24.2-cublas-cuda12-ffmpeg
+    tag: v2.25.0-cublas-cuda12-ffmpeg
   pullPolicy: Always
   runtimeClassName: nvidia
 
