@@ -29,7 +29,7 @@ controllers:
           PHOENIX_COLLECTOR_ENDPOINT: http://phoenix.phoenix.svc.cluster.local:6006
           PHOENIX_PROJECT_NAME: bi
           OPENAI_API_KEY: fake
-        command: ["python3"]
+        command: ["python"]
         args: ["/app/bi/agents/main/app.py", "worker", "-l", "info"]
 
   controller:
@@ -53,8 +53,41 @@ controllers:
               secretKeyRef:
                 name: bi-mongo-bi-bi
                 key: password
-        command: ["python3"]
+        command: ["python"]
         args: ["/app/bi/controller.py", "worker", "-l", "info"]
+
+  memory:
+    containers:
+      main:
+        image:
+          repository: reg.dc/bi
+          tag: latest
+          pullPolicy: Always
+        env:
+          BIBOT_CONFIG: /config/bibot.yml
+          BIBOT_KAFKA__BROKER: kafka://bi-cluster-kafka-bootstrap:9092
+          BIBOT_MONGODB__URI: mongodb://bi-mongo-svc:27017/
+          BIBOT_MONGODB__USER:
+            valueFrom:
+              secretKeyRef:
+                name: bi-mongo-bi-bi
+                key: username
+          BIBOT_MONGODB__PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: bi-mongo-bi-bi
+                key: password
+          BIBOT_QDRANT__API_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: qdrant-apikey
+                key: api-key
+          PHOENIX_COLLECTOR_ENDPOINT: http://phoenix.phoenix.svc.cluster.local:6006
+          PHOENIX_PROJECT_NAME: bi
+          OPENAI_API_KEY: fake
+        command: ["python"]
+        args: ["/app/bi/agents/memory/app.py", "worker", "-l", "info"]
+
 
   discord:
     containers:
@@ -64,7 +97,7 @@ controllers:
           tag: latest
           pullPolicy: Always
     
-        command: ["python3"]
+        command: ["python"]
         args: ["/app/bi/connectors/discord/app.py", "worker", "-l", "info"]
 
         env:
