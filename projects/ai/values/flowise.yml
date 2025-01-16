@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: flowiseai/flowise
-          tag: 2.2.3
+          tag: 2.2.4
         command:
           - flowise
           - start
