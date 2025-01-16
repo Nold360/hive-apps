@@ -36,8 +36,8 @@ apps:
   chart: strimzi-kafka-operator
   targetRevision: 0.41.0
 
-- name: mongodb-operator
-  repoURL: https://mongodb.github.io/helm-charts
-  namespace: mongodb-operator
-  chart: community-operator
-  targetRevision: 0.10.0
+# - name: mongodb-operator
+#   repoURL: https://mongodb.github.io/helm-charts
+#   namespace: mongodb-operator
+#   chart: community-operator
+#   targetRevision: 0.10.0
