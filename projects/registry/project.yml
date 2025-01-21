@@ -4,4 +4,4 @@ apps:
 - name: trow
   repoURL: https://github.com/Trow-Registry/trow
   path: charts/trow
-  targetRevision: main
+  targetRevision: v0.6.4

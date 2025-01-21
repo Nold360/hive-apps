@@ -1,0 +1,45 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: epicwink/proxpi
+          tag: latest
+        env:
+        - name: PROXPI_CACHE_DIR
+          value: /data
+        - name: PROXPI_EXTRA_INDEX_URLS
+          value: https://download.pytorch.org/whl/cu121
+
+ingress:
+  main:
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    enabled: true
+    hosts:
+    - host: pip.dc
+      paths:
+      - path: /
+        service:
+          name: main
+          port: http
+    tls:
+    - hosts:
+      - pip.dc
+      secretName: pip-tls
+
+persistence:
+  data:
+    accessMode: ReadWriteOnce
+    enabled: true
+    readOnly: false
+    size: 10Gi
+    type: persistentVolumeClaim
+
+service:
+  main:
+    ports:
+      http:
+        enabled: true
+        port: 5000
+    type: ClusterIP

@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/trow-registry/trow
-  tag: 0.6.4
+  #tag: 0.6.4
 
 trow:
   logLevel: info
