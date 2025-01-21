@@ -10,24 +10,17 @@ controllers:
         env:
           BIBOT_CONFIG: /config/bibot.yml
           BIBOT_KAFKA__BROKER: kafka://bi-cluster-kafka-bootstrap:9092
-          BIBOT_MONGODB__URI: mongodb://bi-mongo-svc:27017/
-          BIBOT_MONGODB__USER:
-            valueFrom:
-              secretKeyRef:
-                name: bi-mongo-bi-bi
-                key: username
-          BIBOT_MONGODB__PASSWORD:
-            valueFrom:
-              secretKeyRef:
-                name: bi-mongo-bi-bi
-                key: password
           BIBOT_QDRANT__API_KEY:
             valueFrom:
               secretKeyRef:
                 name: qdrant-apikey
                 key: api-key
-          PHOENIX_COLLECTOR_ENDPOINT: http://phoenix.phoenix.svc.cluster.local:6006
-          PHOENIX_PROJECT_NAME: bi
+          BIBOT_VALKEY__HOST: valkey-primary.bi.svc.cluster.local
+          BIBOT_VALKEY__PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: valkey
+                key: valkey-password
           OPENAI_API_KEY: fake
         command: ["python"]
         args: ["/app/bi/agents/main/app.py", "worker", "-l", "info"]
@@ -42,17 +35,12 @@ controllers:
         env:
           BIBOT_CONFIG: /config/bibot.yml
           BIBOT_KAFKA__BROKER: kafka://bi-cluster-kafka-bootstrap:9092
-          BIBOT_MONGODB__URI: mongodb://bi-mongo-svc:27017/
-          BIBOT_MONGODB__USER:
+          BIBOT_VALKEY__HOST: valkey-primary.bi.svc.cluster.local
+          BIBOT_VALKEY__PASSWORD:
             valueFrom:
               secretKeyRef:
-                name: bi-mongo-bi-bi
-                key: username
-          BIBOT_MONGODB__PASSWORD:
-            valueFrom:
-              secretKeyRef:
-                name: bi-mongo-bi-bi
-                key: password
+                name: valkey
+                key: valkey-password
         command: ["python"]
         args: ["/app/bi/controller.py", "worker", "-l", "info"]
 
@@ -66,24 +54,17 @@ controllers:
         env:
           BIBOT_CONFIG: /config/bibot.yml
           BIBOT_KAFKA__BROKER: kafka://bi-cluster-kafka-bootstrap:9092
-          BIBOT_MONGODB__URI: mongodb://bi-mongo-svc:27017/
-          BIBOT_MONGODB__USER:
-            valueFrom:
-              secretKeyRef:
-                name: bi-mongo-bi-bi
-                key: username
-          BIBOT_MONGODB__PASSWORD:
-            valueFrom:
-              secretKeyRef:
-                name: bi-mongo-bi-bi
-                key: password
           BIBOT_QDRANT__API_KEY:
             valueFrom:
               secretKeyRef:
                 name: qdrant-apikey
                 key: api-key
-          PHOENIX_COLLECTOR_ENDPOINT: http://phoenix.phoenix.svc.cluster.local:6006
-          PHOENIX_PROJECT_NAME: bi
+          BIBOT_VALKEY__PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: valkey
+                key: valkey-password
+          BIBOT_VALKEY__HOST: valkey-primary.bi.svc.cluster.local
           OPENAI_API_KEY: fake
         command: ["python"]
         args: ["/app/bi/agents/memory/app.py", "worker", "-l", "info"]
@@ -102,17 +83,7 @@ controllers:
 
         env:
           BIBOT_KAFKA__BROKER: bi-cluster-kafka-bootstrap:9092
-          BIBOT_MONGODB__URI: mongodb://bi-mongo-svc:27017/
-          BIBOT_MONGODB__USER:
-            valueFrom:
-              secretKeyRef:
-                name: bi-mongo-bi-bi
-                key: username
-          BIBOT_MONGODB__PASSWORD:
-            valueFrom:
-              secretKeyRef:
-                name: bi-mongo-bi-bi
-                key: password
+          BIBOT_VALKEY__HOST: valkey-primary.bi.svc.cluster.local
           OPENAI_API_KEY: fake
           BIBOT_DISCORD__TOKEN:
             valueFrom:
@@ -132,20 +103,6 @@ controllers:
           startup: 
             enabled: false
 
-  mongoui:
-    containers:
-      main:
-        image:
-          repository: ugleiton/mongo-gui
-          tag: latest
-          pullPolicy: Always
-        env:
-          MONGO_URL:
-            valueFrom:
-              secretKeyRef:
-                name: bi-mongo-bi-bi
-                key: connectionString.standardSrv
-
 persistence:
   secret:
     name: bibot
@@ -162,28 +119,28 @@ persistence:
     type: persistentVolumeClaim
     accessMode: ReadWriteOnce
 
-service:
-  main:
-    controller: mongoui
-    ports:
-      http:
-        port: 4321
-    type: ClusterIP
+# service:
+#   main:
+#     controller: mongoui
+#     ports:
+#       http:
+#         port: 4321
+#     type: ClusterIP
 
-ingress:
-  main:
-    annotations:
-      cert-manager.io/cluster-issuer: vault-issuer
-    enabled: true
-    hosts:
-    - host: mongo.dc
-      paths:
-      - path: /
-        service:
-          # name: main
-          identifier: main
-          port: 4321
-    tls:
-    - hosts:
-      - mongo.dc
-      secretName: mongo-tls
+# ingress:
+#   main:
+#     annotations:
+#       cert-manager.io/cluster-issuer: vault-issuer
+#     enabled: true
+#     hosts:
+#     - host: mongo.dc
+#       paths:
+#       - path: /
+#         service:
+#           # name: main
+#           identifier: main
+#           port: 4321
+#     tls:
+#     - hosts:
+#       - mongo.dc
+#       secretName: mongo-tls

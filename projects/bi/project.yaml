@@ -27,13 +27,8 @@ apps:
   chart: qdrant
   targetRevision: 1.12.6
 
-# - name: mongo-express
-#   repoURL: https://cowboysysop.github.io/charts/
-#   chart: mongo-express
-#   targetRevision: 6.5.2
-#   secrets:
-#     - name: mongo-express
-#       keys:
-#         - mongodb-admin-password
-#         - site-cookie-secret
-#         - site-session-secret
+- name: valkey
+  namespace: bi
+  repoURL: registry-1.docker.io/bitnamicharts 
+  chart: valkey
+  targetRevision: 2.2.3
