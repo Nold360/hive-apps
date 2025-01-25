@@ -25,7 +25,7 @@ apps:
   namespace: bi
   repoURL: https://qdrant.github.io/qdrant-helm
   chart: qdrant
-  targetRevision: 1.12.6
+  targetRevision: 1.13.1
 
 - name: valkey
   namespace: bi
