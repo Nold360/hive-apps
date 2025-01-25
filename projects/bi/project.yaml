@@ -32,3 +32,9 @@ apps:
   repoURL: registry-1.docker.io/bitnamicharts 
   chart: valkey
   targetRevision: 2.2.3
+
+- name: redpanda
+  namespace: bi
+  repoURL: https://charts.redpanda.com
+  chart: redpanda
+  targetRevision: 5.9.19

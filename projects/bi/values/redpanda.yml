@@ -1,0 +1,29 @@
+image:
+  repository: docker.redpanda.com/redpandadata/redpanda
+  tag: v24.3.3
+
+console:
+  enabled: false
+
+tls:
+  enabled: false
+
+external:
+  enabled: false
+  service:
+    enabled: true
+
+resources:
+  cpu:
+    cores: 100m
+
+statefulset:
+  replicas: 1
+
+  startupProbe:
+    timeoutSeconds: 5
+  livenessProbe:
+    timeoutSeconds: 5
+  readinessProbe:
+    timeoutSeconds: 5
+
