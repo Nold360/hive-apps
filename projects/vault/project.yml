@@ -18,5 +18,5 @@ apps:
   namespace: vault-secrets-operator
   repoURL: https://ricoberger.github.io/helm-charts
   chart: vault-secrets-operator
-  targetRevision: 2.6.1
+  targetRevision: 2.7.0
   syncWave: '-2'
