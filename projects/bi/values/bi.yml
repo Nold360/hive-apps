@@ -9,7 +9,7 @@ controllers:
           pullPolicy: Always
         env:
           BIBOT_CONFIG: /config/bibot.yml
-          BIBOT_KAFKA__BROKER: kafka://bi-cluster-kafka-bootstrap:9092
+          BIBOT_KAFKA__BROKER: kafka://redpanda.bi.svc.cluster.local:9092
           BIBOT_QDRANT__API_KEY:
             valueFrom:
               secretKeyRef:
@@ -34,7 +34,7 @@ controllers:
           pullPolicy: Always
         env:
           BIBOT_CONFIG: /config/bibot.yml
-          BIBOT_KAFKA__BROKER: kafka://bi-cluster-kafka-bootstrap:9092
+          BIBOT_KAFKA__BROKER: kafka://redpanda.bi.svc.cluster.local:9092
           BIBOT_VALKEY__HOST: valkey-primary.bi.svc.cluster.local
           BIBOT_VALKEY__PASSWORD:
             valueFrom:
@@ -53,7 +53,7 @@ controllers:
           pullPolicy: Always
         env:
           BIBOT_CONFIG: /config/bibot.yml
-          BIBOT_KAFKA__BROKER: kafka://bi-cluster-kafka-bootstrap:9092
+          BIBOT_KAFKA__BROKER: kafka://redpanda.bi.svc.cluster.local:9092
           BIBOT_QDRANT__API_KEY:
             valueFrom:
               secretKeyRef:
@@ -82,7 +82,8 @@ controllers:
         args: ["/app/bi/connectors/discord/app.py", "worker", "-l", "info"]
 
         env:
-          BIBOT_KAFKA__BROKER: bi-cluster-kafka-bootstrap:9092
+          BIBOT_KAFKA__BROKER: redpanda.bi.svc.cluster.local:9092
+          BIBOT_QDRANT__API_KEY:
           BIBOT_VALKEY__HOST: valkey-primary.bi.svc.cluster.local
           OPENAI_API_KEY: fake
           BIBOT_DISCORD__TOKEN:
