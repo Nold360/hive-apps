@@ -49,7 +49,7 @@ apps:
   existingNamespace: kube-system
   repoURL: https://helm.cilium.io
   chart: cilium
-  targetRevision: 1.16.5
+  targetRevision: 1.16.6
 
 - name: external-dns
   repoURL: https://kubernetes-sigs.github.io/external-dns
