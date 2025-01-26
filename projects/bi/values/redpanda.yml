@@ -2,6 +2,12 @@ image:
   repository: docker.redpanda.com/redpandadata/redpanda
   tag: v24.3.3
 
+config:
+  cluster:
+    kafka_batch_max_bytes: 16777216 #16MB
+    kafka_request_max_bytes: 16777216
+
+
 console:
   enabled: false
 
