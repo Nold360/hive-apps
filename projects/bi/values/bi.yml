@@ -53,6 +53,7 @@ controllers:
           pullPolicy: Always
         env:
           BIBOT_CONFIG: /config/bibot.yml
+          BIBOT_OPENAI__TEMPERATURE: 0.0
           BIBOT_KAFKA__BROKER: kafka://redpanda.bi.svc.cluster.local:9093
           BIBOT_QDRANT__API_KEY:
             valueFrom:
