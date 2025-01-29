@@ -13,7 +13,7 @@ controllers:
           BIBOT_QDRANT__API_KEY:
             valueFrom:
               secretKeyRef:
-                name: qdrant-apikey
+                name: qdrant-secret
                 key: api-key
           BIBOT_VALKEY__HOST: valkey-primary.bi.svc.cluster.local
           BIBOT_VALKEY__PASSWORD:
@@ -58,7 +58,7 @@ controllers:
           BIBOT_QDRANT__API_KEY:
             valueFrom:
               secretKeyRef:
-                name: qdrant-apikey
+                name: qdrant-secret
                 key: api-key
           BIBOT_VALKEY__PASSWORD:
             valueFrom:
