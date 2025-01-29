@@ -6,7 +6,8 @@ controllers:
       app:
         image:
           repository: searxng/searxng
-          tag: 2024.5.16-2f2d93b29
+          tag: latest
+          pullPolicy: Always
 
         env:
           BASE_URL: https://search.dc
