@@ -28,8 +28,13 @@ persistence:
     storageClass: local-path
     accessMode: ReadWriteOnce
     size: 1Gi
-  media:
+  movies:
     enabled: true
     type: hostPath
-    mountPath: /media/
-    hostPath: /data/media/
+    mountPath: /media/movies
+    hostPath: /data/media/movies
+  tvshows:
+    enabled: true
+    type: hostPath
+    mountPath: /media/tvshows
+    hostPath: /data/media/tvshows
