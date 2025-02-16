@@ -6,7 +6,7 @@ image:
   # -- The image pull policy
   pullPolicy: IfNotPresent
   # -- The image tag to pull, default: `Chart.appVersion`
-  tag: ""
+  tag: 4.0.9
 
 npmrc:
   # -- Enable custom npmrc config
