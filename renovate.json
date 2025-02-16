@@ -1,5 +1,6 @@
 {
   "enabled": true,
+  "extends": ["config:recommended"],
   "timezone": "Europe/Berlin",
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard",
@@ -158,7 +159,7 @@
       ],
       "automerge": true,
       "ignoreTests": true,
-      "schedule": "after 1am and before 5am",
+      "schedule": "after 1am and before 6am",
       "matchUpdateTypes": [
         "minor",
         "patch"
