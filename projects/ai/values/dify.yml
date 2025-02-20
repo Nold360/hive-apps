@@ -2119,7 +2119,7 @@ redis:
     image:
       registry: docker.io
       repository: bitnami/redis-exporter
-      tag: 1.57.0-debian-11-r13
+      tag: 1.57.0-debian-11-r18
       digest: ""
       pullPolicy: IfNotPresent
       ## Optionally specify an array of imagePullSecrets.
