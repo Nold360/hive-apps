@@ -5,7 +5,7 @@ apps:
 - name: authentik
   repoURL: https://charts.goauthentik.io/
   chart: authentik
-  targetRevision: 2023.10.7
+  targetRevision: 2024.12.3
   secrets:
     - name: authentik
       keys:
