@@ -11,7 +11,16 @@ controller:
     externalIPs:
       - 192.168.1.12
   # -- Will add custom configuration options to Nginx https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
-  config: {}
+  config:
+    http-snippet: |
+      more_set_headers -a "X-Robots-Tag: noai";
+      more_set_headers -a "X-Robots-Tag: Google-Extended: none";
+      more_set_headers -a "X-Robots-Tag: GPTBot: none";
+      more_set_headers -a "X-Robots-Tag: ChatGPT-User: none";
+      more_set_headers -a "X-Robots-Tag: anthropic-ai: none";
+      more_set_headers -a "X-Robots-Tag: CCBot: none";
+      more_set_headers -a "X-Robots-Tag: ClaudeBot: none";
+
   # -- Annotations to be added to the controller config configuration configmap.
   configAnnotations: {}
   # -- Will add custom headers before sending traffic to backends according to https://github.com/kubernetes/ingress-nginx/tree/main/docs/examples/customization/custom-headers
