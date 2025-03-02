@@ -5,6 +5,7 @@ cni:
 
 ipam:
   mode: "cluster-pool"
+  multiPoolPreAllocation: ""
 
 ingressController:
   enabled: false
@@ -32,12 +33,6 @@ hubble:
 
   relay:
     enabled: true
-
-    # -- Hubble-relay container image.
-    image:
-      pullPolicy: "IfNotPresent"
-
-    # -- Number of replicas run for the hubble-relay deployment.
     replicas: 1
 
   ui:
