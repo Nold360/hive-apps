@@ -14,7 +14,7 @@ apps:
 - name: nextcloud
   repoURL: https://nextcloud.github.io/helm
   chart: nextcloud
-  targetRevision: 6.6.4
+  targetRevision: 6.6.6
   secrets:
   - name: nextcloud-user
     keys:
