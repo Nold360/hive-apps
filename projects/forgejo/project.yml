@@ -29,3 +29,9 @@ apps:
   - name: redis-auth
     keys:
       - password
+
+  ignoreDiff:
+  - group: apps
+    kind: Deployment
+    jsonPointers:
+    - /spec/replicas

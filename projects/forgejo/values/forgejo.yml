@@ -60,6 +60,9 @@ ingress:
       location /robots.txt {
         return 200 "User-agent: *\nDisallow: /\n";
       }
+    # https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/annotations.md#rate-limiting
+    nginx.ingress.kubernetes.io/limit-rps: "1"
+    nginx.ingress.kubernetes.io/limit-connections: "1"
   hosts:
     - host: git.nold.in
       paths:
