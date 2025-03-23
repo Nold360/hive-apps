@@ -54,7 +54,7 @@ apps:
 - name: external-dns
   repoURL: https://kubernetes-sigs.github.io/external-dns
   chart: external-dns
-  targetRevision: 1.15.2
+  targetRevision: 1.16.0
   secrets:
   - name: cloudflare-api
     keys:
@@ -63,7 +63,7 @@ apps:
 - name: external-dns-adguard
   repoURL: https://kubernetes-sigs.github.io/external-dns
   chart: external-dns
-  targetRevision: 1.15.2
+  targetRevision: 1.16.0
   secrets:
   - name: adguard-config
     keys:
