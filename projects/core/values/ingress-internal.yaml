@@ -5,7 +5,6 @@ controller:
         chroot: false
         registry: registry.k8s.io
         image: ingress-nginx/controller
-        tag: "v1.9.3"
         # digest: sha256:15be4666c53052484dd2992efacf2f50ea77a78ae8aa21ccd91af6baaa7ea22f
         # digestChroot: sha256:0de01e2c316c3ca7847ca13b32d077af7910d07f21a4a82f81061839764f8f81
         pullPolicy: IfNotPresent
