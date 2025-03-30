@@ -1,5 +1,5 @@
 image:
-  repository: ghcr.io/onedr0p/lidarr
+  repository: ghcr.io/home-operations/lidarr
   tag: 2.4.3.4248
 
 ingress:
