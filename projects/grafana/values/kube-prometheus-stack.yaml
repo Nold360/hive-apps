@@ -11,7 +11,7 @@ grafana:
 
   image:
     repository: grafana/grafana
-    tag: 11.5.2
+    tag: 11.5.3
 
   persistence:
     enabled: true
