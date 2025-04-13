@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: homeassistant/home-assistant
-          tag: "2025.3"
+          tag: "2025.4"
 
         env:
           TZ: Europe/Berlin
