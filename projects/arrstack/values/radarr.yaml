@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/home-operations/radarr
-  tag: 5.22.1
+  tag: 5.22.2
 
 env:
   UMASK: "002"
