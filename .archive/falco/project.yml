@@ -5,4 +5,4 @@ apps:
 - name: falco
   repoURL: https://falcosecurity.github.io/charts
   chart: falco
-  targetRevision: 3.8.7
+  targetRevision: 4.21.3
