@@ -37,4 +37,4 @@ apps:
   namespace: bi
   repoURL: https://charts.redpanda.com
   chart: redpanda
-  targetRevision: 5.9.21
+  targetRevision: 5.10.2
