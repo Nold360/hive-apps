@@ -62,7 +62,7 @@
         "common"
       ],
       "registryUrls": [
-        "https://bjw-s.github.io/helm-charts"
+        "https://bjw-s-labs.github.io/helm-charts"
       ]
     },
     {

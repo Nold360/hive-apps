@@ -19,4 +19,4 @@ repos:
   lib42:
     url: https://lib42.github.io/charts
   bjw-s:
-    url: https://bjw-s.github.io/helm-charts
+    url: https://bjw-s-labs.github.io/helm-charts
