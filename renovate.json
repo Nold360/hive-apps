@@ -9,6 +9,10 @@
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
   "branchConcurrentLimit": 0,
+  "ignorePaths": [
+      "ansible/**",
+      ".archive/**"
+  ],
   "suppressNotifications": [
     "prIgnoreNotification"
   ],
@@ -29,7 +33,8 @@
       "projects",
       "ansible",
       "scripts",
-      ".github"
+      ".github",
+      ".archive"
     ]
   },
   "customManagers": [
