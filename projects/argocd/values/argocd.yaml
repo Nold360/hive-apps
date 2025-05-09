@@ -86,6 +86,7 @@ server:
 
   ingress:
     enabled: true
+    hostname: argocd.dc
     annotations:
       cert-manager.io/cluster-issuer: vault-issuer
       traefik.ingress.kubernetes.io/router.tls: 'true'
@@ -93,13 +94,7 @@ server:
       - argocd.dc
     paths:
       - /
-    tls:
-      - secretName: argocd-tls
-        hosts:
-          - argocd.dc
-    https: false
-  # dedicated ingess for gRPC as documented at
-  # https://argoproj.github.io/argo-cd/operator-manual/ingress/
+    tls: true
 
   ## ArgoCD config
   ## reference https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
