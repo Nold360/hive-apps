@@ -10,8 +10,9 @@
   "prConcurrentLimit": 0,
   "branchConcurrentLimit": 0,
   "ignorePaths": [
-      "ansible/**",
-      ".archive/**"
+    "ansible/**",
+    ".archive/**",
+    "bootstrap/**"
   ],
   "suppressNotifications": [
     "prIgnoreNotification"
