@@ -8,7 +8,10 @@ alertmanager:
 grafana:
   enabled: true
   namespaceOverride: "grafana"
-
+  
+  initChownData:
+    enabled: false
+    
   image:
     repository: grafana/grafana
     tag: 12.0.0
