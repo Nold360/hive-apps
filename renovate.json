@@ -1,6 +1,8 @@
 {
   "enabled": true,
-  "extends": ["config:recommended"],
+  "extends": [
+    "config:recommended"
+  ],
   "timezone": "Europe/Berlin",
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard",
@@ -22,13 +24,13 @@
     "@nold360"
   ],
   "helm-values": {
-    "fileMatch": [
-      "projects/.*/values/.+\\.ya?ml$"
+    "managerFilePatterns": [
+      "/projects/.*/values/.+\\.ya?ml$/"
     ]
   },
   "kubernetes": {
-    "fileMatch": [
-      "\\.ya?ml$"
+    "managerFilePatterns": [
+      "/\\.ya?ml$/"
     ],
     "ignorePaths": [
       "projects",
@@ -41,8 +43,8 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "project.ya?ml$"
+      "managerFilePatterns": [
+        "/project.ya?ml$/"
       ],
       "matchStrings": [
         "repoURL: (?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *targetRevision: (?<currentValue>.*)\n"
