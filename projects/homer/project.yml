@@ -4,7 +4,7 @@ apps:
 - name: homer
   repoURL: https://djjudas21.github.io/charts
   chart: homer
-  targetRevision: 8.2.3
+  targetRevision: 8.2.4
   include:
   - ingress-internal
   - noRoot
