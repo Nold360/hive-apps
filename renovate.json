@@ -8,13 +8,7 @@
   "commitBody": "",
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
-  "hostRules": [
-    {
-      "matchHost": "api.github.com",
-      "concurrentRequestLimit": 1,
-      "maxRequestsPerSecond": 8
-    }
-  ],
+  "branchConcurrentLimit": 0,
   "suppressNotifications": [
     "prIgnoreNotification"
   ],
