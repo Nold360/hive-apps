@@ -6,7 +6,8 @@
   "dependencyDashboardTitle": "Renovate Dashboard",
   "commitMessageSuffix": "",
   "commitBody": "",
-  "prHourlyLimit": 20,
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 0,
   "hostRules": [
     {
       "matchHost": "api.github.com",
