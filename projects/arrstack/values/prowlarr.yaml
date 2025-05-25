@@ -9,7 +9,7 @@ image:
   # -- image repository
   repository: ghcr.io/home-operations/prowlarr
   # @default -- chart.appVersion
-  tag: "1.36.2"
+  tag: "1.36.3"
   # -- image pull policy
   pullPolicy: IfNotPresent
 
