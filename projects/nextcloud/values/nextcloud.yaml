@@ -1,6 +1,5 @@
 image:
-  tag: 30-fpm
-  pullPolicy: Always
+  flavor: fpm
 
 nextcloud:
   host: share.nold.in
