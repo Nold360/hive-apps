@@ -24,7 +24,7 @@ server:
   enabled: true
   image:
     repository: quay.io/prometheus/prometheus
-    tag: v3.4.0
+    tag: v3.4.1
  
   strategy:
     type: Recreate
