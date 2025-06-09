@@ -71,13 +71,13 @@ provider:
       livenessProbe:
         httpGet:
           path: /healthz
-          port: 8888
+          port: "8888"
         initialDelaySeconds: 10
         timeoutSeconds: 5
       readinessProbe:
         httpGet:
           path: /healthz
-          port: 8888
+          port: "8888"
         initialDelaySeconds: 10
         timeoutSeconds: 5
       env:
