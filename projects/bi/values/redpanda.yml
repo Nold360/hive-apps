@@ -1,6 +1,6 @@
 image:
   repository: docker.redpanda.com/redpandadata/redpanda
-  tag: v25.1.4
+  tag: v25.1.5
 
 config:
   cluster:
