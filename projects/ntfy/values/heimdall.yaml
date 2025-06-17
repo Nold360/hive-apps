@@ -1,6 +1,6 @@
 image:
   repository: tccr.io/truecharts/heimdall
-  tag: v2.5.7
+  tag: 23.4.14
   pullPolicy: IfNotPresent
 
 securityContext:
