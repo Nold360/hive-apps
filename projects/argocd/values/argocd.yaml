@@ -8,7 +8,7 @@ installCRDs: true
 global:
   image:
     repository: quay.io/argoproj/argocd
-    tag: v3.0.7
+    tag: v3.0.9
 #    imagePullPolicy: IfNotPresent
   securityContext:
     runAsUser: 999
@@ -171,7 +171,7 @@ repoServer:
 
   initContainers:
   - name: copy-cmp-server
-    image: quay.io/argoproj/argocd:v3.0.7
+    image: quay.io/argoproj/argocd:v3.0.9
     command:
     - cp
     - -n
