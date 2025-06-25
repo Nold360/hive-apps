@@ -3,8 +3,7 @@ replicaCount: 1
 deployment:
   image: 
     repository: quay.io/go-skynet/local-ai
-    #tag: master-cublas-cuda12-ffmpeg
-    tag: v2.28.0-cublas-cuda12-ffmpeg
+    tag: v3.0.0-cublas-cuda12
   pullPolicy: Always
   runtimeClassName: nvidia
 
@@ -110,11 +109,6 @@ persistence:
     globalMount: /models
   output:
     enabled: false
-    annotations: {}
-    storageClass: ssd
-    accessModes: ReadWriteOnce
-    size: 100Gi
-    globalMount: /tmp/generated
 
 service:
   type: ClusterIP
