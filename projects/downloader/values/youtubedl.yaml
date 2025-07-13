@@ -1,25 +1,46 @@
-image:
-  repository: tzahi12345/youtubedl-material
-  tag: "4.3"
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/marcopiovanello/yt-dlp-web-ui
+          tag: latest
+          pullPolicy: Always
+
+persistence:
+  config:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 1Gi
+
+  downloads:
+    type: hostPath
+    hostPath: /data/media/downloads
+
+
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: 3033
+    type: ClusterIP
 
 ingress:
   main:
-    enabled: true
+    className: ingress-internal
     annotations:
-      cert-manager.io/cluster-issuer: "vault-issuer"
-      traefik.ingress.kubernetes.io/router.tls: 'true'
+      cert-manager.io/cluster-issuer: vault-issuer
+    enabled: true
     hosts:
       - host: youtubedl.dc
         paths:
-          - path: /
-            pathType: Prefix
+        - path: /
+          service:
+            identifier: main
+            port: 3033
     tls:
-      - secretName: youtubedl.dc-tls
-        hosts:
-          - youtubedl.dc
-
-hostPathMounts:
-  - name: downloads
-    enabled: true
-    mountPath: /downloads
-    hostPath: /data/downloads
+      - hosts:
+        - youtubedl.dc
+        secretName: youtubedl-tls

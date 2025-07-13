@@ -16,17 +16,7 @@ apps:
     - OPENVPN_USER
     - WIREGUARD_PRIVATE_KEY
 
-
 - name: youtubedl
-  repoURL: https://k8s-at-home.com/charts/
-  chart: youtubedl-material
-  targetRevision: 4.4.2
-  include:
-  - ingress-internal
-
-- name: pyload
-  repoURL: https://k8s-at-home.com/charts/
-  chart: pyload
-  targetRevision: 6.4.2
-  include:
-  - ingress-internal
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 4.1.2
