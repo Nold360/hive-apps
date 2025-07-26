@@ -15,7 +15,7 @@ apps:
 - name: forgejo
   repoURL: codeberg.org/forgejo-contrib
   chart: forgejo
-  targetRevision: 3.0.0
+  targetRevision: 5.1.0
   secrets:
   - name: admin
     keys:
