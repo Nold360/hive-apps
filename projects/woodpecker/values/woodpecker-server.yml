@@ -16,6 +16,7 @@ env:
   WOODPECKER_ADMIN: "Nold360"
   WOODPECKER_HOST: https://ci.nold.in
   WOODPECKER_GITHUB: "true"
+  WOODPECKER_PLUGINS_PRIVILEGED: "woodpeckerci/plugin-docker-buildx"
   #WOODPECKER_REPO_OWNERS: "nold360"
 
   HTTP_PROXY: http://proxy-squid.proxy.svc.cluster.local:3128
