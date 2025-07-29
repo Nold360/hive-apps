@@ -38,9 +38,11 @@ strategy:
     maxSurge: 0
     maxUnavailable: 1
 
-# Comma separated list of feature gates that should be enabled on the
-# controller pod & webhook pod.
-featureGates: ""
+config:
+  featureGates:
+    # Disable the use of Exact PathType in Ingress resources, to work around a bug in ingress-nginx
+    # https://github.com/kubernetes/ingress-nginx/issues/11176
+    ACMEHTTP01IngressPathTypeExact: false
 
 image:
   repository: quay.io/jetstack/cert-manager-controller
