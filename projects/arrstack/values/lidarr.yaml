@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/home-operations/lidarr
-  tag: 2.13.0
+  tag: 2.13.1
 
 ingress:
   main:
