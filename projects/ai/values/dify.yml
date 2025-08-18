@@ -1677,7 +1677,7 @@ redis:
     image:
       registry: docker.io
       repository: bitnami/redis-sentinel
-      tag: 7.4.3-debian-12-r0
+      tag: 8.2.1-debian-12-r0
       digest: ""
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
