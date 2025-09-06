@@ -10,11 +10,10 @@ apps:
   targetRevision: add/qbittorrent
   path: charts/qbittorrent
   secrets:
-  - name: vpn-config
+  - name: wireguard
     keys:
-    - SERVER_CITIES
-    - OPENVPN_USER
     - WIREGUARD_PRIVATE_KEY
+    - SERVER_COUNTRIES
 
 - name: youtubedl
   repo: bjw-s

@@ -89,22 +89,19 @@ addons:
         tag: v3.40.0
 
     env:
-      VPN_SERVICE_PROVIDER: mullvad
-      VPN_TYPE: openvpn
-      WIREGUARD_ADDRESSES: 10.67.135.224/32
+      VPN_SERVICE_PROVIDER: protonvpn
+      VPN_TYPE: wireguard
+      VPN_PORT_FORWARDING: on
      
-      # Fix: https://github.com/qdm12/gluetun/issues/1569#issuecomment-1549992099
-      OPENVPN_CIPHERS: AES-256-GCM
-
       DNS_KEEP_NAMESERVER: "on"
       DOT: "on"
-      FIREWALL: "on"
-      FIREWALL_INPUT_PORTS: "8080,8000"
-      FIREWALL_VPN_INPUT_PORTS: 61086
+      # FIREWALL: "on"
+      # FIREWALL_INPUT_PORTS: "8080,8000"
+      # FIREWALL_VPN_INPUT_PORTS: 61086
 
     envFrom:
     - secretRef:
-        name: wireguard-config
+        name: wireguard
 
     securityContext:
       privileged: true
