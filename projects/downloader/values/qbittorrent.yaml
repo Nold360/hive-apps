@@ -1,11 +1,82 @@
 ---
-image:
-  repository: ghcr.io/home-operations/qbittorrent
-  tag: 5.1.2
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-4.2.0/charts/other/app-template/values.schema.json
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    pod:
+      securityContext:
+        # sysctls:
+        #   - name: net.ipv6.conf.all.disable_ipv6
+        #     value: "1"
+        fsGroup: 2420
+        fsGroupChangePolicy: "OnRootMismatch"
+        supplementalGroups:
+          - 1000
+          - 568
+
+    containers:
+      main:
+        dependsOn: gluetun
+        image:
+          repository: ghcr.io/home-operations/qbittorrent
+          tag: 5.1.2
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+        env:
+          BIND_TO_INTERFACE: wg0
+
+      gluetun:
+        image:
+          repository: ghcr.io/qdm12/gluetun
+          tag: v3.40.0
+
+        envFrom:
+          - secretRef:
+              name: wireguard
+
+        env:
+          VPN_SERVICE_PROVIDER: protonvpn
+          VPN_TYPE: wireguard
+          VPN_INTERFACE: wg0
+
+          PORT_FORWARD_ONLY: "on"
+          VPN_PORT_FORWARDING: "on"
+          VPN_PORT_FORWARDING_UP_COMMAND: /bin/sh -c 'wget -O- --retry-connrefused --post-data "json={\"listen_port\":$(cat /tmp/gluetun/forwarded_port)}" http://127.0.0.1:8080/api/v2/app/setPreferences 2>&1'
+          
+          DOT: "off"
+          
+          HEALTH_VPN_DURATION_INITIAL: 15s
+          HEALTH_VPN_DURATION_ADDITION: 15s
+          HEALTH_SUCCESS_WAIT_DURATION: 15s
+
+          FIREWALL: "on"
+          FIREWALL_INPUT_PORTS: "8080,8000"
+          FIREWALL_OUTBOUND_SUBNETS: 10.42.0.0/16,192.168.1.0/24,127.0.0.0/8
+
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - NET_ADMIN
+              - NET_RAW
+
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /v1/openvpn/status
+                port: 8000
+              initialDelaySeconds: 30
+              periodSeconds: 30
 
 ingress:
   main:
-    enabled: true
+    className: ingress-internal
     annotations:
       cert-manager.io/cluster-issuer: "vault-issuer"
       nginx.ingress.kubernetes.io/proxy-body-size: 50m
@@ -14,6 +85,9 @@ ingress:
         paths:
           - path: /
             pathType: Prefix
+            service:
+              identifier: main
+              port: http
     tls:
       - secretName: qbittorrent-tls
         hosts:
@@ -21,98 +95,21 @@ ingress:
 
 service:
   main:
-    enabled: true
+    controller: main
+    type: ClusterIP
     ports:
       http:
         port: 8080
 
-podSecurityContext:
-  # Disable IPv6 support for gluetun:
-  sysctls:
-    - name: net.ipv6.conf.all.disable_ipv6
-      value: "1"
-  fsGroup: 2420
-  fsGroupChangePolicy: "OnRootMismatch"
-  supplementalGroups:
-    - 1000
-    - 568
-
 persistence:
   config:
     enabled: true
-    mountPath: /config
     size: 10M
+    accessMode: ReadWriteOnce
 
-  # for custom themes:
-  theme:
-    enabled: false
-    mountpath: /theme
-    type: emptyDir
-
-  ## example used hostpath instead
   downloads:
     enabled: true
     type: hostPath
     hostPath: /data/media/torrent
-    mountPath: /downloads
-
-
-## Install custom Theme
-# initContainers:
-#   init-config:
-#     image: alpine/git
-#     args: 
-#       - "clone"
-#       - "--depth"
-#       - "1"
-#       - "https://github.com/dracula/qbittorrent.git"
-#       - "/theme"
-#     volumeMounts:
-#     - name: theme
-#       mountPath: /theme
-#     securityContext:
-#       runAsNonRoot: true
-#       privileged: false
-#       readOnlyRootFilesystem: true
-#       allowPrivilegeEscalation: false
-#       capabilities:
-#         drop:
-#         - ALL
-
-## VPN
-addons:
-  vpn:
-    enabled: true
-    gluetun:
-      image:
-        repository: ghcr.io/qdm12/gluetun
-        tag: v3.40.0
-
-    env:
-      VPN_SERVICE_PROVIDER: protonvpn
-      VPN_TYPE: wireguard
-      VPN_PORT_FORWARDING: on
-     
-      DNS_KEEP_NAMESERVER: "on"
-      DOT: "on"
-      # FIREWALL: "on"
-      # FIREWALL_INPUT_PORTS: "8080,8000"
-      # FIREWALL_VPN_INPUT_PORTS: 61086
-
-    envFrom:
-    - secretRef:
-        name: wireguard
-
-    securityContext:
-      privileged: true
-      capabilities:
-        add :
-          - NET_ADMIN
-          - NET_RAW
-
-    livenessProbe:
-      httpGet:
-        path: /v1/openvpn/status
-        port: 8000
-      initialDelaySeconds: 30
-      periodSeconds: 30
+    globalMounts:
+      - path: /downloads

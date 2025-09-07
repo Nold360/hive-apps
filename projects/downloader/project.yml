@@ -3,18 +3,17 @@ config:
 
 apps:
 - name: qbittorrent
-  #  repoURL: https://lib42.github.io/charts
-  repoURL: https://github.com/lib42/charts
-  #chart: deluge
-  #targetRevision: 1.3.0
-  targetRevision: add/qbittorrent
-  path: charts/qbittorrent
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 4.2.0
   secrets:
   - name: wireguard
     keys:
+    - SERVER_COUNTRIES
     - WIREGUARD_PRIVATE_KEY
     - WIREGUARD_ENDPOINT_IP 
     - WIREGUARD_PUBLIC_KEY
+    - DNS_ADDRESS
 
 - name: youtubedl
   repo: bjw-s
