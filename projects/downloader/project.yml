@@ -13,7 +13,8 @@ apps:
   - name: wireguard
     keys:
     - WIREGUARD_PRIVATE_KEY
-    - SERVER_COUNTRIES
+    - WIREGUARD_ENDPOINT_IP 
+    - WIREGUARD_PUBLIC_KEY
 
 - name: youtubedl
   repo: bjw-s
