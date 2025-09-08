@@ -15,7 +15,7 @@ ingress:
       - paperless.dc
 image:
   repository: ghcr.io/paperless-ngx/paperless-ngx
-  tag: 2.18.3
+  tag: 2.18.4
   pullPolicy: IfNotPresent
 
 # -- See the following files for additional environment variables:
