@@ -1,8 +1,48 @@
 ---
-image:
-  repository: lib42/squid
-  tag: "latest"
-  pullPolicy: Always
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/heads/main/charts/library/common/values.schema.json
+#
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "vault-issuer"
+      nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    hosts:
+      - host: proxy.dc
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+    tls:
+     - secretName: squid-tls
+       hosts:
+          - proxy.dc
+
+controllers:
+  main:
+    pod:
+      securityContext:
+        runAsUser: 31
+        runAsGroup: 31
+        fsGroup: 31
+
+    containers:
+      main:
+        image:
+          repository: lib42/squid
+          tag: "latest"
+          pullPolicy: Always
+
+        securityContext:
+          runAsNonRoot: true
+          privileged: false
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
 
 configMaps:
   config:
@@ -46,41 +86,6 @@ configMaps:
         # Do not display squid version
         httpd_suppress_version_string on
 
-controller:
-  replicas: 1
-  strategy: RollingUpdate
-
-podSecurityContext:
-  runAsUser: 31
-  runAsGroup: 31
-  fsGroup: 31
-
-securityContext:
-  runAsNonRoot: true
-  privileged: false
-  readOnlyRootFilesystem: true
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop:
-    - ALL
-
-ingress:
-  main:
-    enabled: true
-    annotations:
-      cert-manager.io/cluster-issuer: "vault-issuer"
-      traefik.ingress.kubernetes.io/router.tls: 'true'
-      nginx.ingress.kubernetes.io/proxy-body-size: 50m
-    hosts:
-      - host: proxy.dc
-        paths:
-          - path: /
-            pathType: Prefix
-    tls:
-      - secretName: squid-tls
-        hosts:
-           - proxy.dc
-
 service:
   main:
     enabled: true
@@ -90,28 +95,30 @@ service:
 
 persistence:
   config:
-    name: '{{ include "bjw-s.common.lib.chart.names.fullname" . -}}-config'
     enabled: true
     type: configMap
-    mountPath: /etc/squid/squid.conf
-    subPath: squid.conf
-
+    identifier: config
+    advancedMounts:
+      main:
+        main:
+          - path: /etc/squid/squid.conf
+            readOnly: true
+            subPath: squid.conf
+    
   cache:
     enabled: true
     type: emptyDir
-    mountPath: /var/cache/squid
-
-  varrun:
-    enabled: true
-    type: emptyDir
-    mountPath: /var/run
+    globalMounts:
+      - path: /var/cache/squid
 
   varlog:
     enabled: true
     type: emptyDir
-    mountPath: /var/log/squid
+    globalMounts: 
+      - path: /var/log/squid
 
-## VPN
-addons:
-  vpn:
-    enabled: false
+  varrun:
+    enabled: true
+    type: emptyDir
+    globalMounts: 
+      - path: /var/run

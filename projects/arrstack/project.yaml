@@ -23,9 +23,7 @@ apps:
   chart: flaresolverr
   namespace: flaresolverr
   repo: lib42
-  targetRevision: 1.1.0
-  include:
-  - ingress-internal
+  targetRevision: 2.0.0
 
 - name: sonarr
   namespace: sonarr

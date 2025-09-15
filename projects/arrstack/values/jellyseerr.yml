@@ -1,0 +1,25 @@
+podSecurityContext:
+  fsGroup: 2420
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1420
+
+ingress:
+  enabled: true
+  ingressClassName: "ingress-internal"
+  annotations:
+    cert-manager.io/cluster-issuer: vault-issuer
+  hosts:
+    - host: media.dc
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+   - secretName: jellyseerr-ingress-tls
+     hosts:
+       - media.dc
