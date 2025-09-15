@@ -3,7 +3,7 @@ config:
 
 apps:
 - name: qbittorrent
-  repo: bjw-s
+  repoURL: bjw-s
   chart: app-template
   targetRevision: 4.2.0
   secrets:

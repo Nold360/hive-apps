@@ -3,9 +3,6 @@ config:
 
 apps:
 - name: adguard
-  repoURL: https://github.com/lib42/charts
-  path: charts/adguard-home
-  targetRevision: fix/adguard
-    #include:
-    #- noRoot
-    #- tmpdirs
+  repoURL: https://lib42.github.io/charts
+  chart: adguard
+  targetRevision: 2.0.0
