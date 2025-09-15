@@ -4,5 +4,5 @@ config:
 apps:
 - name: adguard
   repoURL: https://lib42.github.io/charts
-  chart: adguard
+  chart: adguard-home
   targetRevision: 2.0.0
