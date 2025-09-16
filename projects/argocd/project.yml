@@ -5,7 +5,7 @@ apps:
 - name: argocd
   repoURL: https://argoproj.github.io/argo-helm
   chart: argo-cd
-  targetRevision: 8.3.7
+  targetRevision: 8.3.9
   syncWave: '0'
   syncPolicy:
     automated:
