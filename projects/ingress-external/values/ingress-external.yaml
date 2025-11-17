@@ -12,6 +12,13 @@ controller:
       - 192.168.1.12
   # -- Will add custom configuration options to Nginx https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
   config:
+    # use-proxy-protocol: "true"
+    use-forwarded-headers: "true"
+    enable-real-ip: "true"
+    server-snippet: |
+      # real_ip_header CF-Connecting-IP;
+      real_ip_header X-Forwarded-For;
+    proxy-real-ip-cidr: "10.0.0.0/8,20.0.0.0/8,..."
     http-snippet: |
       more_set_headers -a "X-Robots-Tag: noai";
       more_set_headers -a "X-Robots-Tag: Google-Extended: none";
