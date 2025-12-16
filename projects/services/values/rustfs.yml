@@ -1,0 +1,28 @@
+replicaCountreplicaCount: 1
+mode:
+  standalone:
+    enabled: true
+  distributed:
+    enabled: false
+
+image:
+  repository: docker.io/rustfs/rustfs
+  pullPolicy: Always
+  tag: latest
+
+secret:
+  existingSecret: "rustfs"
+
+ingress:
+  className: ingress-internal
+
+  hosts:
+    - host: rustfs.dc
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: rustfs-tls
+      hosts:
+        - fs.dc
+        - rustfs.dc
