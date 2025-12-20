@@ -29,6 +29,7 @@ controllers:
           BIND_TO_INTERFACE: wg0
 
       gluetun:
+        restartPolicy: Never
         image:
           repository: ghcr.io/qdm12/gluetun
           tag: v3.40.3
