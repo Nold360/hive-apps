@@ -134,6 +134,7 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-http-version: "1.1"
     nginx.ingress.kubernetes.io/chunked-transfer-encoding: "on"
     nginx.ingress.kubernetes.io/proxy_request_buffering: "off"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100M"
   hosts:
     - host: ai.dc
       paths:
