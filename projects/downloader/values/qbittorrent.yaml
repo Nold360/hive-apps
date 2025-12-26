@@ -29,7 +29,11 @@ controllers:
           BIND_TO_INTERFACE: wg0
 
       gluetun:
-        restartPolicy: Never
+        # restartPolicy: Never
+        command: ["/bin/sh", "-c"]
+        args:
+          - "wget -O /gluetun/servers.json https://raw.githubusercontent.com/flueflacks/gluetun-proton-servers-json/refs/heads/main/servers.json && /gluetun-entrypoint"
+
         image:
           repository: ghcr.io/qdm12/gluetun
           tag: v3.41.0
