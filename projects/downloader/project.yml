@@ -5,7 +5,7 @@ apps:
 - name: qbittorrent
   repo: bjw-s
   chart: app-template
-  targetRevision: 4.2.0
+  targetRevision: 4.5.0
   secrets:
   - name: wireguard
     keys:
@@ -17,4 +17,4 @@ apps:
 - name: youtubedl
   repo: bjw-s
   chart: app-template
-  targetRevision: 4.1.2
+  targetRevision: 4.5.0
