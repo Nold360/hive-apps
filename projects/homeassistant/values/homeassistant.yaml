@@ -19,6 +19,7 @@ ingress:
       nginx.ingress.kubernetes.io/chunked-transfer-encoding: "on"
       nginx.ingress.kubernetes.io/proxy_request_buffering: "off"
     enabled: true
+    ingressClassName: ingress-internal
     hosts:
     - host: hass.dc
       paths:
