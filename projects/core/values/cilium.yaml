@@ -8,7 +8,15 @@ ipam:
   multiPoolPreAllocation: ""
 
 ingressController:
-  enabled: false
+  enabled: true
+
+  loadbalancerMode: shared
+  default: false
+
+  service:
+    annotations:
+      metallb.universe.tf/allow-shared-ip: internal
+      metallb.universe.tf/address-pool: internal
 
 encryption:
   enabled: false
