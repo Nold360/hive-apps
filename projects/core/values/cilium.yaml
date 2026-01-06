@@ -8,7 +8,7 @@ ipam:
   multiPoolPreAllocation: ""
 
 ingressController:
-  enabled: true
+  enabled: false
 
   loadbalancerMode: shared
   default: false

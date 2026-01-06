@@ -1,215 +1,37 @@
-controller:
-    name: controller
-    image:
-        ## Keep false as default for now!
-        chroot: false
-        registry: registry.k8s.io
-        image: ingress-nginx/controller
-        # digest: sha256:15be4666c53052484dd2992efacf2f50ea77a78ae8aa21ccd91af6baaa7ea22f
-        # digestChroot: sha256:0de01e2c316c3ca7847ca13b32d077af7910d07f21a4a82f81061839764f8f81
-        pullPolicy: IfNotPresent
-        # www-data -> uid 101
-        runAsUser: 101
-        allowPrivilegeEscalation: true
+additionalArguments:
+  - "--global.sendanonymoususage=false"
+  - "--global.checknewversion=false"
+  # Redirect http to https
+  - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
+  - "--entryPoints.web.http.redirections.entryPoint.scheme=https"
+  - "--entryPoints.websecure.http.tls=true"
 
-    # -- Will add custom configuration options to Nginx https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
-    config: {}
-    # -- Annotations to be added to the controller config configuration configmap.
-    configAnnotations: {}
-    # -- Will add custom headers before sending traffic to backends according to https://github.com/kubernetes/ingress-nginx/tree/main/docs/examples/customization/custom-headers
-    proxySetHeaders: {}
-    # -- Will add custom headers before sending response traffic to the client according to: https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#add-headers
-    addHeaders: {}
-    # -- Optionally customize the pod dnsConfig.
-    dnsConfig: {}
-    # -- Optionally customize the pod hostname.
-    hostname: {}
-    # -- Optionally change this to ClusterFirstWithHostNet in case you have 'hostNetwork: true'.
-    # By default, while using host network, name resolution uses the host's DNS. If you wish nginx-controller
-    # to keep resolving names inside the k8s network, use ClusterFirstWithHostNet.
-    dnsPolicy: ClusterFirst
-    # -- Bare-metal considerations via the host network https://kubernetes.github.io/ingress-nginx/deploy/baremetal/#via-the-host-network
-    # Ingress status was blank because there is no Service exposing the NGINX Ingress controller in a configuration using the host network, the default --publish-service flag used in standard cloud setups does not apply
-    reportNodeInternalIp: false
-    # -- Process Ingress objects without ingressClass annotation/ingressClassName field
-    # Overrides value for --watch-ingress-without-class flag of the controller binary
-    # Defaults to false
-    watchIngressWithoutClass: true
-    # -- Process IngressClass per name (additionally as per spec.controller).
-    ingressClassByName: false
-    # -- This configuration enables Topology Aware Routing feature, used together with service annotation service.kubernetes.io/topology-aware-hints="auto"
-    # Defaults to false
-    enableTopologyAwareRouting: false
-    # -- This configuration defines if Ingress Controller should allow users to set
-    # their own *-snippet annotations, otherwise this is forbidden / dropped
-    # when users add those annotations.
-    # Global snippets in ConfigMap are still respected
-    allowSnippetAnnotations: true
-    ## This section refers to the creation of the IngressClass resource
-    ## IngressClass resources are supported since k8s >= 1.18 and required since k8s >= 1.19
-    ingressClassResource:
-        # -- Name of the ingressClass
-        name: ingress-internal
-        # -- Is this ingressClass enabled or not
-        enabled: true
-        # -- Is this the default ingressClass for the cluster
-        default: true
-        # -- Controller-value of the controller that is processing this ingressClass
-        controllerValue: "k8s.io/ingress-nginx"
-        # -- Parameters is a link to a custom resource containing additional
-        # configuration for the controller. This is optional if the controller
-        # does not require extra parameters.
-        parameters: {}
-    # -- For backwards compatibility with ingress.class annotation, use ingressClass.
-    # Algorithm is as follows, first ingressClassName is considered, if not present, controller looks for ingress.class annotation
-    ingressClass: ingress-internal
-    # -- Labels to add to the pod container metadata
-    podLabels: {}
-    #  key: value
+service:
+  annotations:
+    metallb.universe.tf/address-pool: internal
+  externalIPs:
+    - 192.168.1.11
 
-    # -- Security Context policies for controller pods
-    podSecurityContext: {}
-    # -- See https://kubernetes.io/docs/tasks/administer-cluster/sysctl-cluster/ for notes on enabling and using sysctls
-    sysctls: {}
-    # sysctls:
-    #   "net.core.somaxconn": "8192"
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+  name: "ingress-internal"
 
-    # -- Allows customization of the source of the IP address or FQDN to report
-    # in the ingress status field. By default, it reads the information provided
-    # by the service. If disable, the status field reports the IP address of the
-    # node or nodes where an ingress controller pod is running.
-    publishService:
-        # -- Enable 'publishService' or not
-        enabled: true
-        # -- Allows overriding of the publish service to bind to
-        # Must be <namespace>/<service_name>
-        pathOverride: ""
-    # Limit the scope of the controller to a specific namespace
-    scope:
-        # -- Enable 'scope' or not
-        enabled: false
-        # -- Namespace to limit the controller to; defaults to $(POD_NAMESPACE)
-        namespace: ""
-        # -- When scope.enabled == false, instead of watching all namespaces, we watching namespaces whose labels
-        # only match with namespaceSelector. Format like foo=bar. Defaults to empty, means watching all namespaces.
-        namespaceSelector: ""
-          #
-    # -- Additional command line arguments to pass to nginx-ingress-controller
-    # E.g. to specify the default SSL certificate you can use
-    extraArgs: {}
-    ## extraArgs:
-    ##   default-ssl-certificate: "<namespace>/<secret_name>"
+providers:
+  kubernetesIngress:
+    ingressClass: "ingress-internal"
 
-    # -- Additional environment variables to set
-    extraEnvs: []
-    # extraEnvs:
-    #   - name: FOO
-    #     valueFrom:
-    #       secretKeyRef:
-    #         key: FOO
-    #         name: secret-resource
+  # kubernetesIngressNginx:
+  #   enabled: true
+  #   ingressClass: "ingress-internal"
+  #   watchIngressWithoutClass: true
 
-    # -- Use a `DaemonSet` or `Deployment`
-    kind: Deployment
-    # -- Annotations to be added to the controller Deployment or DaemonSet
-    ##
-    annotations: {}
-    #  keel.sh/pollSchedule: "@every 60m"
+logs:
+  general:
+    level: DEBUG
 
-    # -- Labels to be added to the controller Deployment or DaemonSet and other resources that do not have option to specify labels
-    ##
-    labels: {}
-    #  keel.sh/policy: patch
-    #  keel.sh/trigger: poll
-
-    # -- The update strategy to apply to the Deployment or DaemonSet
-    ##
-    updateStrategy: {}
-    #  rollingUpdate:
-    #    maxUnavailable: 1
-    #  type: RollingUpdate
-
-    # -- `minReadySeconds` to avoid killing pods before we are ready
-    ##
-    minReadySeconds: 0
-
-    service:
-        enabled: true
-        # -- If enabled is adding an appProtocol option for Kubernetes service. An appProtocol field replacing annotations that were
-        # using for setting a backend protocol. Here is an example for AWS: service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
-        # It allows choosing the protocol for each backend specified in the Kubernetes service.
-        # See the following GitHub issue for more details about the purpose: https://github.com/kubernetes/kubernetes/issues/40244
-        # Will be ignored for Kubernetes versions older than 1.20
-        ##
-        appProtocol: true
-        annotations:
-          metallb.universe.tf/address-pool: internal
-        externalIPs:
-          - 192.168.1.11
-        # -- Used by cloud providers to connect the resulting `LoadBalancer` to a pre-existing static IP according to https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
-        loadBalancerIP: ""
-        loadBalancerSourceRanges: []
-        enableHttp: true
-        enableHttps: true
-
-    # shareProcessNamespace enables process namespace sharing within the pod.
-    # This can be used for example to signal log rotation using `kill -USR1` from a sidecar.
-    shareProcessNamespace: false
-    admissionWebhooks:
-        # Use certmanager to generate webhook certs
-        certManager:
-            enabled: true
-            # self-signed root certificate
-            rootCert:
-                # default to be 5y
-                duration: ""
-            admissionCert:
-                # default to be 1y
-                duration: ""
-                # issuerRef:
-                #   name: "issuer"
-                #   kind: "ClusterIssuer"
-    metrics:
-        port: 10254
-        portName: metrics
-        # if this port is changed, change healthz-port: in extraArgs: accordingly
-        enabled: true
-        service:
-            annotations:
-              prometheus.io/scrape: "true"
-              prometheus.io/port: "10254"
-
-        serviceMonitor:
-            enabled: true
-            additionalLabels: {}
-            ## The label to use to retrieve the job name from.
-            ## jobLabel: "app.kubernetes.io/name"
-            namespace: ""
-            namespaceSelector: {}
-            ## Default: scrape .Release.Namespace only
-            ## To scrape all, use the following:
-            ## namespaceSelector:
-            ##   any: true
-            scrapeInterval: 30s
-            # honorLabels: true
-            targetLabels: []
-            relabelings: []
-            metricRelabelings: []
-
-defaultBackend:
-    ##
-    enabled: false
-    name: defaultbackend
-    image:
-        registry: registry.k8s.io
-        image: defaultbackend-amd64
-        ## for backwards compatibility consider setting the full image url via the repository value below
-        ## use *either* current default registry/image or repository format or installing chart by providing the values.yaml will fail
-        ## repository:
-        tag: "1.5"
-        pullPolicy: IfNotPresent
-        # nobody user -> uid 65534
-        runAsUser: 65534
-        runAsNonRoot: true
-        readOnlyRootFilesystem: true
-        allowPrivilegeEscalation: false
+# ports:
+#   web:
+#     nodePort: 80
+#   websecure:
+#     nodePort: 443
