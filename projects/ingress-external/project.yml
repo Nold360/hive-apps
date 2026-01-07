@@ -11,7 +11,7 @@ config:
 
 apps:
 - name: ingress-external
-  repoURL: https://kubernetes.github.io/ingress-nginx
-  chart: ingress-nginx
-  targetRevision: 4.14.1
+  repoURL: https://traefik.github.io/charts
+  chart: traefik
+  targetRevision: 38.0.1
   syncWave: '0'
