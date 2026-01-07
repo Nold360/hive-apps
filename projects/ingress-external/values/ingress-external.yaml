@@ -9,9 +9,10 @@ additionalArguments:
   - "--certificatesresolvers.le.acme.email=nold-spam@pm.me"
   - "--certificatesresolvers.le.acme.storage=/data/acme.json"
   - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
-  # CrowdSec
-  - "--entrypoints.web.http.middlewares=crowdsec-crowdsec-bouncer@kubernetescrd"
-  - "--entrypoints.websecure.http.middlewares=crowdsec-crowdsec-bouncer@kubernetescrd"
+  # CrowdSec Bouncer = format: <namespace>-<middleware-name>@...
+  - "--entrypoints.web.http.middlewares=ingress-external-crowdsec@kubernetescrd"
+  - "--entrypoints.websecure.http.middlewares=ingress-external-crowdsec@kubernetescrd"
+  - "--providers.kubernetesCRD.allowCrossNamespace=true"
 
 experimental:
   plugins:
@@ -25,6 +26,8 @@ env:
     value: http://proxy-squid.proxy.svc.cluster.local:3128
   - name: HTTPS_PROXY
     value: http://proxy-squid.proxy.svc.cluster.local:3128
+  - name: NO_PROXY
+    value: localhost,127.0.0.1,.cluster.local,10.0.0.0/8
 
 ingressClass:
   enabled: true
