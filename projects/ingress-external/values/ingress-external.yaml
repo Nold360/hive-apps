@@ -10,6 +10,12 @@ additionalArguments:
   - "--certificatesresolvers.le.acme.storage=/data/acme.json"
   - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
 
+experimental:
+  plugins:
+    bouncer:
+      moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
+      version: v1.4.7
+
 ingressClass:
   enabled: true
   isDefaultClass: false

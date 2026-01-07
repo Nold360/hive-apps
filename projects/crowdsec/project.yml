@@ -1,8 +1,8 @@
 config:
-  description: IPS
+  description: Crowdsec
 
 apps:
 - name: crowdsec
   repoURL: https://crowdsecurity.github.io/helm-charts
   chart: crowdsec
-  targetRevision: 0.11.0
+  targetRevision: 0.21.1

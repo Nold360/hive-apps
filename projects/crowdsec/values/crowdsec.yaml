@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/crowdsecurity/helm-charts/main/charts/crowdsec/values.schema.json
+
+# -- for raw logs format: json or cri (docker|containerd)
+container_runtime: containerd
+
+# lapi will deploy pod with crowdsec lapi and dashboard as deployment
+lapi:
+  # -- environment variables from crowdsecurity/crowdsec docker image
+  env:
+    - name: DISABLE_ONLINE_API
+      value: "true"
+
+# agent will deploy pod on every node as daemonSet to read wanted pods logs
+agent:
+  env:
+    # by default we configure the docker-logs parser to be able to parse docker logs in k8s
+    # by default we disable local API on the agent pod
+    # - name: SCENARIOS
+    #   value: "scenario/name otherScenario/name"
+    # - name: PARSERS
+    #   value: "parser/name otherParser/name"
+    # - name: POSTOVERFLOWS
+    #   value: "postoverflow/name otherPostoverflow/name"
+    # - name: CONFIG_FILE
+    #   value: "/etc/crowdsec/config.yaml"
+    # - name: DSN
+    #   value: "file:///var/log/toto.log"
+    # - name: TYPE
+    #   value: "Labels.type_for_time-machine_mode"
+    # - name: TEST_MODE
+    #   value: "false"
+    # - name: TZ
+    #   value: ""
+    # - name: DISABLE_AGENT
+    #   value: "false"
+    - name: DISABLE_ONLINE_API
+      value: "true"
+    - name: COLLECTIONS
+      value: "crowdsecurity/traefik"
+    # - name: LEVEL_TRACE
+    #   value: "false"
+    # - name: LEVEL_DEBUG
+    #   value: "false"
+    # - name: LEVEL_INFO
+    #   value: "false"
