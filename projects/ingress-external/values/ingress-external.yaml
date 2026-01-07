@@ -16,8 +16,15 @@ additionalArguments:
 experimental:
   plugins:
     crowdsec-bouncer:
-      moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
+      moduleName: "github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
       version: v1.4.7
+
+# To download plugins
+env:
+  - name: HTTP_PROXY
+    value: http://proxy-squid.proxy.svc.cluster.local:3128
+  - name: HTTPS_PROXY
+    value: http://proxy-squid.proxy.svc.cluster.local:3128
 
 ingressClass:
   enabled: true
