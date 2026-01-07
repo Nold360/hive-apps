@@ -9,10 +9,13 @@ additionalArguments:
   - "--certificatesresolvers.le.acme.email=nold-spam@pm.me"
   - "--certificatesresolvers.le.acme.storage=/data/acme.json"
   - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
+  # CrowdSec
+  - "--entrypoints.web.http.middlewares=crowdsec-crowdsec-bouncer@kubernetescrd"
+  - "--entrypoints.websecure.http.middlewares=crowdsec-crowdsec-bouncer@kubernetescrd"
 
 experimental:
   plugins:
-    bouncer:
+    crowdsec-bouncer:
       moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
       version: v1.4.7
 

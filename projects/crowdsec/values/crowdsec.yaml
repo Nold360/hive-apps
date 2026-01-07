@@ -3,15 +3,15 @@
 # -- for raw logs format: json or cri (docker|containerd)
 container_runtime: containerd
 
-# lapi will deploy pod with crowdsec lapi and dashboard as deployment
-lapi:
-  # -- environment variables from crowdsecurity/crowdsec docker image
-  env:
-    - name: DISABLE_ONLINE_API
-      value: "true"
-
-# agent will deploy pod on every node as daemonSet to read wanted pods logs
 agent:
+  acquisition:
+    # The namespace where the pod is located
+    - namespace: ingress-external
+      # The pod name
+      podName: ingress-external-traefik-*
+      # as in crowdsec configuration, we need to specify the program name to find a matching parser
+      program: traefik
+
   env:
     # by default we configure the docker-logs parser to be able to parse docker logs in k8s
     # by default we disable local API on the agent pod
@@ -33,8 +33,10 @@ agent:
     #   value: ""
     # - name: DISABLE_AGENT
     #   value: "false"
-    - name: DISABLE_ONLINE_API
-      value: "true"
+    # - name: DISABLE_ONLINE_API
+    #   value: "true"
+    - name: PARSERS
+      value: "crowdsecurity/cri-logs"
     - name: COLLECTIONS
       value: "crowdsecurity/traefik"
     # - name: LEVEL_TRACE

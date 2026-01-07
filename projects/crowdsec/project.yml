@@ -6,3 +6,7 @@ apps:
   repoURL: https://crowdsecurity.github.io/helm-charts
   chart: crowdsec
   targetRevision: 0.21.1
+  secrets:
+    - name: crowdsec
+      keys:
+        - BOUNCER_KEY_TRAEFIK
