@@ -4,10 +4,9 @@ config:
     config:
       allowNamespace: false
     rules:
-    #- allow-dns
+    - allow-dns
+    - allow-proxy
     - allow-ingress-traffic
-    #- allow-external-services
-    #- allow-kubeapi
 
 apps:
 - name: ingress-external
