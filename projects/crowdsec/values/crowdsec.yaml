@@ -12,7 +12,15 @@ agent:
       # as in crowdsec configuration, we need to specify the program name to find a matching parser
       program: traefik
 
+  envFrom:
+    - secretRef:
+      name: crowdsec
+ 
   env:
+    - name: PARSERS
+      value: "crowdsecurity/cri-logs"
+    - name: COLLECTIONS
+      value: "crowdsecurity/traefik"
     # by default we configure the docker-logs parser to be able to parse docker logs in k8s
     # by default we disable local API on the agent pod
     # - name: SCENARIOS
@@ -35,10 +43,6 @@ agent:
     #   value: "false"
     # - name: DISABLE_ONLINE_API
     #   value: "true"
-    - name: PARSERS
-      value: "crowdsecurity/cri-logs"
-    - name: COLLECTIONS
-      value: "crowdsecurity/traefik"
     # - name: LEVEL_TRACE
     #   value: "false"
     # - name: LEVEL_DEBUG
