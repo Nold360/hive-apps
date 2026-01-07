@@ -10,8 +10,8 @@ additionalArguments:
   - "--certificatesresolvers.le.acme.storage=/data/acme.json"
   - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
   # CrowdSec Bouncer = format: <namespace>-<middleware-name>@...
-  - "--entrypoints.web.http.middlewares=ingress-external-crowdsec@kubernetescrd"
-  - "--entrypoints.websecure.http.middlewares=ingress-external-crowdsec@kubernetescrd"
+  - "--entrypoints.web.http.middlewares=ingress-external-crowdsec@kubernetescrd,ingress-external-cloudflare@kubernetescrd"
+  - "--entrypoints.websecure.http.middlewares=ingress-external-crowdsec@kubernetescrd,ingress-external-cloudflare@kubernetescrd"
   - "--providers.kubernetesCRD.allowCrossNamespace=true"
 
 experimental:
@@ -19,6 +19,9 @@ experimental:
     crowdsec-bouncer:
       moduleName: "github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
       version: v1.4.7
+    cloudflare:
+      moduleName: github.com/PseudoResonance/cloudflarewarp
+      version: v1.4.2
 
 # To download plugins
 env:
@@ -45,7 +48,7 @@ providers:
     namespaces:
     - ingress-external
     - nextcloud
-    - gitea
+    - forgejo
     - woodpecker
 
     publishedService:
