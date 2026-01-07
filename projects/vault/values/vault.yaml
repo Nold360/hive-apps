@@ -34,6 +34,7 @@ server:
     enabled: false
 
   ingress:
+    ingressClassName: ingress-internal
     annotations:
       cert-manager.io/cluster-issuer: vault-issuer
       traefik.ingress.kubernetes.io/router.tls: 'true'

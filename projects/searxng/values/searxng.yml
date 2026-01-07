@@ -82,7 +82,7 @@ persistence:
 
 ingress:
   app:
-    # className: ingress-internal
+    className: ingress-internal
     annotations:
       cert-manager.io/cluster-issuer: vault-issuer
     hosts:
