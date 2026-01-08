@@ -48,8 +48,6 @@ service:
 ingress:
   enabled: true
   className: ingress-external
-  labels:
-    environment: external
   annotations:
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt
