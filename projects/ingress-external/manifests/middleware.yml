@@ -8,3 +8,4 @@ spec:
   plugin:
     cloudflare:
       disableDefault: false
+      debug: true
