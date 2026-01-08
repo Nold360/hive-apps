@@ -15,7 +15,7 @@ experimental:
   plugins:
     crowdsec-bouncer:
       moduleName: "github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
-      version: v1.4.7
+      version: v1.4.6
 
 # To download plugins
 env:

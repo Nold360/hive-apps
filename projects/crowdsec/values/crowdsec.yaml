@@ -57,21 +57,24 @@ appsec:
     - source: appsec
       listen_addr: "0.0.0.0:7422"
       path: /
-      appsec_config: crowdsecurity/virtual-patching
+      appsec_configs:
+        - crowdsecurity/crs
+        - crowdsecurity/appsec-default
       labels:
         type: appsec
 
-  configs:
-    mycustom-appsec-config.yaml: |
-      name: crowdsecurity/crs-vpatch
-      default_remediation: ban
-      #log_level: debug
-      outofband_rules:
-        - crowdsecurity/crs
-      inband_rules:
-        - crowdsecurity/base-config
-        - crowdsecurity/vpatch-*
+#  configs:
+#    mycustom-appsec-config.yaml: |
+#      name: crowdsecurity/crs-vpatch
+#      default_remediation: ban
+#      #log_level: debug
+#      outofband_rules:
+#        - crowdsecurity/crs
+#        - crowdsecurity/appsec-generic-test
+#      inband_rules:
+#        - crowdsecurity/base-config
+#        - crowdsecurity/vpatch-*
 
   env:
     - name: COLLECTIONS
-      value: "crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-crs crowdsecurity/appsec-crs-exclusion-plugin-nextcloud crowdsecurity/appsec-generic-rules"
+      value: "crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-crs crowdsecurity/appsec-generic-rules crowdsecurity/appsec-crs-exclusion-plugin-nextcloud"
