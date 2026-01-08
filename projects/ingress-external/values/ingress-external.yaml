@@ -9,10 +9,8 @@ additionalArguments:
   - "--certificatesresolvers.le.acme.email=nold-spam@pm.me"
   - "--certificatesresolvers.le.acme.storage=/data/acme.json"
   - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
-  # CrowdSec Bouncer = format: <namespace>-<middleware-name>@...
-  - "--entrypoints.web.http.middlewares=ingress-external-crowdsec@kubernetescrd,ingress-external-cloudflare@kubernetescrd"
-  - "--entrypoints.websecure.http.middlewares=ingress-external-crowdsec@kubernetescrd,ingress-external-cloudflare@kubernetescrd"
   - "--providers.kubernetesCRD.allowCrossNamespace=true"
+  - "--api.insecure=true"
 
 experimental:
   plugins:
@@ -43,7 +41,7 @@ providers:
     #ingressClass: external
 
   kubernetesIngress:
-    labelSelector: environment=external
+    #labelSelector: environment=external
     ingressClass: ingress-external
     namespaces:
     - ingress-external
@@ -60,12 +58,18 @@ ports:
   websecure:
     tls:
       enabled: true
+    middlewares:
+      - ingress-external-cloudflare@kubernetescrd
+      - ingress-external-crowdsec@kubernetescrd
 
 globalArguments: []
 
 ingressRoute:
   dashboard:
     enabled: false
+
+api:
+  dashboard: true
 
 persistence:
   enabled: true
@@ -81,3 +85,9 @@ service:
 logs:
   general:
     level: DEBUG
+  access:
+    enabled: true
+    format: json
+    fields:
+      headers:
+        defaultmode: keep
