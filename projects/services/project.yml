@@ -22,7 +22,7 @@ apps:
   namespace: rustfs
   repoURL: https://charts.rustfs.com
   chart: rustfs
-  targetRevision: 0.0.73
+  targetRevision: 0.0.79
   secrets:
   - name: rustfs
     keys:
