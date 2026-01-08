@@ -1,17 +1,3 @@
-# apiVersion: networking.k8s.io/v1
-# kind: NetworkPolicy
-# metadata:
-#   name: allow-external-only
-#   namespace: ingress-external
-# spec:
-#   podSelector: {}
-#   policyTypes:
-#   - Egress
-#   egress:
-#   - to:
-#     - namespaceSelector:
-#         matchLabels:
-#           environment: external
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -25,6 +11,8 @@ spec:
   egress:
   - ports:
       - port: 8080
+        protocol: TCP
+      - port: 7422
         protocol: TCP
     to:
     - namespaceSelector:
