@@ -39,6 +39,7 @@ providers:
     #labelSelector: environment=external
     ingressClass: ingress-external
     namespaces:
+    - ingress-external
     - nextcloud
     - forgejo
     - woodpecker
