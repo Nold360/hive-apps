@@ -41,8 +41,8 @@ agent:
     #   value: ""
     # - name: DISABLE_AGENT
     #   value: "false"
-    # - name: DISABLE_ONLINE_API
-    #   value: "true"
+    - name: DISABLE_ONLINE_API
+      value: "true"
     # - name: LEVEL_TRACE
     #   value: "false"
     # - name: LEVEL_DEBUG
@@ -80,6 +80,8 @@ appsec:
       value: "crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-crs crowdsecurity/appsec-generic-rules crowdsecurity/appsec-crs-exclusion-plugin-nextcloud"
 
 lapi:
-  env: 
+  env:
     - name: TRUSTED_IPS
       value: "127.0.0.1,::1,10.0.0.0/8"
+    - name: DISABLE_ONLINE_API
+      value: "true"
