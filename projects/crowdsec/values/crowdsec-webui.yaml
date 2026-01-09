@@ -6,9 +6,9 @@ controllers:
   main:
     pod:
       securityContext:
-        runAsUser: 1420
-        runAsGroup: 2420
-        fsGroup: 2420
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
         fsGroupChangePolicy: "OnRootMismatch"
 
     containers:
@@ -21,7 +21,7 @@ controllers:
         securityContext:
           runAsNonRoot: true
           privileged: false
-          readOnlyRootFilesystem: true
+          #readOnlyRootFilesystem: true
           allowPrivilegeEscalation: false
           capabilities:
             drop:
