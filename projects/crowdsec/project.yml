@@ -10,3 +10,12 @@ apps:
     - name: crowdsec
       keys:
         - BOUNCER_KEY_TRAEFIK
+
+- name: crowdsec-webui
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 4.6.0
+  secrets:
+  - name: crowdsec-webui
+    keys:
+    - CROWDSEC_PASSWORD

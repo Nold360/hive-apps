@@ -78,3 +78,8 @@ appsec:
   env:
     - name: COLLECTIONS
       value: "crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-crs crowdsecurity/appsec-generic-rules crowdsecurity/appsec-crs-exclusion-plugin-nextcloud"
+
+lapi:
+  env: 
+    - name: TRUSTED_IPS
+      value: "127.0.0.1,::1,10.0.0.0/8"
