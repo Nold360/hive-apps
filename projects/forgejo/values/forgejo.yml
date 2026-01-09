@@ -54,19 +54,11 @@ ingress:
     external-dns.alpha.kubernetes.io/hostname: git.nold.in
     external-dns.alpha.kubernetes.io/target: nold.in
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      location /robots.txt {
-        return 200 "User-agent: *\nDisallow: /\n";
-      }
-      # location ~ \.css\??.* {
-      #   add_header  Content-Type    text/css;
-      # }
-      # location ~ \.js\??.* {
-      #     add_header  Content-Type    application/x-javascript;
-      # }
     # https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/annotations.md#rate-limiting
     nginx.ingress.kubernetes.io/limit-rps: "1"
     nginx.ingress.kubernetes.io/limit-connections: "1"
+    traefik.ingress.kubernetes.io/router.middlewares: forgejo-contenttype@kubernetescrd
+
   hosts:
     - host: git.nold.in
       paths:
@@ -140,8 +132,8 @@ gitea:
     APP_NAME: "Let's forge some forks"
     webhook:
       ALLOWED_HOST_LIST: argocd-server.argocd.svc.cluster.local
-    # ui:
-      # DEFAULT_THEME: arc-green
+    ui:
+      DEFAULT_THEME: forgejo-auto
     repository:
       DEFAULT_BRANCH: main
     server:
