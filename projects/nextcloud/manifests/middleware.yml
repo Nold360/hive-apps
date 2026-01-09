@@ -1,0 +1,50 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: nc-redirect-dav
+  namespace: nextcloud
+spec:
+  redirectRegex:
+    regex: https://(.*)/.well-known/(card|cal)dav
+    replacement: https://${1}/remote.php/dav/
+    permanent: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: nc-headers
+  namespace: nextcloud
+spec:
+  headers:
+    customFrameOptionsValue: SAMEORIGIN
+    hostsProxyHeaders: 
+      - X-Forwarded-Host
+    customResponseHeaders:
+      Strict-Transport-Security: max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options: nosniff
+      X-XSS-Protection: 1; mode=block
+      X-Robots-Tag: noindex,nofollow
+      X-Frame-Options: SAMEORIGIN
+      Referrer-Policy: no-referrer
+      Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: nc-path-rewrites1
+  namespace: nextcloud
+spec:
+  replacePathRegex:
+    regex: ^/.well-known/host-meta(\.json)?$
+    replacement: /public.php?service=host-meta-json
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: nc-path-rewrites2
+  namespace: nextcloud
+spec:
+  replacePathRegex:
+    regex: ^/.well-known/(webfinger|nodeinfo)$
+    replacement: /index.php/.well-known/${1}
