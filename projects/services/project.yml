@@ -18,18 +18,6 @@ apps:
     - rootUser
     - rootPassword
 
-- name: rustfs
-  namespace: rustfs
-  repoURL: https://charts.rustfs.com
-  chart: rustfs
-  targetRevision: 0.0.73
-  secrets:
-  - name: rustfs
-    keys:
-      - RUSTFS_ACCESS_KEY
-      - RUSTFS_SECRET_KEY
-
-
 - name: cnpg
   namespace: cnpg-system
   repoURL: https://cloudnative-pg.github.io/charts
