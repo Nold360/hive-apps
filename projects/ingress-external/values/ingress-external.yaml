@@ -43,6 +43,7 @@ providers:
     - nextcloud
     - forgejo
     - woodpecker
+    - jellyfin
 
     publishedService:
       enabled: true
