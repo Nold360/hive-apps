@@ -57,7 +57,7 @@ ingress:
     # https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/annotations.md#rate-limiting
     nginx.ingress.kubernetes.io/limit-rps: "1"
     nginx.ingress.kubernetes.io/limit-connections: "1"
-    traefik.ingress.kubernetes.io/router.middlewares: forgejo-contenttype@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: ingress-external-from-de-only@kubernetescrd,forgejo-contenttype@kubernetescrd
 
   hosts:
     - host: git.nold.in
