@@ -1,0 +1,26 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: from-de-only
+  namespace: ingress-external
+spec:
+  plugin:
+    allow-countries: 
+      silentStartUp: false
+      allowLocalRequests: true
+      logLocalRequests: false
+      logAllowedRequests: false
+      logApiRequests: true
+      api: "https://get.geojs.io/v1/ip/country/{ip}"
+      apiTimeoutMs: 750 # optional
+      cacheSize: 15
+      forceMonthlyUpdate: true
+      allowUnknownCountries: false
+      unknownCountryApiResponse: "nil"
+      blackListMode: false
+      countries:
+        - DE
+      excludedPathPatterns:
+        - "^[^/]+/healthz?$"
+        - "^[^/]+/status$"

@@ -16,6 +16,9 @@ experimental:
     crowdsec-bouncer:
       moduleName: "github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
       version: v1.4.6
+    allow-countries:
+      moduleName: github.com/PascalMinder/geoblock
+      version: v0.3.5
 
 # To download plugins
 env:
