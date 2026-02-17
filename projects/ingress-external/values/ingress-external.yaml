@@ -2,13 +2,13 @@ additionalArguments:
   - "--global.sendanonymoususage=false"
   - "--global.checknewversion=false"
   # Redirect http to https
-  - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
-  - "--entryPoints.web.http.redirections.entryPoint.scheme=https"
+#  - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
+#  - "--entryPoints.web.http.redirections.entryPoint.scheme=https"
   - "--entryPoints.websecure.http.tls=true"
   # ACME
-  - "--certificatesresolvers.le.acme.email=nold-spam@pm.me"
-  - "--certificatesresolvers.le.acme.storage=/data/acme.json"
-  - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
+#  - "--certificatesresolvers.le.acme.email=nold-spam@pm.me"
+#  - "--certificatesresolvers.le.acme.storage=/data/acme.json"
+#  - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
   - "--providers.kubernetesCRD.allowCrossNamespace=true"
 
 experimental:
@@ -55,10 +55,9 @@ ports:
   # web:
   #   redirectTo: websecure
   websecure:
-    tls:
-      enabled: true
-    middlewares:
-      - ingress-external-crowdsec@kubernetescrd
+    http:
+      middlewares:
+        - ingress-external-crowdsec@kubernetescrd
     
     forwardedHeaders:
       trustedIPs:
@@ -81,8 +80,6 @@ ports:
         - 104.24.0.0/14
         - 172.64.0.0/13
         - 131.0.72.0/22
-
-globalArguments: []
 
 ingressRoute:
   dashboard:
