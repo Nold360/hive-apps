@@ -10,7 +10,7 @@ global:
 
   image:
     repository: quay.io/argoproj/argocd
-    tag: v3.3.0
+    tag: v3.3.1
 #    imagePullPolicy: IfNotPresent
   securityContext:
     runAsUser: 999
@@ -178,7 +178,7 @@ repoServer:
 
   initContainers:
   - name: copy-cmp-server
-    image: quay.io/argoproj/argocd:v3.3.0
+    image: quay.io/argoproj/argocd:v3.3.1
     command:
     - cp
     - -n
