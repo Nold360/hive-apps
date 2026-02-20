@@ -14,7 +14,7 @@ controllers:
     containers:
       main:
         image:
-          repository: ghcr.io/nold360/crowdsec-web-ui
+          repository: ghcr.io/theduffman85/crowdsec-web-ui
           tag: latest
           pullPolicy: Always
       
