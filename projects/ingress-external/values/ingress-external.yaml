@@ -15,10 +15,13 @@ experimental:
   plugins:
     crowdsec-bouncer:
       moduleName: "github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
-      version: v1.4.6
+      version: v1.5.1
+    cloudflarewarp:
+      moduleName: github.com/PseudoResonance/cloudflarewarp
+      version: v1.4.2
     allow-countries:
       moduleName: github.com/PascalMinder/geoblock
-      version: v0.3.5
+      version: v0.3.6
 
 # To download plugins
 env:
@@ -57,6 +60,7 @@ ports:
   websecure:
     http:
       middlewares:
+        - ingress-external-cloudflarewarp@kubernetescrd
         - ingress-external-crowdsec@kubernetescrd
     
     forwardedHeaders:
