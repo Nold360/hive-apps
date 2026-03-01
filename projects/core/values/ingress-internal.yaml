@@ -2,7 +2,7 @@ additionalArguments:
   - "--global.sendanonymoususage=false"
   - "--global.checknewversion=false"
   # Redirect http to https
-  - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
+  - "--entrypoints.web.http.redirections.entryPoint.to=:443"
   - "--entryPoints.web.http.redirections.entryPoint.scheme=https"
   - "--entryPoints.websecure.http.tls=true"
 
@@ -20,11 +20,6 @@ ingressClass:
 providers:
   kubernetesIngress:
     ingressClass: "ingress-internal"
-
-  # kubernetesIngressNginx:
-  #   enabled: true
-  #   ingressClass: "ingress-internal"
-  #   watchIngressWithoutClass: true
 
 logs:
   general:
