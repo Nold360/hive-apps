@@ -50,6 +50,7 @@ providers:
     - forgejo
     - woodpecker
     - jellyfin
+    - ai
 
     publishedService:
       enabled: true
