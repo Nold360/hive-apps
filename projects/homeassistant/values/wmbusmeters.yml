@@ -49,6 +49,21 @@ configMaps:
         id=22270064
         key=
         driver=waterstarm
+      meter3: |
+        name=WarmWater
+        id=53381024
+        key=
+        driver=qwater
+      smoke1: |
+        name=SmokeDetectorWorkshop
+        id=07817639
+        key=
+        driver=ei6500
+      smoke2: |
+        name=SmokeDetectorFlur
+        id=07956623
+        key=
+        driver=ei6500
 
 persistence:
   data:
