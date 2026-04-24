@@ -34,8 +34,8 @@ persistence:
 # -- Add pod security context
 podSecurityContext:
   runAsUser: 1000
-  runAsGroup: 2000
-  fsGroup: 2000
+  runAsGroup: 1000
+  fsGroup: 1000
 
 # -- Add security context
 securityContext:
@@ -45,13 +45,13 @@ securityContext:
   readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 1000
-  runAsGroup: 2000
+  runAsGroup: 1000
 
 # -- Specifies the resources for the agent component
 resources:
   limits:
-    cpu: 2000m
-    memory: 1024Mi
+    cpu: 4000m
+    memory: 8Gi
   requests:
     cpu: 10m
     memory: 10Mi
