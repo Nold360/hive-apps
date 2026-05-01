@@ -1,0 +1,12 @@
+config:
+  description: S3 Garage Operator
+
+apps:
+- name: garage-operator
+  repoURL: oci://ghcr.io/rajsinghtech/charts/garage-operator
+  path: .
+  targetRevision: 0.3.16
+  secrets:
+    - name: admin-token
+      keys:
+        - admin-token
