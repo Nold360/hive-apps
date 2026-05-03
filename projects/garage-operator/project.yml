@@ -8,7 +8,7 @@ apps:
   targetRevision: 0.3.16
   parameters:
     - name: watchAnyNamespace
-      value: false
+      value: "true"
   secrets:
     - name: admin-token
       keys:
