@@ -6,7 +6,7 @@ config:
     rules:
     - allow-ssh
     - allow-argocd
-    - allow-minio
+    - allow-s3
 
   labels:
     environment: external

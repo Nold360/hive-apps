@@ -110,6 +110,19 @@ networkPolicy:
             matchLabels:
               app.heqet.gnu.one/name: s3
 
+    allow-s3:
+      podSelector: {}
+      policyTypes:
+      - Egress
+      egress:
+      - ports:
+        - port: 3900
+          protocol: TCP
+        to:
+        - namespaceSelector:
+            matchLabels:
+              app.nold.in/name: garage
+
     allow-ingress-traffic:
       podSelector: {}
       policyTypes:
