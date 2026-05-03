@@ -1,0 +1,27 @@
+---
+apiVersion: garage.rajsingh.info/v1alpha1
+kind: GarageBucket
+metadata:
+  name: forgejo
+  namespace: forgejo
+spec:
+  clusterRef:
+    name: garage
+    namespace: garage
+  quotas:
+    maxSize: 100Gi
+---
+apiVersion: garage.rajsingh.info/v1alpha1
+kind: GarageKey
+metadata:
+  name: forgejo-bucket-key
+  namespace: forgejo
+spec:
+  clusterRef:
+    name: garage
+    namespace: garage
+  bucketPermissions:
+    - bucketRef: forgejo
+      bucketNamespace: forgejo
+      read: true
+      write: true

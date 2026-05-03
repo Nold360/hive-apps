@@ -9,55 +9,32 @@ spec:
   instances: 1
   imageName: ghcr.io/cloudnative-pg/postgresql:15
 
+  plugins:
+  - name: barman-cloud.cloudnative-pg.io
+    isWALArchiver: true
+    parameters:
+      barmanObjectName: garage-store
+
   bootstrap:
     initdb:
       database: app
       owner: app
 
-  backup:
-    barmanObjectStore:
-      destinationPath: "s3://forgejo/"
-      endpointURL: "http://s3-minio.s3.svc.cluster.local:9000"
-      s3Credentials:
-        accessKeyId:
-          name: bucket
-          key: accesskey
-        secretAccessKey:
-          name: bucket
-          key: secretkey
-      wal:
-        compression: gzip
-        #encryption: AES256
-      data:
-        compression: gzip
-        #encryption: AES256
-    retentionPolicy: "90d"
-  #
   resources:
     requests:
       memory: "64Mi"
       cpu: "50m"
-    # limits:
-    #   memory: "1Gi"
-    #   cpu: "1"
 
   storage:
     size: 10Gi
 
   externalClusters:
-    - name: forgejo-db
-      barmanObjectStore:
-        destinationPath: "s3://forgejo/"
-        endpointURL: "http://s3-minio.s3.svc.cluster.local:9000"
-        s3Credentials:
-          accessKeyId:
-            name: bucket
-            key: accesskey
-          secretAccessKey:
-            name: bucket
-            key: secretkey
-        wal:
-          maxParallel: 8
+    - name: forgejo
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: garage-store
+          serverName: forgejo
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
@@ -69,3 +46,29 @@ spec:
   backupOwnerReference: self
   cluster:
     name: forgejo-db
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
+---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: garage-store
+  namespace: forgejo
+spec:
+  retentionPolicy: "90d"
+  configuration:
+    destinationPath: s3://forgejo/
+    endpointURL: http://garage.garage.svc.cluster.local:3900
+    s3Credentials:
+      accessKeyId:
+        name: forgejo-bucket-key
+        key: access-key-id
+      secretAccessKey:
+        name: forgejo-bucket-key
+        key: secret-access-key
+      region:
+        name: forgejo-bucket-key
+        key: region
+    wal:
+      compression: gzip
