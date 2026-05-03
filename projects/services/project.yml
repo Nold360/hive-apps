@@ -7,17 +7,6 @@ apps:
   chart: squid
   targetRevision: 2.0.0
 
-- name: s3
-  namespace: s3
-  repoURL: https://charts.min.io
-  chart: minio
-  targetRevision: 5.4.0
-  secrets:
-  - name: minio-root
-    keys:
-    - rootUser
-    - rootPassword
-
 - name: cnpg
   namespace: cnpg-system
   repoURL: https://cloudnative-pg.github.io/charts
