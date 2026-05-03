@@ -6,6 +6,9 @@ apps:
   repoURL: oci://ghcr.io/rajsinghtech/charts/garage-operator
   path: .
   targetRevision: 0.3.16
+  parameters:
+    - name: watchAnyNamespace
+      value: false
   secrets:
     - name: admin-token
       keys:
