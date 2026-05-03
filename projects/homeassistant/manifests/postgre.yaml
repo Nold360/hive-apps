@@ -11,36 +11,23 @@ spec:
     recovery:
       source: homeassistant
 
-  backup:
-    retentionPolicy: "90d"
-    barmanObjectStore:
-      destinationPath: "s3://homeassistant-backup/"
-      endpointURL: "http://s3-minio.s3.svc.cluster.local:9000"
-      s3Credentials:
-        accessKeyId:
-          name: bucket
-          key: accesskey
-        secretAccessKey:
-          name: bucket
-          key: secretkey
-
   storage:
     size: 10Gi
 
   externalClusters:
     - name: homeassistant
-      barmanObjectStore:
-        destinationPath: "s3://homeassistant-backup/"
-        endpointURL: "http://s3-minio.s3.svc.cluster.local:9000"
-        s3Credentials:
-          accessKeyId:
-            name: bucket
-            key: accesskey
-          secretAccessKey:
-            name: bucket
-            key: secretkey
-        wal:
-          maxParallel: 8
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: garage-store
+          serverName: homeassistant
+
+  plugins:
+  - name: barman-cloud.cloudnative-pg.io
+    isWALArchiver: true
+    parameters:
+      barmanObjectName: garage-store
+
 
 ---
 apiVersion: postgresql.cnpg.io/v1
@@ -53,3 +40,29 @@ spec:
   backupOwnerReference: self
   cluster:
     name: homeassistant
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
+---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: garage-store
+  namespace: homeassistant
+spec:
+  retentionPolicy: "90d"
+  configuration:
+    destinationPath: s3://homeassistant/
+    endpointURL: http://garage.garage.svc.cluster.local:3900
+    s3Credentials:
+      accessKeyId:
+        name: homeassistant-bucket-key
+        key: access-key-id
+      secretAccessKey:
+        name: homeassistant-bucket-key
+        key: secret-access-key
+      region:
+        name: homeassistant-bucket-key
+        key: region
+    wal:
+      compression: gzip
