@@ -4,7 +4,7 @@ config:
     groups:
     - internet
     rules:
-    - allow-minio
+    - allow-s3
     - allow-localai
 
   labels:
