@@ -1,3 +1,17 @@
+apiVersion: ricoberger.de/v1alpha1
+kind: VaultSecret
+metadata:
+  finalizers:
+  - vaultsecrets.ricoberger.de/finalizer
+  generation: 1
+  name: admin-token
+  namespace: garage
+spec:
+  keys:
+  - admin-token
+  path: heqet/garage-operator/admin-token
+  type: Opaque
+---
 apiVersion: garage.rajsingh.info/v1alpha1
 kind: GarageCluster
 metadata:
@@ -5,7 +19,7 @@ metadata:
   namespace: garage
 spec:
   replicas: 1
-  zone: eu-east-1
+  zone: us-east-1
   replication:
     factor: 1
   storage:
