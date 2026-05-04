@@ -3,9 +3,9 @@ config:
 
 apps:
 - name: garage-operator
-  repoURL: oci://ghcr.io/rajsinghtech/charts/garage-operator
-  path: .
-  targetRevision: 0.3.16
+  repoURL: ghcr.io/rajsinghtech/charts
+  chart: garage-operator
+  targetRevision: 0.4.3
   parameters:
     - name: watchAnyNamespace
       value: "true"
