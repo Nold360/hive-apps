@@ -43,5 +43,3 @@ spec:
     adminTokenSecretRef:
       name: admin-token
       key: admin-token
-  monitoring:
-    enabled: true
