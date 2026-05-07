@@ -5,7 +5,7 @@ apps:
 - name: garage-operator
   repoURL: ghcr.io/rajsinghtech/charts
   chart: garage-operator
-  targetRevision: 0.4.3
+  targetRevision: 0.4.6
   parameters:
     - name: watchAnyNamespace
       value: "true"
