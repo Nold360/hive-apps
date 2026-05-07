@@ -1,5 +1,5 @@
 ---
-apiVersion: garage.rajsingh.info/v1alpha1
+apiVersion: garage.rajsingh.info/v1beta1
 kind: GarageBucket
 metadata:
   name: nextcloud
@@ -11,7 +11,7 @@ spec:
   quotas:
     maxSize: 100Gi
 ---
-apiVersion: garage.rajsingh.info/v1alpha1
+apiVersion: garage.rajsingh.info/v1beta1
 kind: GarageKey
 metadata:
   name: nextcloud-bucket-key
@@ -21,7 +21,8 @@ spec:
     name: garage
     namespace: garage
   bucketPermissions:
-    - bucketRef: nextcloud
-      bucketNamespace: nextcloud
+    - bucketRef: 
+        name: nextcloud
+        namespace: nextcloud
       read: true
       write: true

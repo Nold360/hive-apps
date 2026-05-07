@@ -20,7 +20,7 @@ spec:
   path: heqet/garage-operator/admin-token
   type: Opaque
 ---
-apiVersion: garage.rajsingh.info/v1alpha1
+apiVersion: garage.rajsingh.info/v1beta1
 kind: GarageCluster
 metadata:
   name: garage
