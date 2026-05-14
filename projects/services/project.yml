@@ -11,7 +11,7 @@ apps:
   namespace: cnpg-system
   repoURL: https://cloudnative-pg.github.io/charts
   chart: cloudnative-pg
-  targetRevision: 0.28.0
+  targetRevision: 0.28.2
 
 - name: redis-operator
   repoURL: https://ot-container-kit.github.io/helm-charts
