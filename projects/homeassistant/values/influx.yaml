@@ -1,6 +1,6 @@
 image:
   repository: influxdb
-  tag: 2.9.0-alpine
+  tag: 2.9.1-alpine
   pullPolicy: IfNotPresent
   ## If specified, use these secrets to access the images
   # pullSecrets:
