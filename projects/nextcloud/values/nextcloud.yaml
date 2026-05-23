@@ -9,7 +9,7 @@ nextcloud:
     - name: HTTPS_PROXY
       value: http://proxy-squid.proxy.svc.cluster.local:3128
     - name: NO_PROXY
-      value: .cluster.local
+      value: .cluster.local,localai-local-ai.ai.svc.cluster.local
   existingSecret:
     enabled: true
     secretName: nextcloud-user
@@ -22,7 +22,7 @@ nextcloud:
       <?php
         $CONFIG = array (
            'proxy' => 'proxy-squid.proxy.svc.cluster.local:3128',
-            'proxyexclude' => ['.cluster.local'],
+            'proxyexclude' => ['.cluster.local', 'localai-local-ai.ai.svc.cluster.local'],
             'debug' => true,
             'loglevel' => 1,
         );
