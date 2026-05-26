@@ -3,7 +3,7 @@ replicaCount: 1
 deployment:
   image: 
     repository: quay.io/go-skynet/local-ai
-    tag: v4.3.0-gpu-nvidia-cuda-13
+    tag: v4.3.1-gpu-nvidia-cuda-13
   pullPolicy: Always
   runtimeClassName: nvidia
 
