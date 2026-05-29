@@ -2,7 +2,7 @@ image:
   flavor: fpm
 
 nextcloud:
-  host: share.nold.in
+  host: share.nold.me
   extraEnv:
     - name: HTTP_PROXY
       value: http://proxy-squid.proxy.svc.cluster.local:3128
@@ -76,15 +76,15 @@ ingress:
     cert-manager.io/cluster-issuer: letsencrypt
     traefik.ingress.kubernetes.io/router.tls: 'true'
     # kubernetes.io/ingress.class: ingress-external
-    external-dns.alpha.kubernetes.io/hostname: share.nold.in
-    external-dns.alpha.kubernetes.io/target: nold.in
+    external-dns.alpha.kubernetes.io/hostname: share.nold.me
+    external-dns.alpha.kubernetes.io/target: nold.me
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     traefik.ingress.kubernetes.io/router.middlewares: ingress-external-from-de-only@kubernetescrd,nextcloud-nc-headers@kubernetescrd,nextcloud-nc-redirect-dav@kubernetescrd,nextcloud-nc-path-rewrites1@kubernetescrd,nextcloud-nc-path-rewrites2@kubernetescrd
 
   tls:
     - secretName: nextcloud-tls
       hosts:
-      - share.nold.in
+      - share.nold.me
 
 nginx:
   enabled: true
