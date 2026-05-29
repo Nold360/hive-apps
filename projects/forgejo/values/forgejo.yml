@@ -51,8 +51,8 @@ ingress:
   annotations:
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt
-    external-dns.alpha.kubernetes.io/hostname: git.nold.in
-    external-dns.alpha.kubernetes.io/target: nold.in
+    external-dns.alpha.kubernetes.io/hostname: git.nold.me
+    external-dns.alpha.kubernetes.io/target: nold.me
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
     # https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/annotations.md#rate-limiting
     nginx.ingress.kubernetes.io/limit-rps: "1"
@@ -60,14 +60,14 @@ ingress:
     traefik.ingress.kubernetes.io/router.middlewares: ingress-external-from-de-only@kubernetescrd,forgejo-contenttype@kubernetescrd
 
   hosts:
-    - host: git.nold.in
+    - host: git.nold.me
       paths:
         - path: /
           pathType: Prefix
   tls:
     - secretName: gitea-tls
       hosts:
-        - git.nold.in
+        - git.nold.me
 
 
 ## @section deployment
@@ -139,8 +139,8 @@ gitea:
     server:
       LFS_START_SERVER: true
       PROTOCOL: http
-      DOMAIN: git.nold.in
-      ROOT_URL: https://git.nold.in
+      DOMAIN: git.nold.me
+      ROOT_URL: https://git.nold.me
     database:
       DB_TYPE: postgres
       NAME: app

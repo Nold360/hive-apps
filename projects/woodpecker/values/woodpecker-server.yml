@@ -14,7 +14,7 @@ image:
 env:
   WOODPECKER_OPEN: "false"
   WOODPECKER_ADMIN: "Nold360"
-  WOODPECKER_HOST: https://ci.nold.in
+  WOODPECKER_HOST: https://ci.nold.me
   WOODPECKER_GITHUB: "true"
   WOODPECKER_PLUGINS_PRIVILEGED: "woodpeckerci/plugin-docker-buildx"
   #WOODPECKER_REPO_OWNERS: "nold360"
@@ -57,19 +57,19 @@ ingress:
   annotations:
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt
-    external-dns.alpha.kubernetes.io/hostname: ci.nold.in
-    external-dns.alpha.kubernetes.io/target: nold.in
+    external-dns.alpha.kubernetes.io/hostname: ci.nold.me
+    external-dns.alpha.kubernetes.io/target: nold.me
   hosts:
-    - host: ci.nold.in
+    - host: ci.nold.me
       paths:
       - path: /
         backend:
           serviceName: server
           servicePort: 80
   tls:
-    - secretName: ci-nold-in-tls
+    - secretName: ci-nold-me-tls
       hosts:
-        - ci.nold.in
+        - ci.nold.me
 
 # -- Specifies the ressources for the server component
 resources:
