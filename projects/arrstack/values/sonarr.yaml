@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/home-operations/sonarr
-  tag: 4.0.17
+  tag: 4.0.18
 
 securityContext:
   privileged: true
