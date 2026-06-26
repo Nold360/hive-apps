@@ -1,0 +1,69 @@
+controllers:
+  music-assistant:
+    containers:
+      app:
+        image:
+          repository: ghcr.io/music-assistant/server
+          tag: 2.9.4
+        env:
+          TZ: Europe/Berlin
+          LOG_LEVEL: info
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: { drop: ["ALL"], add: ["SYS_ADMIN", "DAC_READ_SEARCH"] }
+        resources: {}
+
+defaultPodOptions:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+
+service:
+  app:
+    controller: music-assistant
+    ports:
+      http:
+        port: 8095
+      stream:
+        port: 8097
+
+ingress:
+  main:
+    className: ingress-internal
+    annotations:
+      cert-manager.io/cluster-issuer: "vault-issuer"
+    hosts:
+      - host: music.dc
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: app
+              port: http
+    tls:
+      - secretName: music-tls
+        hosts:
+           - music.dc
+
+persistence:
+  music:
+    type: hostPath
+    hostPath: /data/media/music
+
+  data:
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    advancedMounts:
+      music-assistant:
+        app:
+          - path: /data
+            subPath: data
+          - path: /cache
+            subPath: cache
+  tmp:
+    type: emptyDir

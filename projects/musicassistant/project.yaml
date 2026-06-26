@@ -1,0 +1,8 @@
+config:
+  description: Music Assistant
+
+apps:
+  - name: music-assistant
+    repo: bjw-s
+    chart: app-template
+    targetRevision: 5.0.1
