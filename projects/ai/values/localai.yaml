@@ -1,7 +1,7 @@
 replicaCount: 1
 
 deployment:
-  image: 
+  image:
     repository: quay.io/go-skynet/local-ai
     tag: v4.5.5-gpu-nvidia-cuda-13
   pullPolicy: Always
@@ -44,7 +44,7 @@ deployment:
 
     ## Enable go tags, available: stablediffusion, tts
     ## stablediffusion: image generation with stablediffusion
-    ## tts: enables text-to-speech with go-piper 
+    ## tts: enables text-to-speech with go-piper
     ## (requires REBUILD=true)
     #
     #GO_TAGS=tts
@@ -100,20 +100,27 @@ models:
       # basicAuth: base64EncodedCredentials
 
 persistence:
-  models: 
+  configuration:
+    enabled: true
+    size: 100Mi
+    globalMount: /configuration
+    accessModes:
+      - ReadWriteOnce
+
+  models:
     enabled: true
     annotations: {}
     storageClass: ssd
-    accessModes: 
+    accessModes:
       - ReadWriteOnce
     size: 100Gi
     globalMount: /models
 
-  backends: 
+  backends:
     enabled: true
     annotations: {}
     # storageClass: ssd
-    accessModes: 
+    accessModes:
       - ReadWriteOnce
     size: 100Gi
     globalMount: /backends
@@ -140,7 +147,7 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-  tls: 
+  tls:
     - secretName: localai-tls
       hosts:
         - ai.dc
