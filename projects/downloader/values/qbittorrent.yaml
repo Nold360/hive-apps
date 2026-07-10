@@ -21,7 +21,7 @@ controllers:
         dependsOn: gluetun
         image:
           repository: ghcr.io/home-operations/qbittorrent
-          tag: 5.2.2
+          tag: 5.2.3
         securityContext:
           runAsUser: 568
           runAsGroup: 568
