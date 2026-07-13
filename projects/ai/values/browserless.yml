@@ -3,11 +3,13 @@ controllers:
     containers:
       main:
         image: 
-          repository:  browserless/chrome
+          repository: ghcr.io/browserless/chromium
           tag: latest
           pullPolicy: Always
         env:
-          MAX_CONCURRENT_SESSIONS: 10
+          CONCURRENT: 10
+          ENABLE_DEBUGGER: "false"
+          EXTERNAL: http://browserless.browserless.svc.cluster.local:3000
 
 ingress:
   main:
