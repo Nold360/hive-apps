@@ -4,7 +4,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/music-assistant/server
-          tag: 2.9.8
+          tag: 2.9.9
         env:
           TZ: Europe/Berlin
           LOG_LEVEL: info
