@@ -19,18 +19,27 @@ apps:
   chart: app-template
   targetRevision: 2.4.0
 
-# - name: flowise
-#   repo: bjw-s 
-#   chart: app-template
-#   targetRevision: 2.4.0
-
-# - name: big-agi
-#   repo: bjw-s
-#   chart: app-template
-#   targetRevision: 2.4.0
-
 - name: browserless
   namespace: browserless
   repo: bjw-s
   chart: app-template
   targetRevision: 2.4.0
+
+- name: hermes-agent
+  namespace: hermes-agent
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 5.0.1
+  secrets:
+    - name: hermes-agent
+      keys:
+        - GITHUB_TOKEN
+        - OMBI_API_KEY
+        - OPENVIKING_API_KEY
+        - TELEGRAM_BOT_TOKEN
+
+- name: openviking
+  namespace: openviking
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 5.0.1

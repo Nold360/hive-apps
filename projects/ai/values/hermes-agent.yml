@@ -1,0 +1,237 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/common-5.0.1/charts/library/common/values.schema.json
+global:
+  createDefaultServiceAccount: true
+  
+serviceAccount:
+  hermes-agent: {}
+  
+# RBAC Configuration for bjw-s-labs/helm-charts common library
+rbac:
+
+  # Define the Role/ClusterRole
+  roles:
+    pod-manager-role:
+      # Set to false to disable the Role or ClusterRole.
+      enabled: true
+      # Set the type of RBAC resource. Supported values: Role, ClusterRole.
+      type: Role
+      # Optional annotations and labels
+      annotations: {}
+      labels: {}
+      # Rules for the Role
+      rules:
+        - apiGroups: [""]
+          resources: ["pods", "pods/exec", "pods/log"]
+          verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+        - apiGroups: [""]
+          resources: ["pods/portforward"]
+          verbs: ["create"]
+        - apiGroups: [""]
+          resources: ["services", "endpoints", "configmaps", "secrets"]
+          verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+        - apiGroups: ["apps"]
+          resources: ["deployments", "replicasets", "statefulsets"]
+          verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+    hermes-viewer:
+      enabled: true
+      type: ClusterRole
+      rules:
+        - apiGroups: [""]
+          resources: ["services"]
+          verbs: ["get", "list", "watch"]
+        - apiGroups: [""]
+          resources: ["pods", "pods/log", "namespace"]
+          verbs: ["get", "list"]
+
+  # Define the RoleBinding
+  bindings:
+    pod-manager-rolebinding:
+      enabled: true
+      type: RoleBinding
+      roleRef:
+        identifier: pod-manager-role
+      subjects:
+        - identifier: hermes-agent
+
+    hermes-viewer:
+      enabled: true
+      type: ClusterRoleBinding
+      roleRef:
+        identifier: hermes-viewer
+      subjects:
+        - identifier: hermes-agent
+
+
+defaultPodOptions:
+  runtimeClassName: nvidia
+  automountServiceAccountToken: true
+  enableServiceLinks: false
+  securityContext:
+    runAsUser: 10000
+    runAsGroup: 10000
+    fsGroup: 10000
+    fsGroupChangePolicy: "OnRootMismatch"
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+    supplementalGroups:
+      - 999 # Signal-cli
+
+controllers:
+  hermes-agent:
+    containers:
+      hermes-agent:
+        image: &image
+          repository: docker.io/nousresearch/hermes-agent
+          tag: latest
+          pullPolicy: Always
+        command: /opt/hermes/bin/hermes 
+        args: ["gateway", "run", "-vv"]
+        env: &env
+          HERMES_HOME: /opt/data/.hermes
+          HOME: /opt/data
+          HERMES_UID: "10000"
+          HERMES_GID: "10000"
+          TZ: "Europe/Berlin"
+          HERMES_DASHBOARD: "1"
+          TERMINAL_ENV: local
+
+          OPENAI_BASE_URL: http://localai-local-ai.ai.svc.cluster.local:80/v1
+          OPENAI_API_KEY: sks-fake
+          OPENAI_MODEL: default
+          VOICE_TOOLS_OPENAI_KEY: sks-fake
+          STT_OPENAI_MODEL: parakeet-cpp-tdt-0.6b-v3
+          STT_OPENAI_BASE_URL: http://localai-local-ai.ai.svc.cluster.local:80/v1
+          SEARXNG_URL: "http://searxng.searxng.svc.cluster.local:8080"
+          NTFY_TOPIC: hermes
+          NTFY_SERVER_URL: http://ntfy.ntfy.svc.cluster.local
+          # for nvidia-smi
+          NVIDIA_VISIBLE_DEVICES: all
+          NVIDIA_DRIVER_CAPABILITIES: compute,utility
+          # DISCORD_BOT_TOKEN
+          # DISCORD_ALLOWED_USERS
+          # DISCORD_ALLOWED_CHANNELS
+          DISCORD_HOME_CHANNEL: 1216437200510521384
+
+          OPENVIKING_API_KEY: 
+            valueFrom:
+              secretKeyRef:
+                name: hermes-agent
+                key: OPENVIKING_API_KEY    
+          OMBI_API_KEY: 
+            valueFrom:
+              secretKeyRef:
+                name: hermes-agent
+                key: OMBI_API_KEY
+          GITHUB_TOKEN: 
+            valueFrom:
+              secretKeyRef:
+                name: hermes-agent
+                key: GITHUB_TOKEN     
+          TELEGRAM_BOT_TOKEN: 
+            valueFrom:
+              secretKeyRef:
+                name: hermes-agent
+                key: TELEGRAM_BOT_TOKEN
+
+      hermes-dashboard:
+        image: *image
+        command: /opt/hermes/bin/hermes
+        args: ["dashboard", "--host", "0.0.0.0"]
+        env: *env
+
+        probes:
+          liveness: &probes
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /
+                port: &port 9119
+              initialDelaySeconds: 30
+              periodSeconds: 30
+              failureThreshold: 5
+          readiness: *probes
+          startup:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /
+                port: *port
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              failureThreshold: 30
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          capabilities:
+            drop:
+              - ALL
+
+service:
+  hermes-agent:
+    controller: hermes-agent
+    ports:
+      http:
+        port: 9119
+      webhooks:
+        port: 8644
+
+ingress:
+  hermes-agent:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    hosts:
+      - host: "hermes.dc"
+        paths:
+          - path: /
+            service:
+              identifier: hermes-agent
+              port: http
+    tls:
+      - hosts:
+          - hermes.dc
+        secretName: hermes-tls
+
+  hermes-agent-webhooks:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    hosts:
+      - host:  hermes-webhook.dc
+        paths:
+          - path: /webhooks/
+            service:
+              identifier: hermes-agent
+              port: webhooks
+    tls:
+      - hosts:
+          - hermes-webhook.dc
+        secretName: hermes-webhook-tls
+
+persistence:
+  opt:
+    enabled: true
+    size: 10Gi
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    globalMounts:
+      - path: /opt/data
+
+  home:
+    enabled: true
+    size: 10Gi
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    globalMounts:
+      - path: /home/hermes
+
+  tmp:
+    enabled: true
+    type: emptyDir
+  run:
+    enabled: true
+    type: emptyDir

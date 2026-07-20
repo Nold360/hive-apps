@@ -1,0 +1,129 @@
+image:
+  repository: ghcr.io/volcengine/openviking
+  pullPolicy: Always
+  tag: latest
+
+podSecurityContext:
+  fsGroup: 1000
+
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 1933
+
+ingress:
+  enabled: true
+  className: "ingress-internal"
+  annotations:
+    cert-manager.io/cluster-issuer: vault-issuer
+  hosts:
+    - host: openviking.dc
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: 
+   - secretName: openviking-tls
+     hosts:
+       - openviking.dc
+
+resources:
+  limits:
+    cpu: "2"
+    memory: 4Gi
+  requests:
+    cpu: 10m
+    memory: 100Mi
+
+persistence:
+  enabled: true
+  # Storage class for the PVC. Leave empty for the default storage class.
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 20Gi
+  # Existing PVC name. If set, no new PVC is created.
+  existingClaim: ""
+  # Mount path inside the container for OpenViking persistent state. The official
+  # Docker image expects ov.conf, ovcli.conf, and workspace data under this path.
+  mountPath: /app/.openviking
+
+bot:
+  # The Docker image can start vikingbot with the API server. Keep it disabled
+  # for Kubernetes by default so the chart exposes only the OpenViking API port.
+  enabled: false
+
+# OpenViking server configuration (ov.conf).
+# This is rendered into a ConfigMap and mounted at
+# ${persistence.mountPath}/ov.conf.
+config:
+  storage:
+    workspace: /app/.openviking/openviking_workspace
+    vectordb:
+      name: context
+      backend: local
+      project: default
+    agfs:
+      backend: local
+      timeout: 10
+  log:
+    level: INFO
+    output: stdout
+  server:
+    host: "0.0.0.0"
+    port: 1933
+    workers: 1
+    # Required when host is 0.0.0.0. Prefer setting this via an environment
+    # variable placeholder plus extraEnv/Secret, e.g. ${OPENVIKING_ROOT_API_KEY}.
+    root_api_key: viking
+    cors_origins:
+      - "*"                                                                                  
+  embedding:                                                                                                                                                  
+    dense:                                                                                                                                                    
+      api_base: http://localai-local-ai.ai.svc.cluster.local:80/v1                                                                                            
+      api_key: "fake"                                                                                                                                             
+      provider: openai                                                                                                                                        
+      dimension: 768                                                                                                                                          
+      model: nomic-embed-text-v1.5                                                                                                                            
+    max_concurrent: 10                                                                                                                                        
+    text_source: content_only                                                                                                                                 
+    max_input_tokens: 4096                                                                                                                                    
+  vlm:                                                                                                                                                        
+    api_base: http://localai-local-ai.ai.svc.cluster.local:80/v1                                                                                              
+    api_key: "fake"                                                                                                                                               
+    provider: openai                                                                                                                                          
+    model: "default"                                                                                                                        
+    max_concurrent: 64    
+
+# Extra environment variables to set on the container.
+# Use this for secrets or overrides that should not be in the ConfigMap.
+extraEnv: []
+  # - name: OPENVIKING_ROOT_API_KEY
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: my-secret
+  #       key: root-api-key
+
+# Liveness and readiness probes.
+livenessProbe:
+  httpGet:
+    path: /health
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 600
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: http
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
