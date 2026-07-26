@@ -11,6 +11,8 @@ deployment:
     threads: 16
     context_size: 4096
     DEBUG: "true"
+    TORCH_DISABLE_VIDEO_CODEC: "1"
+    PYTORCH_CUDA_ALLOC_CONF: "expandable_segments:True"
     #
     # SINGLE_ACTIVE_BACKEND: "true"
     # PYTHON_GRPC_MAX_WORKERS: "1"
