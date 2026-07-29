@@ -24,7 +24,7 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
-  tls: 
+  tls:
    - secretName: openviking-tls
      hosts:
        - openviking.dc
@@ -78,23 +78,23 @@ config:
     # variable placeholder plus extraEnv/Secret, e.g. ${OPENVIKING_ROOT_API_KEY}.
     root_api_key: viking
     cors_origins:
-      - "*"                                                                                  
-  embedding:                                                                                                                                                  
-    dense:                                                                                                                                                    
-      api_base: http://localai-local-ai.ai.svc.cluster.local:80/v1                                                                                            
-      api_key: "fake"                                                                                                                                             
-      provider: openai                                                                                                                                        
-      dimension: 768                                                                                                                                          
-      model: nomic-embed-text-v1.5                                                                                                                            
-    max_concurrent: 10                                                                                                                                        
-    text_source: content_only                                                                                                                                 
-    max_input_tokens: 4096                                                                                                                                    
-  vlm:                                                                                                                                                        
-    api_base: http://localai-local-ai.ai.svc.cluster.local:80/v1                                                                                              
-    api_key: "fake"                                                                                                                                               
-    provider: openai                                                                                                                                          
-    model: "default"                                                                                                                        
-    max_concurrent: 64    
+      - "*"
+  embedding:
+    dense:
+      api_base: http://localai-local-ai.ai.svc.cluster.local:80/v1
+      api_key: "fake"
+      provider: openai
+      dimension:  1024
+      model: text-embedding
+    max_concurrent: 10
+    text_source: content_only
+    max_input_tokens: 32768
+  vlm:
+    api_base: http://localai-local-ai.ai.svc.cluster.local:80/v1
+    api_key: "fake"
+    provider: openai
+    model: "default"
+    max_concurrent: 64
 
 # Extra environment variables to set on the container.
 # Use this for secrets or overrides that should not be in the ConfigMap.

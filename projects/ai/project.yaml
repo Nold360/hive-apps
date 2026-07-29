@@ -15,7 +15,7 @@ apps:
         - hf-token
 
 - name: anythingllm
-  repo: bjw-s 
+  repo: bjw-s
   chart: app-template
   targetRevision: 2.4.0
 
@@ -40,6 +40,6 @@ apps:
 
 - name: openviking
   namespace: openviking
-  repo: bjw-s
-  chart: app-template
-  targetRevision: 5.0.1
+  repoURL: https://github.com/volcengine/OpenViking
+  path: deploy/helm/openviking
+  targetRevision: main
