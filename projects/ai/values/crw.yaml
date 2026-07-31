@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/common-5.0.1/charts/library/common/values.schema.json
+global:
+  createDefaultServiceAccount: false
+
+defaultPodOptions:
+  securityContext:
+    runAsUser: 10000
+    runAsGroup: 10000
+    fsGroup: 10000
+    fsGroupChangePolicy: "OnRootMismatch"
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+
+controllers:
+  crw:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/us/crw
+          tag: latest
+          pullPolicy: Always
+        env:
+          CRW_EXTRACTION__LLM__PROVIDER: openai
+          CRW_EXTRACTION__LLM__MODEL: default
+          CRW_EXTRACTION__LLM__API_KEY: sk-fakega 
+          CRW_EXTRACTION__LLM__BASE_URL: http://localai-local-ai.ai.svc.cluster.local/v1
+          CRW_EXTRACTION__LLM__MAX_CONCURRENCY: "1"
+          CRW_RENDERER__MODE: chrome
+          CRW_RENDERER__RENDER_JS_DEFAULT: true
+          CRW_CRAWLER__STEALTH__ENABLED: "true"
+          CRW_RENDERER__CHROME__WS_URL: ws://browserless.browserless.svc.cluster.local:3000/
+          CRW_SEARCH__SEARXNG_URL: http://searxng.searxng.svc.cluster.local:8080
+
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+              - ALL
+
+service:
+  crw:
+    controller: crw
+    ports:
+      http:
+        port: 3000
+
+ingress:
+  crw:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    hosts:
+      - host: "crw.dc"
+        paths:
+          - path: /
+            service:
+              identifier: crw
+              port: http
+    tls:
+      - hosts:
+          - crw.dc
+        secretName: crw-tls

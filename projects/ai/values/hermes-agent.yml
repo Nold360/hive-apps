@@ -113,6 +113,8 @@ controllers:
           # DISCORD_ALLOWED_USERS
           # DISCORD_ALLOWED_CHANNELS
           DISCORD_HOME_CHANNEL: 1216437200510521384
+          FIRECRAWL_API_URL: http://crw.crw.svc.cluster.local:3000
+          FIRECRAWL_API_KEY: none
 
           OPENVIKING_API_KEY: 
             valueFrom:

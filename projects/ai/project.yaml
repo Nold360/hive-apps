@@ -43,3 +43,9 @@ apps:
   repoURL: https://github.com/volcengine/OpenViking
   path: deploy/helm/openviking
   targetRevision: main
+
+- name: crw
+  namespace: crw
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 5.0.1
