@@ -9,8 +9,7 @@ deployment:
 
   env:
     threads: 16
-    context_size: 4096
-    DEBUG: "true"
+    #DEBUG: "true"
     TORCH_DISABLE_VIDEO_CODEC: "1"
     PYTORCH_CUDA_ALLOC_CONF: "expandable_segments:True"
     OMP_NUM_THREADS: "1"
