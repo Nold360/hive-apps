@@ -1,0 +1,62 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/heads/main/charts/library/common/values.schema.json
+
+controllers:
+  main:
+    pod:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+
+    containers:
+      main:
+        image:
+          repository: ghcr.io/flaresolverr/flaresolverr
+          tag: "v3.5.0"
+
+        env:
+          - name: TZ
+            value: UTC
+          - name: DISABLE_MEDIA
+            value: true
+          ## See: https://github.com/FlareSolverr/FlareSolverr#environment-variables
+          #  - name: LOG_LEVEL
+          #  value: info
+          #- name: LOG_HTML
+          #  value: "false"
+          #- name: CAPTCHA_SOLVER
+          #  value: none
+          #- name: BROWSER_TIMEOUT
+          #  value: "40000"
+          #- name: TEST_URL
+          #  value: https://www.google.com
+
+        # resources:
+            # requests:
+            #   memory: 105Mi
+            # limits:
+            #   memory: 300Mi    
+
+        securityContext:
+          runAsNonRoot: true
+          privileged: false
+          # FIXME: flaresolverr crashes if /app is not writeable
+          readOnlyRootFilesystem: false
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+
+ingress:
+  main:
+    enabled: false
+
+service:
+  main:
+    enabled: true
+    controller: main
+    ports:
+      http:
+        port: 8191

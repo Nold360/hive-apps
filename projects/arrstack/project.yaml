@@ -20,10 +20,10 @@ apps:
   - ingress-internal
 
 - name: flaresolverr
-  chart: flaresolverr
+  chart: app-template
   namespace: flaresolverr
-  repo: lib42
-  targetRevision: 2.0.0
+  repo: bjw-s
+  targetRevision: 5.0.1
 
 - name: sonarr
   namespace: sonarr
