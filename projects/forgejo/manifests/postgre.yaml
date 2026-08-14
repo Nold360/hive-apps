@@ -7,7 +7,7 @@ metadata:
     cnpg.io/skipEmptyWalArchiveCheck: enabled
 spec:
   instances: 1
-  imageName: ghcr.io/cloudnative-pg/postgresql:15
+  imageName: ghcr.io/cloudnative-pg/postgresql:18
 
   plugins:
   - name: barman-cloud.cloudnative-pg.io
