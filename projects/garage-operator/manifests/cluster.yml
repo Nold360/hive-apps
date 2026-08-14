@@ -20,17 +20,22 @@ spec:
   path: heqet/garage-operator/admin-token
   type: Opaque
 ---
-apiVersion: garage.rajsingh.info/v1beta1
+apiVersion: garage.rajsingh.info/v1beta2
 kind: GarageCluster
 metadata:
   name: garage
   namespace: garage
 spec:
-  replicas: 1
   zone: us-east-1
+  gateway:
+    replicas: 1
   replication:
     factor: 1
   storage:
+    replicas: 1
+    metadata:
+      storageClassName: "ssd"
+      size: 10Gi
     data:
       size: 100Gi
   network:
@@ -38,7 +43,6 @@ spec:
     service:
       type: ClusterIP
   admin:
-    enabled: true
     bindPort: 3903
     adminTokenSecretRef:
       name: admin-token

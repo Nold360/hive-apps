@@ -26,3 +26,18 @@ spec:
         namespace: homeassistant
       read: true
       write: true
+---
+apiVersion: garage.rajsingh.info/v1beta1
+kind: GarageReferenceGrant
+metadata:
+  name: allow-homeassistant
+  namespace: garage
+spec:
+  from:
+    - kind: GarageKey
+      namespace: homeassistant
+    - kind: GarageBucket
+      namespace: homeassistant
+  to:
+    - kind: GarageCluster
+      name: garage

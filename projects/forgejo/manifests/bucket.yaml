@@ -26,3 +26,18 @@ spec:
         namespace: forgejo
       read: true
       write: true
+---
+apiVersion: garage.rajsingh.info/v1beta1
+kind: GarageReferenceGrant
+metadata:
+  name: allow-forgejo
+  namespace: garage
+spec:
+  from:
+    - kind: GarageKey
+      namespace: forgejo
+    - kind: GarageBucket
+      namespace: forgejo
+  to:
+    - kind: GarageCluster
+      name: garage

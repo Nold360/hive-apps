@@ -26,3 +26,18 @@ spec:
         namespace: nextcloud
       read: true
       write: true
+---
+apiVersion: garage.rajsingh.info/v1beta1
+kind: GarageReferenceGrant
+metadata:
+  name: allow-nextcloud
+  namespace: garage
+spec:
+  from:
+    - kind: GarageKey
+      namespace: nextcloud
+    - kind: GarageBucket
+      namespace: nextcloud
+  to:
+    - kind: GarageCluster
+      name: garage
