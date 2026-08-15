@@ -1,3 +1,51 @@
+# Egress for the external Traefik ingress controller.
+#
+# Cilium goes deny-all-by-default for egress once ANY policy selects the
+# endpoint, and the allowed set is the UNION of every egress rule from all
+# policies (standard NetworkPolicy + CiliumNetworkPolicy) that select it.
+#
+# The Traefik pod is labeled `app.kubernetes.io/name: traefik` (NOT `name:
+# traefik`). Every endpointSelector below MUST use that label, or the policy
+# silently matches zero endpoints.
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-internet
+  namespace: ingress-external
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: traefik
+  egress:
+  # Broad egress: geojs.io geo lookups (geoblock plugin), Cloudflare (warp
+  # plugin / ACME). `world` covers external destinations only.
+  - toEntities:
+    - world
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-crowdsec
+  namespace: ingress-external
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: traefik
+  egress:
+  # crowdsec-bouncer plugin talks to the LAPI (8080) and appsec (7422).
+  # The crowdsec namespace is NOT labeled environment=external, so this is
+  # the only policy that lets Traefik reach it. Selecting by namespace covers
+  # both the lapi and appsec pods.
+  - toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+      - port: "7422"
+        protocol: TCP
+    toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: crowdsec
+---
 apiVersion: "cilium.io/v2"
 kind: CiliumNetworkPolicy
 metadata:
@@ -8,6 +56,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: traefik
   egress:
+  # Traefik watches Ingress/IngressRoute/Secret CRDs via the k8s API.
   - toEntities:
     - kube-apiserver
   - toPorts:
