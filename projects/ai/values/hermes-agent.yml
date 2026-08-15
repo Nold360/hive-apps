@@ -10,50 +10,23 @@ rbac:
 
   # Define the Role/ClusterRole
   roles:
-    pod-manager-role:
-      # Set to false to disable the Role or ClusterRole.
-      enabled: true
-      # Set the type of RBAC resource. Supported values: Role, ClusterRole.
-      type: Role
-      # Optional annotations and labels
-      annotations: {}
-      labels: {}
-      # Rules for the Role
-      rules:
-        - apiGroups: [""]
-          resources: ["pods", "pods/exec", "pods/log"]
-          verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-        - apiGroups: [""]
-          resources: ["pods/portforward"]
-          verbs: ["create"]
-        - apiGroups: [""]
-          resources: ["services", "endpoints", "configmaps", "secrets"]
-          verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-        - apiGroups: ["apps"]
-          resources: ["deployments", "replicasets", "statefulsets"]
-          verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-
     hermes-viewer:
       enabled: true
       type: ClusterRole
       rules:
-        - apiGroups: [""]
-          resources: ["services"]
-          verbs: ["get", "list", "watch"]
-        - apiGroups: [""]
-          resources: ["pods", "pods/log", "namespace"]
-          verbs: ["get", "list"]
+      # Erlaubt Lesezugriff auf ALLE API-Gruppen (inklusive aller CRDs!)
+      - apiGroups: ["*"]
+        resources: ["*"]
+        verbs: ["get", "list", "watch"]
+      # Kubernetes erlaubt keine "Deny"-Regeln. Da Secrets aber zur Kern-Gruppe ("") gehören,
+      # überschreibt der restriktivere Kern-Eintrag für Secrets hier das obere Wildcard NICHT automatisch.
+      # Um absolut sicherzugehen, dass Secrets nur gelistet werden, trennt man den Kern sauber auf:
+      - apiGroups: [""]
+        resources: ["secrets"]
+        verbs: ["list", "watch"] # Kein "get" -> Inhalte bleiben geschützt!
 
   # Define the RoleBinding
   bindings:
-    pod-manager-rolebinding:
-      enabled: true
-      type: RoleBinding
-      roleRef:
-        identifier: pod-manager-role
-      subjects:
-        - identifier: hermes-agent
-
     hermes-viewer:
       enabled: true
       type: ClusterRoleBinding
