@@ -1,0 +1,89 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: hindsight-db
+  namespace: hindsight
+spec:
+  instances: 1
+  imageName: ghcr.io/cloudnative-pg/postgresql:18-minimal-trixie
+
+  bootstrap:
+    initdb:
+      postInitSQL:
+        - CREATE EXTENSION IF NOT EXISTS vector;
+
+  storage:
+    size: 10Gi
+    storageClass: ssd
+
+  postgresql:
+    extensions:
+      - name: pgvector
+        image:
+          # renovate: suite=trixie-pgdg depName=postgresql-18-pgvector
+          reference: ghcr.io/cloudnative-pg/pgvector:0.8.6-18-trixie
+
+  externalClusters:
+    - name: hindsight-db
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: garage-store
+          serverName: hindsight-db
+
+  plugins:
+  - name: barman-cloud.cloudnative-pg.io
+    isWALArchiver: true
+    parameters:
+      barmanObjectName: garage-store
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: hindsight
+spec:
+  name: hindsight
+  owner: hindsight
+  cluster:
+    name: hindsight-db
+  extensions:
+  - name: vector
+    # renovate: suite=trixie-pgdg depName=postgresql-18-pgvector extractVersion=^(?<version>\d+\.\d+\.\d+)
+    version: '0.8.6'
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: hindsight-db-backup
+  namespace: hindsight
+spec:
+  schedule: "0 0 * * * *"
+  backupOwnerReference: self
+  cluster:
+    name: hindsight-db
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
+---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: garage-store
+  namespace: hindsight
+spec:
+  retentionPolicy: "90d"
+  configuration:
+    destinationPath: s3://hindsight/
+    endpointURL: http://garage.garage.svc.cluster.local:3900
+    s3Credentials:
+      accessKeyId:
+        name: hindsight-bucket-key
+        key: access-key-id
+      secretAccessKey:
+        name: hindsight-bucket-key
+        key: secret-access-key
+      region:
+        name: hindsight-bucket-key
+        key: region
+    wal:
+      compression: gzip

@@ -1,0 +1,116 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/common-5.0.1/charts/library/common/values.schema.json
+defaultPodOptions:
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+
+controllers:
+  hindsight:
+    containers:
+      api:
+        image:
+          repository: ghcr.io/vectorize-io/hindsight-api
+          tag: latest
+          pullPolicy: Always
+        env:
+          TZ: Europe/Berlin
+          # LLM
+          HINDSIGHT_API_LLM_PROVIDER: openai
+          HINDSIGHT_API_LLM_MODEL: default-fast
+          HINDSIGHT_API_LLM_REASONING_EFFORT: none
+          HINDSIGHT_API_LLM_API_KEY: none
+          HINDSIGHT_API_LLM_BASE_URL: http://localai-local-ai.ai.svc.cluster.local:80/v1
+          HINDSIGHT_API_LLM_MAX_CONCURRENT: 1
+          HINDSIGHT_API_LLM_TIMEOUT: 300
+          HINDSIGHT_API_LLM_MAX_RETRIES: 2 
+
+          HINDSIGHT_API_RETAIN_LLM_MODEL: default-fast
+          HINDSIGHT_API_RETAIN_MAX_COMPLETION_TOKENS: 4000
+          HINDSIGHT_API_REFLECT_LLM_MODEL: default-fast
+          HINDSIGHT_API_CONSOLIDATION_LLM_BATCH_SIZE: 2
+          #HINDSIGHT_API_ENABLE_OBSERVATIONS: false
+          HINDSIGHT_API_ENABLE_BANK_LLM_HEALTH: true
+
+          HINDSIGHT_RECALL_BUDGET: low
+          HINDSIGHT_RECALL_MAX_TOKENS: 1024
+          
+          # Embeddings
+          HINDSIGHT_API_EMBEDDINGS_PROVIDER: openai
+          HINDSIGHT_API_EMBEDDINGS_OPENAI_MODEL: text-embedding
+          HINDSIGHT_API_EMBEDDINGS_OPENAI_BASE_URL: http://localai-local-ai.ai.svc.cluster.local:80/v1
+          # Local provider (default)
+          #HINDSIGHT_API_RERANKER_PROVIDER: local
+          HINDSIGHT_API_RERANKER_MAX_CANDIDATES: 100
+          #HINDSIGHT_API_RERANKER_LOCAL_MODEL: cross-encoder/ms-marco-MiniLM-L-6-v2
+          #HINDSIGHT_API_RERANKER_LOCAL_FP16: true
+          #HINDSIGHT_API_RERANKER_LOCAL_BUCKET_BATCHING: true
+
+          HINDSIGHT_API_RERANKER_PROVIDER: cohere             
+          HINDSIGHT_API_RERANKER_COHERE_BASE_URL: http://localai-local-ai.ai.svc.cluster.local/v1/rerank
+          HINDSIGHT_API_RERANKER_COHERE_API_KEY: none                                            
+          HINDSIGHT_API_RERANKER_COHERE_MODEL: jina-reranker-v1-tiny-en
+
+        envFrom:
+          - secretRef: 
+              name: hindsight
+
+        resources:
+          requests:
+            cpu: 100m
+            memory: 1Gi
+          limits:
+            cpu: 1000m
+            memory: 6Gi
+
+      controlplane:
+        image:
+          repository: ghcr.io/vectorize-io/hindsight-control-plane
+          tag: latest
+          pullPolicy: Always
+        env:
+          TZ: Europe/Berlin
+          NODE_ENV: "production"
+          HINDSIGHT_CP_HOSTNAME: "0.0.0.0"
+          HINDSIGHT_CP_PORT: "3000"
+          HINDSIGHT_CP_DATAPLANE_API_URL: "http://hindsight-api"
+        # envFrom:
+        #   - secretRef:
+        #       name: hindsight
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+          limits:
+            cpu: 500m
+            memory: 2Gi
+
+service:
+  api:
+    controller: hindsight
+    ports:
+      http:
+        port: 8888
+  controlplane:
+    controller: hindsight
+    ports:
+      http:
+        port: 3000
+
+ingress:
+  api:
+    enabled: false
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    hosts:
+      - host: "hindsight.dc"
+        paths:
+          - path: /
+            service:
+              identifier: api
+              port: http
+    tls:
+      - hosts:
+          - hindsight.dc
+        secretName: hindsight-tls

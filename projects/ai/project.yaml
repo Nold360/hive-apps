@@ -49,3 +49,13 @@ apps:
   repo: bjw-s
   chart: app-template
   targetRevision: 5.0.1
+
+- name: hindsight
+  namespace: hindsight
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 5.0.1
+  secrets:
+    - name: hindsight
+      keys:
+        - HINDSIGHT_API_DATABASE_URL
