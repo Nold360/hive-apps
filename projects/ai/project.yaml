@@ -35,14 +35,7 @@ apps:
       keys:
         - GITHUB_TOKEN
         - OMBI_API_KEY
-        - OPENVIKING_API_KEY
         - TELEGRAM_BOT_TOKEN
-
-- name: openviking
-  namespace: openviking
-  repoURL: https://github.com/volcengine/OpenViking
-  path: deploy/helm/openviking
-  targetRevision: main
 
 - name: crw
   namespace: crw
