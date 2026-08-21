@@ -13,10 +13,10 @@ spec:
       botProxyUrl: "http://miasma.miasma.svc.cluster.local:9999"
       # Route ai-robots-txt and other traffic under /miasma so miasma can
       # serve the lure pages coherently.
-      robotsTxtFilePath: "/etc/miasma/robots.txt"
-      botBlockHttpCode: 403
-      useFastMatch: true
-      cacheUpdateInterval: "24h"
-      cacheSize: 500
-      logLevel: INFO
-      setNoArchiveHeader: true
+      # robotsTxtFilePath: "/etc/miasma/robots.txt"
+      # botBlockHttpCode: 403
+      # useFastMatch: true
+      # cacheUpdateInterval: "24h"
+      # cacheSize: 500
+      # logLevel: INFO
+      # setNoArchiveHeader: true
