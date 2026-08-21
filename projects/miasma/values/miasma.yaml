@@ -21,6 +21,8 @@ controllers:
           MIASMA_NUM_WORKER_TABS: "1"
           # Seed/randomness for generated trap pages and short-link IDs.
           MIASMA_SHORT_LINK_SALT: "grimbimbelfoo42"
+          # Expose Miasma's metrics at /metrics on the main port (9999).
+          MIASMA_METRICS_ENDPOINT: "/metrics"
         # miasma serves on port 9999; use a TCP socket probe rather than an
         # unverified HTTP path to avoid CrashLoop while we confirm /healthz.
         probes:
@@ -36,3 +38,12 @@ controllers:
             spec:
               tcpSocket:
                 port: http
+
+serviceMonitor:
+  main:
+    enabled: true
+    endpoints:
+      - port: http
+        path: /metrics
+        scheme: http
+        interval: 60s
