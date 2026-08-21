@@ -63,3 +63,23 @@ spec:
     - ports:
       - port: "6443"
         protocol: TCP
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-miasma
+  namespace: ingress-external
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: traefik
+  egress:
+  # bot-wrangler (PROXY action) forwards detected bots to the miasma tarpit.
+  # miasma is not external-labeled, so add a dedicated allow to its service port.
+  - toPorts:
+    - ports:
+      - port: "9999"
+        protocol: TCP
+    toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: miasma

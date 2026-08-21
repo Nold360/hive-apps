@@ -1,0 +1,18 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-internet
+  namespace: miasma
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: miasma
+  egress:
+  # Upstream is an LLM used to generate tarpit poison content; reach it via the
+  # squid egress proxy (10.43.0.22, see resources/networkpolicy.yml group 6).
+  - toCIDRs:
+    - 10.43.0.22/32
+    toPorts:
+    - ports:
+      - port: "3128"
+        protocol: TCP

@@ -1,0 +1,15 @@
+config:
+  description: LLM scraper / crawler tarpit
+  networkPolicy:
+    config:
+      allowNamespace: false
+    rules:
+    - allow-dns
+    - allow-proxy
+    - allow-ingress-traffic
+
+apps:
+- name: miasma
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 5.0.1

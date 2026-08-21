@@ -1,0 +1,38 @@
+service:
+  main:
+    ports:
+      http:
+        port: 9999
+        targetPort: 9999
+
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: docker.io/austinweeks/miasma
+          tag: latest
+          pullPolicy: Always
+        env:
+          MIASMA_PORT: "9999"
+          # Serve lure/robots content coherently under the same prefix Traefik
+          # proxies bots to (bot-wrangler botProxyUrl -> /miasma).
+          MIASMA_LINK_PREFIX: "/miasma"
+          MIASMA_NUM_WORKER_TABS: "1"
+          # Seed/randomness for generated trap pages and short-link IDs.
+          MIASMA_SHORT_LINK_SALT: "grimbimbelfoo42"
+        # miasma serves on port 9999; use a TCP socket probe rather than an
+        # unverified HTTP path to avoid CrashLoop while we confirm /healthz.
+        probes:
+          liveness:
+            enabled: true
+            type: TCP
+            spec:
+              tcpSocket:
+                port: http
+          readiness:
+            enabled: true
+            type: TCP
+            spec:
+              tcpSocket:
+                port: http
