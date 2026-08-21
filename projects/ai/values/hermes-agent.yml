@@ -24,6 +24,14 @@ rbac:
       - apiGroups: [""]
         resources: ["secrets"]
         verbs: ["list", "watch"] # Kein "get" -> Inhalte bleiben geschützt!
+    # Namespace-scoped: allows the agent to restart its own pod (delete in hermes-agent ns)
+    hermes-pod-restart:
+      enabled: true
+      type: Role
+      rules:
+      - apiGroups: [""]
+        resources: ["pods"]
+        verbs: ["delete"]
 
   # Define the RoleBinding
   bindings:
@@ -32,6 +40,13 @@ rbac:
       type: ClusterRoleBinding
       roleRef:
         identifier: hermes-viewer
+      subjects:
+        - identifier: hermes-agent
+    hermes-pod-restart:
+      enabled: true
+      type: RoleBinding
+      roleRef:
+        identifier: hermes-pod-restart
       subjects:
         - identifier: hermes-agent
 
