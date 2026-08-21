@@ -19,9 +19,6 @@ experimental:
     cloudflarewarp:
       moduleName: github.com/PseudoResonance/cloudflarewarp
       version: v1.4.2
-    allow-countries:
-      moduleName: github.com/PascalMinder/geoblock
-      version: v0.3.6
     bot-wrangler:
       moduleName: github.com/holysoles/bot-wrangler-traefik-plugin
       version: v0.10.2
