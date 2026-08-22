@@ -105,6 +105,12 @@ service:
   externalIPs:
   - 192.168.1.12
 
+metrics:
+  enabled: true
+  prometheus:
+    addRoutersLabels: true
+    addInternals: true
+
 logs:
   general:
     level: INFO
