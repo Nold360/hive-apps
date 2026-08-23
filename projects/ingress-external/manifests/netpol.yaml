@@ -67,19 +67,18 @@ spec:
 apiVersion: "cilium.io/v2"
 kind: CiliumNetworkPolicy
 metadata:
-  name: allow-miasma
+  name: allow-belladonna
   namespace: ingress-external
 spec:
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: traefik
   egress:
-  # bot-wrangler (PROXY action) forwards detected bots to the miasma tarpit.
-  # miasma is not external-labeled, so add a dedicated allow to its service port.
+  # bot-wrangler (PROXY action) forwards detected bots to the tarpit.
   - toPorts:
     - ports:
-      - port: "9999"
+      - port: "8080"
         protocol: TCP
     toEndpoints:
     - matchLabels:
-        k8s:io.kubernetes.pod.namespace: miasma
+        k8s:io.kubernetes.pod.namespace: belladonna

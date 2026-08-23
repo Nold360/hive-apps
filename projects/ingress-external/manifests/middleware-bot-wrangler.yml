@@ -10,7 +10,7 @@ spec:
       enabled: true
       botAction: PROXY
       # Traefik proxies detected bots to the miasma tarpit (ClusterIP).
-      botProxyUrl: "http://miasma.miasma.svc.cluster.local:9999"
+      botProxyUrl: "http://belladonna.belladonna.svc.cluster.local:8080"
       # Route ai-robots-txt and other traffic under /miasma so miasma can
       # serve the lure pages coherently.
       # robotsTxtFilePath: "/etc/miasma/robots.txt"
