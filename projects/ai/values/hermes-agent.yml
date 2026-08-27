@@ -105,11 +105,6 @@ controllers:
           FIRECRAWL_API_URL: http://crw.crw.svc.cluster.local:3000
           FIRECRAWL_API_KEY: none
 
-          OPENVIKING_API_KEY: 
-            valueFrom:
-              secretKeyRef:
-                name: hermes-agent
-                key: OPENVIKING_API_KEY    
           OMBI_API_KEY: 
             valueFrom:
               secretKeyRef:
