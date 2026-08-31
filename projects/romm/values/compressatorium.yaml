@@ -15,6 +15,10 @@ controllers:
           tag: latest
           pullPolicy: Always
 
+        envFrom:
+          - secretRef: 
+              name: compressatorium
+
         env:
           # Mode: webui (default) or cli
           CHD_MODE: webui
