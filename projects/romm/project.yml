@@ -11,3 +11,8 @@ apps:
       keys:
         - DB_PASSWD
         - ROMM_AUTH_SECRET_KEY
+
+- name: compressatorium
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 5.0.1

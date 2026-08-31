@@ -1,0 +1,119 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/common-5.0.1/charts/library/common/values.schema.json                               service:
+defaultPodOptions:
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+
+controllers:
+  compressatorium:
+    containers:
+      app:
+        image:
+          repository: pacnpal/compressatorium
+          tag: latest
+          pullPolicy: Always
+
+
+        env:
+          # Mode: webui (default) or cli
+          CHD_MODE: webui
+          # Auto-discover mounted volumes under this root (/data/*)
+          COMPRESSATORIUM_MOUNT_ROOT: /data
+          # Optional: override temp location (default: /config/temp)
+          # - CHD_TEMP_DIR=/temp
+          # Optional: remap container runtime UID/GID (Unraid-friendly)
+          # - PUID=99
+          # - PGID=100
+          # Conversion mode: createcd (CD-ROM) or createdvd (DVD-ROM)
+          CHDMAN_MODE: createcd
+          # Maximum parallel conversion jobs (Web UI only)
+          MAX_CONCURRENT_JOBS: 1
+          # Reduce CPU/IO impact of conversions (applies to all tools)
+          COMPRESSATORIUM_TOOL_NICE: 10
+          COMPRESSATORIUM_TOOL_IOPRIO_CLASS: 2
+          COMPRESSATORIUM_TOOL_IOPRIO_LEVEL: 6
+          # Nintendo Switch (nsz): directory holding your own prod.keys. Source of
+          # truth when set; required for Switch compress/decompress. When unset, the
+          # app best-effort looks in ~/.switch and your mounted volumes. No keys
+          # ship with the image.
+          # - SWITCH_KEYS=/keys`
+        # probes:
+        #   liveness: &probes
+        #     enabled: true
+        #     custom: true
+        #     spec:
+        #       httpGet:
+        #         path: /api/heartbeat
+        #         port: &port 8080
+        #       initialDelaySeconds: 0
+        #       periodSeconds: 10
+        #       timeoutSeconds: 3
+        #       failureThreshold: 3
+        #   readiness: *probes
+        #   startup:
+        #     enabled: true
+        #     spec:
+        #       failureThreshold: 30
+        #       periodSeconds: 10
+
+        resources:
+          limits:
+            memory: 8Gi
+
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          capabilities:
+            drop:
+              - ALL
+          seccompProfile:
+            type: RuntimeDefault
+
+service:
+  compressatorium:
+    controller: compressatorium
+    ports:
+      http:
+        port: &port 8080
+
+persistence:
+  config:
+    type: persistentVolumeClaim
+    size: 10Gi
+    accessMode: ReadWriteOnce
+
+  roms:
+    type: hostPath
+    hostPath: /data/consoles/roms
+    advancedMounts:
+      compressatorium:
+        app:
+          - path: /data/roms
+  
+  tmp:
+    type: emptyDir
+    medium: Memory
+    advancedMounts:
+      compressatorium:
+        app:
+          - path: /tmp
+
+
+ingress:
+  compressatorium:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    hosts:
+      - host: "compress.dc"
+        paths:
+          - path: /
+            service:
+              identifier: compressatorium
+              port: *port
+    tls:
+      - hosts:
+          - compress.dc
+        secretName: compressatorium-tls
