@@ -36,6 +36,7 @@ controllers:
 
           # FIXME:
           ENABLE_RESCAN_ON_FILESYSTEM_CHANGE: "false"
+          SCAN_WORKERS: 4
 
           RESCAN_ON_FILESYSTEM_CHANGE_DELAY: 5
           FLASHPOINT_API_ENABLED: true
