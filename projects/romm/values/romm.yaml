@@ -26,6 +26,7 @@ controllers:
           DB_HOST: romm-db-rw
           DB_PORT: 5432
           REDIS_DB: "2"
+          ROMM_TMP_PATH: /tmp
 
           # Scrapers / scheduled jobs
           ENABLE_SCHEDULED_RESCAN: "true"
@@ -37,8 +38,7 @@ controllers:
           FLASHPOINT_API_ENABLED: true
           HLTB_API_ENABLED: true
           HASHEOUS_API_ENABLED: true
-          LAUNCHBOX_API_ENABLED: true
-          ENABLE_SCHEDULED_UPDATE_LAUNCHBOX_METADATA: true
+          LAUNCHBOX_API_ENABLED: false
           PLAYMATCH_API_ENABLED: false
           # TheGamesDB: keyless public API, capped 1000 req/month for unregistered.
           # Plenty for periodic library scans on a personal collection.
@@ -48,14 +48,6 @@ controllers:
           # ~10k ROMs through 10 metadata sources fits in one job
           # without RQ JobTimeoutException.
           SCAN_TIMEOUT: 28800
-
-          # Metadata Providers
-          # IGDB_CLIENT_ID=  # Client ID for the IGDB API
-          # IGDB_CLIENT_SECRET=  # Client secret for the IGDB API
-          # MOBYGAMES_API_KEY=  # MobyGames secret API key
-          # SCREENSCRAPER_USER=  # Screenscraper username
-          # SCREENSCRAPER_PASSWORD=  # Screenscraper password
-          # STEAMGRIDDB_API_KEY=  # SteamGridDB secret API key
 
         probes:
           liveness: &probes
@@ -122,6 +114,14 @@ persistence:
         app:
           - path: /romm/library/roms
   
+  bios:
+    type: hostPath
+    hostPath: /data/consoles/bios
+    advancedMounts:
+      romm:
+        app:
+          - path: /romm/library/bios
+
   tmp:
     type: emptyDir
     medium: Memory
