@@ -24,7 +24,7 @@ controllers:
           DB_NAME: app
           DB_USER: app
           DB_HOST: romm-db-rw
-
+          DB_PORT: 5432
           REDIS_DB: "2"
 
           # Scrapers / scheduled jobs
