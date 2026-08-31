@@ -23,7 +23,7 @@ controllers:
           ROMM_DB_DRIVER: postgresql
           POSTGRES_DB: app
           POSTGRES_USER: app
-          POSTGRES_HOST: romm-db-rw
+          DB_HOST: romm-db-rw
 
           REDIS_DB: "2"
 
