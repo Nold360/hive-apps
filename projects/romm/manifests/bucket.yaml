@@ -1,0 +1,43 @@
+---
+apiVersion: garage.rajsingh.info/v1beta1
+kind: GarageBucket
+metadata:
+  name: romm
+  namespace: romm
+spec:
+  clusterRef:
+    name: garage
+    namespace: garage
+  quotas:
+    maxSize: 100Gi
+---
+apiVersion: garage.rajsingh.info/v1beta1
+kind: GarageKey
+metadata:
+  name: romm-bucket-key
+  namespace: romm
+spec:
+  clusterRef:
+    name: garage
+    namespace: garage
+  bucketPermissions:
+    - bucketRef: 
+        name: romm
+        namespace: romm
+      read: true
+      write: true
+---
+apiVersion: garage.rajsingh.info/v1beta1
+kind: GarageReferenceGrant
+metadata:
+  name: allow-romm
+  namespace: garage
+spec:
+  from:
+    - kind: GarageKey
+      namespace: romm
+    - kind: GarageBucket
+      namespace: romm
+  to:
+    - kind: GarageCluster
+      name: garage

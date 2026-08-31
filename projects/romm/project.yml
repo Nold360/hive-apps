@@ -9,4 +9,4 @@ apps:
   secrets:
     - name: romm
       keys:
-        - POSTGRES_PASSWORD
+        - DB_PASSWD

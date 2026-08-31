@@ -21,8 +21,8 @@ controllers:
         env:
           ROMM_PORT: &port 8080
           ROMM_DB_DRIVER: postgresql
-          POSTGRES_DB: app
-          POSTGRES_USER: app
+          DB_NAME: app
+          DB_USER: app
           DB_HOST: romm-db-rw
 
           REDIS_DB: "2"
