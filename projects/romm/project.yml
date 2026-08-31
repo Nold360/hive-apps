@@ -10,3 +10,4 @@ apps:
     - name: romm
       keys:
         - DB_PASSWD
+        - ROMM_AUTH_SECRET_KEY
