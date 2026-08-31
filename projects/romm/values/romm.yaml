@@ -33,7 +33,10 @@ controllers:
           SCHEDULED_RESCAN_CRON: "0 3 * * *"
           ENABLE_SCHEDULED_UPDATE_SWITCH_TITLEDB: "false"
           ENABLE_SCHEDULED_UPDATE_MAME_XML: "false"
-          ENABLE_RESCAN_ON_FILESYSTEM_CHANGE: "true"
+
+          # FIXME:
+          ENABLE_RESCAN_ON_FILESYSTEM_CHANGE: "false"
+
           RESCAN_ON_FILESYSTEM_CHANGE_DELAY: 5
           FLASHPOINT_API_ENABLED: true
           HLTB_API_ENABLED: true
