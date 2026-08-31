@@ -120,7 +120,7 @@ ingress:
           - path: /
             service:
               identifier: compressatorium
-              port: *port
+              port: 8080
     tls:
       - hosts:
           - compress.dc
