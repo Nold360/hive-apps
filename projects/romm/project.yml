@@ -21,3 +21,7 @@ apps:
   repo: bjw-s
   chart: app-template
   targetRevision: 5.0.1
+  secrets:
+    - name: compressatorium
+      keys: 
+        - ROMM_TOKEN

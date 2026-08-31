@@ -15,17 +15,16 @@ controllers:
           tag: latest
           pullPolicy: Always
 
-
         env:
           # Mode: webui (default) or cli
           CHD_MODE: webui
           # Auto-discover mounted volumes under this root (/data/*)
           COMPRESSATORIUM_MOUNT_ROOT: /data
           # Optional: override temp location (default: /config/temp)
-          # - CHD_TEMP_DIR=/temp
+          CHD_TEMP_DIR: /tmp
           # Optional: remap container runtime UID/GID (Unraid-friendly)
-          # - PUID=99
-          # - PGID=100
+          PUID: 1000
+          PGID: 1000
           # Conversion mode: createcd (CD-ROM) or createdvd (DVD-ROM)
           CHDMAN_MODE: createcd
           # Maximum parallel conversion jobs (Web UI only)
@@ -39,24 +38,29 @@ controllers:
           # app best-effort looks in ~/.switch and your mounted volumes. No keys
           # ship with the image.
           # - SWITCH_KEYS=/keys`
-        # probes:
-        #   liveness: &probes
-        #     enabled: true
-        #     custom: true
-        #     spec:
-        #       httpGet:
-        #         path: /api/heartbeat
-        #         port: &port 8080
-        #       initialDelaySeconds: 0
-        #       periodSeconds: 10
-        #       timeoutSeconds: 3
-        #       failureThreshold: 3
-        #   readiness: *probes
-        #   startup:
-        #     enabled: true
-        #     spec:
-        #       failureThreshold: 30
-        #       periodSeconds: 10
+          COMPRESSATORIUM_HASHEOUS_ENABLED: true
+          ROMM_URL: http://romm.romm.svc.cluster.local:8080
+          ROMM_LIBRARY_ROOT: /data/roms
+          ROMM_AUTO_CONVERT: false
+
+        probes:
+          liveness: &probes
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /health
+                port: 8080
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 3
+              failureThreshold: 3
+          readiness: *probes
+          startup:
+            enabled: true
+            spec:
+              failureThreshold: 30
+              periodSeconds: 10
 
         resources:
           limits:
@@ -76,7 +80,7 @@ service:
     controller: compressatorium
     ports:
       http:
-        port: &port 8080
+        port: 8080
 
 persistence:
   config:
