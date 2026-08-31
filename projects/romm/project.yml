@@ -1,0 +1,9 @@
+apps:
+- name: romm
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 5.0.1
+  secrets:
+    - name: romm
+      keys:
+        - POSTGRES_PASSWORD
