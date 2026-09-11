@@ -5,12 +5,10 @@ container_runtime: containerd
 
 agent:
   acquisition:
-    # The namespace where the pod is located
     - namespace: ingress-external
-      # The pod name
       podName: ingress-external-traefik-*
-      # as in crowdsec configuration, we need to specify the program name to find a matching parser
       program: traefik
+      poll_without_inotify: true
 
   envFrom:
     - secretRef:
