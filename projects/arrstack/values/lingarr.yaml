@@ -1,0 +1,98 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/common-5.0.1/charts/library/common/values.schema.json
+
+controllers:
+  lingarr:
+    containers:
+      app:
+        image:
+          repository: ghcr.io/lingarr-translate/lingarr
+          tag: "1.3.0"
+        env:
+          TZ: Europe/Berlin
+          ASPNETCORE_URLS: "http://+:9876"
+          ## SQLite keeps the app self-contained (no separate DB controller).
+          DB_CONNECTION: sqlite
+          SQLITE_DB_PATH: /app/config/local.db
+          DB_HANGFIRE_SQLITE_PATH: /app/config/Hangfire.db
+          ## Translation backend: in-cluster LocalAI (OpenAI-compatible).
+          SERVICE_TYPE: '["localai"]'
+          LOCAL_AI_ENDPOINT: "http://localai-local-ai.ai.svc.cluster.local/v1/chat/completions"
+          LOCAL_AI_MODEL: default
+          LOCAL_AI_API_KEY: not-needed
+          ## Media server integration (API keys injected from the lingarr secret).
+          RADARR_URL: "http://radarr.radarr.svc.cluster.local:7878"
+          SONARR_URL: "http://sonarr.sonarr.svc.cluster.local:8989"
+        envFrom:
+          - secretRef:
+              name: lingarr
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          capabilities:
+            drop:
+            - ALL
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            memory: 1Gi
+
+defaultPodOptions:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+
+service:
+  app:
+    controller: lingarr
+    ports:
+      http:
+        port: 9876
+
+ingress:
+  main:
+    className: ingress-internal
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+      traefik.ingress.kubernetes.io/router.tls: 'true'
+    hosts:
+      - host: lingarr.dc
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: app
+              port: http
+    tls:
+      - secretName: lingarr-tls
+        hosts:
+          - lingarr.dc
+
+persistence:
+  config:
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 1Gi
+    storageClass: local-path
+    advancedMounts:
+      lingarr:
+        app:
+          - path: /app/config
+  movies:
+    type: hostPath
+    hostPath: /data/media/movies
+    advancedMounts:
+      lingarr:
+        app:
+          - path: /movies
+  tv:
+    type: hostPath
+    hostPath: /data/media/tvshows
+    advancedMounts:
+      lingarr:
+        app:
+          - path: /tv

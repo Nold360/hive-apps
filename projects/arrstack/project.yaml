@@ -59,3 +59,13 @@ apps:
   - noRoot
   - tmpdirs
   - ingress-internal
+
+- name: lingarr
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 5.0.1
+  secrets:
+  - name: lingarr
+    keys:
+    - RADARR_API_KEY
+    - SONARR_API_KEY
