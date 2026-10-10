@@ -6,7 +6,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/lingarr-translate/lingarr
-          tag: "1.3.0"
+          tag: "1.4.0"
         env:
           TZ: Europe/Berlin
           ASPNETCORE_URLS: "http://+:9876"
