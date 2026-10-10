@@ -41,9 +41,9 @@ controllers:
 defaultPodOptions:
   securityContext:
     runAsNonRoot: true
-    runAsUser: 1000
-    runAsGroup: 1000
-    fsGroup: 1000
+    runAsUser: 1420
+    runAsGroup: 2420
+    fsGroup: 2420
     fsGroupChangePolicy: OnRootMismatch
 
 service:
