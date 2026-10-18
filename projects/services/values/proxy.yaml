@@ -90,7 +90,7 @@ configMaps:
         # Squid eats all my RAM in seconds.. wtf?
         memory_pools off
         cache_mem 0 MB
-        cache_deny all
+        cache deny all
 
 
 service:
