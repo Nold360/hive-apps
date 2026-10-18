@@ -59,8 +59,9 @@ configMaps:
 
         # Recommended minimum Access Permission configuration:
         #
-        # Deny requests to certain unsafe ports
+        # Deny requests to certain unsafe ports & localhost
         http_access deny !Safe_ports
+        http_access deny to_localhost
 
         # Only allow cachemgr access from localhost
         http_access allow localhost manager
@@ -85,6 +86,12 @@ configMaps:
 
         # Do not display squid version
         httpd_suppress_version_string on
+
+        # Squid eats all my RAM in seconds.. wtf?
+        memory_pools off
+        cache_mem 0 MB
+        cache_deny all
+
 
 service:
   main:
