@@ -3,6 +3,6 @@ config:
 
 apps:
 - name: scanservjs
-  repoURL: https://github.com/nold360/hive-apps
-  path: projects/scanservjs/chart
-  targetRevision: main
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 5.0.1
