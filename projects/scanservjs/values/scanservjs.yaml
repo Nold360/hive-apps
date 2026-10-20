@@ -1,81 +1,102 @@
-image:
-  # -- image repository
-  repository:  sbs20/scanservjs
-  # -- image tag
-  tag: latest
-  # -- image pull policy
-  pullPolicy: Always
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/common-5.0.1/charts/library/common/values.schema.json
+defaultPodOptions:
+  # Host network so the scanner (192.168.1.117) is reachable via saned/airscan
+  hostNetwork: true
+  dnsPolicy: ClusterFirstWithHostNet
+  securityContext:
+    fsGroup: 1000
 
-# -- environment variables.
-# See more environment variables in the [scanservjs documentation](https://scanservjs.org/docs).
-env:
-  # -- Set the container timezone
-  TZ: UTC
-  SANED_NET_HOSTS: 192.168.1.0/24
-  # OCR_LANG: "eng"
-  AIRSCAN_DEVICES: 192.168.1.117 #printer.lan
-  PIXMA_HOSTS: 192.168.1.117 #printer.lan
-  # DELIMITER:
-  # DEVICES:
-  # SCANIMAGE_LIST_IGNORE:
+controllers:
+  scanservjs:
+    containers:
+      app:
+        image:
+          repository: docker.io/sbs20/scanservjs
+          tag: latest
+          pullPolicy: Always
+        # See more environment variables in the scanservjs documentation:
+        # https://scanservjs.org/docs
+        env:
+          TZ: "UTC"
+          OCR_LANG: "deu+eng"
+          SANED_NET_HOSTS: "192.168.1.0/24"
+          AIRSCAN_DEVICES: "192.168.1.117"
+          PIXMA_HOSTS: "192.168.1.117"
+        # No documented health endpoint; use a TCP probe on the web port.
+        probes:
+          liveness:
+            enabled: true
+            type: TCP
+            spec:
+              tcpSocket:
+                port: http
+          readiness:
+            enabled: true
+            type: TCP
+            spec:
+              tcpSocket:
+                port: http
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 2Gi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
 
-# -- Configures service settings for the chart.
 service:
   main:
+    controller: scanservjs
     ports:
       http:
         port: 8080
 
-# -- Enable and configure ingress settings for the chart under this key.
+persistence:
+  config:
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 1Gi
+    advancedMounts:
+      scanservjs:
+        app:
+          - path: /app/config
+  # Output lands where paperless picks it up
+  output:
+    type: hostPath
+    hostPath: /data/paperless/import
+    advancedMounts:
+      scanservjs:
+        app:
+          - path: /app/data/output
+  # Needed for local scanners
+  dbus:
+    type: hostPath
+    hostPath: /var/run/dbus
+    advancedMounts:
+      scanservjs:
+        app:
+          - path: /var/run/dbus
+
 ingress:
   main:
     enabled: true
+    className: ingress-internal
     annotations:
       cert-manager.io/cluster-issuer: vault-issuer
       traefik.ingress.kubernetes.io/router.tls: "true"
     hosts:
-    - host: scan.dc
-      paths:
-      - path: /
-        pathType: Prefix
+      - host: scan.dc
+        paths:
+          - path: /
+            service:
+              identifier: main
+              port: http
     tls:
-    - secretName: scan-tls
-      hosts:
-      - scan.dc
-
-# -- Configure persistence settings for the chart under this key.
-persistence:
-  ## This might be needed for local scanners:
-  #dbus:
-  #  enabled: true
-  #  mountPath: /var/run/dbus
-  #  hostPath: /var/run/dbus
-  #  type: hostPath
-
-  output:
-    enabled: true
-    mountPath: /app/data/output
-    hostPath: /data/paperless/import
-    type: hostPath
-
-  config:
-    enabled: true
-    mountPath: /app/config
-    size: 1G
-
-podSecurityContext:
-  #runAsUser: 1000
-  #runAsGroup: 1000
-  fsGroup: 1000
-
-hostNetwork: true
-dnsPolicy: ClusterFirstWithHostNet
-
-#securityContext:
-  #runAsNonRoot: true
-  #privileged: false
-  #readOnlyRootFilesystem: true
-  #allowPrivilegeEscalation: false
-  #capabilities:
-    #drop:
-    #- ALL
+      - hosts:
+          - scan.dc
+        secretName: scan-tls
