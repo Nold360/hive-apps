@@ -33,7 +33,7 @@ grafana:
     annotations:
       gethomepage.dev/enabled: "true"
       gethomepage.dev/name: "Grafana"
-      gethomepage.dev/group: "Monitoring"
+      gethomepage.dev/group: "Tools"
       gethomepage.dev/icon: "grafana"
       gethomepage.dev/description: "Metrics dashboards"
       cert-manager.io/cluster-issuer: vault-issuer

@@ -48,7 +48,7 @@ ingress:
   annotations:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "ntfy"
-    gethomepage.dev/group: "Notifications"
+    gethomepage.dev/group: "Tools"
     gethomepage.dev/icon: "ntfy"
     gethomepage.dev/description: "Push notifications"
     cert-manager.io/cluster-issuer: vault-issuer

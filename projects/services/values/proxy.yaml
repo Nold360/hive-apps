@@ -7,7 +7,7 @@ ingress:
     annotations:
       gethomepage.dev/enabled: "true"
       gethomepage.dev/name: "Squid Proxy"
-      gethomepage.dev/group: "Network"
+      gethomepage.dev/group: "Security"
       gethomepage.dev/icon: "box"
       gethomepage.dev/description: "Web proxy"
       cert-manager.io/cluster-issuer: "vault-issuer"

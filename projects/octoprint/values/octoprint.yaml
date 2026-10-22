@@ -12,7 +12,7 @@ ingress:
     annotations:
       gethomepage.dev/enabled: "true"
       gethomepage.dev/name: "OctoPrint"
-      gethomepage.dev/group: "3D Print"
+      gethomepage.dev/group: "Tools"
       gethomepage.dev/icon: "octoprint"
       gethomepage.dev/description: "3D print control"
       cert-manager.io/cluster-issuer: vault-issuer

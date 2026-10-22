@@ -73,7 +73,7 @@ ingress:
   annotations:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "Nextcloud"
-    gethomepage.dev/group: "Files"
+    gethomepage.dev/group: "Documents"
     gethomepage.dev/icon: "nextcloud"
     gethomepage.dev/description: "File sync & share"
     nginx.ingress.kubernetes.io/proxy-body-size: 20G
