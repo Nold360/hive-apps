@@ -8,7 +8,7 @@ serviceAccount:
 
 image:
   repository: ghcr.io/gethomepage/homepage
-  tag: v1.2.0
+  tag: v2.6.0
 
 # Run as non-root. The image declares USER root, but runAsUser overrides it;
 # the chart mounts an emptyDir at /app/config, so the entrypoint's root-only
