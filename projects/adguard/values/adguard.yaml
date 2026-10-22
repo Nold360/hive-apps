@@ -47,7 +47,7 @@ ingress:
     annotations:
       gethomepage.dev/enabled: "true"
       gethomepage.dev/name: "AdGuard Home"
-      gethomepage.dev/group: "Network"
+      gethomepage.dev/group: "Security"
       gethomepage.dev/icon: "adguard-home"
       gethomepage.dev/description: "DNS ad blocker"
       cert-manager.io/cluster-issuer: vault-issuer

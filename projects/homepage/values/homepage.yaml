@@ -33,11 +33,6 @@ ingress:
     annotations:
       cert-manager.io/cluster-issuer: vault-issuer
       traefik.ingress.kubernetes.io/router.tls: "true"
-      gethomepage.dev/enabled: "true"
-      gethomepage.dev/name: "Homepage"
-      gethomepage.dev/group: "Dashboard"
-      gethomepage.dev/icon: "homepage"
-      gethomepage.dev/description: "Home dashboard"
     ingressClassName: ingress-internal
     hosts:
     - host: home.dc
@@ -69,7 +64,9 @@ config:
           memory: true
           showLabel: true
     - search:
-        provider: duckduckgo
+        # Self-hosted SearXNG (search.dc) instead of a public provider.
+        provider: custom
+        url: https://search.dc/search?q=
         target: _blank
   settings:
     title: Homepage
