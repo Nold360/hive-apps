@@ -1,0 +1,80 @@
+# Homepage (gethomepage).
+# Services are auto-discovered from Ingress annotations (gethomepage.dev/*).
+
+# RBAC for Kubernetes service discovery (cluster-wide)
+enableRbac: true
+serviceAccount:
+  create: true
+
+image:
+  repository: ghcr.io/gethomepage/homepage
+  tag: v1.2.0
+
+# Run as non-root. The image declares USER root, but runAsUser overrides it;
+# the chart mounts an emptyDir at /app/config, so the entrypoint's root-only
+# symlink step is never reached and the app runs fully as uid/gid 1000.
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+  fsGroupChangePolicy: OnRootMismatch
+
+# Minimal container security context (applied to the main container by the chart)
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+      traefik.ingress.kubernetes.io/router.tls: "true"
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Homepage"
+      gethomepage.dev/group: "Dashboard"
+      gethomepage.dev/icon: "homepage"
+      gethomepage.dev/description: "Home dashboard"
+    ingressClassName: ingress-internal
+    hosts:
+    - host: home.dc
+      paths:
+      - path: /
+        pathType: Prefix
+    tls:
+    - secretName: homepage-tls
+      hosts:
+      - home.dc
+
+config:
+  # Clear the chart's example config; services come from k8s discovery.
+  services: []
+  bookmarks: []
+  kubernetes:
+    mode: cluster
+  widgets:
+    - kubernetes:
+        cluster:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+          label: "cluster"
+        nodes:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+    - search:
+        provider: duckduckgo
+        target: _blank
+  settings:
+    title: Homepage
+    headerStyle: boxed
+
+env:
+  - name: HOMEPAGE_ALLOWED_HOSTS
+    value: home.dc

@@ -50,6 +50,11 @@ ingress:
   crw:
     enabled: true
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "CRW"
+      gethomepage.dev/group: "AI"
+      gethomepage.dev/icon: "box"
+      gethomepage.dev/description: "Web crawler"
       cert-manager.io/cluster-issuer: vault-issuer
     hosts:
       - host: "crw.dc"

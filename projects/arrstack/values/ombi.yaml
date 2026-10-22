@@ -6,6 +6,11 @@ ingress:
   main:
     enabled: true
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Ombi"
+      gethomepage.dev/group: "Media"
+      gethomepage.dev/icon: "ombi"
+      gethomepage.dev/description: "Media requests"
       cert-manager.io/cluster-issuer: vault-issuer
       traefik.ingress.kubernetes.io/router.tls: 'true'
     hosts:

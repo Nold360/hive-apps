@@ -84,6 +84,11 @@ ingress:
   app:
     className: ingress-internal
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "SearXNG"
+      gethomepage.dev/group: "Tools"
+      gethomepage.dev/icon: "searxng"
+      gethomepage.dev/description: "Meta search engine"
       cert-manager.io/cluster-issuer: vault-issuer
     hosts:
       - host: search.dc

@@ -57,6 +57,11 @@ ingress:
   main:
     className: ingress-internal
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Lingarr"
+      gethomepage.dev/group: "Media"
+      gethomepage.dev/icon: "box"
+      gethomepage.dev/description: "Audiobook collection"
       cert-manager.io/cluster-issuer: vault-issuer
       traefik.ingress.kubernetes.io/router.tls: 'true'
     hosts:

@@ -139,6 +139,11 @@ ingress:
   romm:
     enabled: true
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "RomM"
+      gethomepage.dev/group: "Games"
+      gethomepage.dev/icon: "romm"
+      gethomepage.dev/description: "ROM manager"
       cert-manager.io/cluster-issuer: vault-issuer
     hosts:
       - host: "roms.dc"

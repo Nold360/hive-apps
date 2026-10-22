@@ -26,6 +26,11 @@ controllers:
 ingress:
   main:
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Big AGI"
+      gethomepage.dev/group: "AI"
+      gethomepage.dev/icon: "box"
+      gethomepage.dev/description: "AI assistant"
       cert-manager.io/cluster-issuer: vault-issuer
     enabled: true
     hosts:

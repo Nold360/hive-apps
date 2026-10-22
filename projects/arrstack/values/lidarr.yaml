@@ -6,6 +6,11 @@ ingress:
   main:
     enabled: true
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Lidarr"
+      gethomepage.dev/group: "Media"
+      gethomepage.dev/icon: "lidarr"
+      gethomepage.dev/description: "Music collection"
       cert-manager.io/cluster-issuer: vault-issuer
       traefik.ingress.kubernetes.io/router.tls: 'true'
     hosts:

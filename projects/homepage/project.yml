@@ -1,0 +1,7 @@
+config:
+  description: Homepage Dashboard
+apps:
+- name: homepage
+  repoURL: https://jameswynn.github.io/helm-charts
+  chart: homepage
+  targetRevision: 2.1.0

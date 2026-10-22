@@ -14,6 +14,11 @@ controllers:
 ingress:
   main:
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Browserless"
+      gethomepage.dev/group: "AI"
+      gethomepage.dev/icon: "browserless"
+      gethomepage.dev/description: "Headless browser"
       cert-manager.io/cluster-issuer: vault-issuer
     enabled: true
     hosts:

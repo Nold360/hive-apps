@@ -45,6 +45,11 @@ ingress:
   main:
     enabled: true
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "AdGuard Home"
+      gethomepage.dev/group: "Network"
+      gethomepage.dev/icon: "adguard-home"
+      gethomepage.dev/description: "DNS ad blocker"
       cert-manager.io/cluster-issuer: vault-issuer
       traefik.ingress.kubernetes.io/router.tls: 'true'
     hosts:

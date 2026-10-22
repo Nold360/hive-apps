@@ -53,6 +53,11 @@ hubble:
       enabled: true
       className: ingress-internal
       annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/name: "Hubble UI"
+        gethomepage.dev/group: "Network"
+        gethomepage.dev/icon: "cilium"
+        gethomepage.dev/description: "Network observability"
         cert-manager.io/cluster-issuer: vault-issuer
       hosts:
         - cilium.dc

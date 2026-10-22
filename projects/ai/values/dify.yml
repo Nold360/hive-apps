@@ -624,6 +624,11 @@ ingress:
   enabled: true
   className: "ingress-internal"
   annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Dify"
+    gethomepage.dev/group: "AI"
+    gethomepage.dev/icon: "si-dify"
+    gethomepage.dev/description: "LLM app builder"
     cert-manager.io/cluster-issuer: vault-issuer
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"

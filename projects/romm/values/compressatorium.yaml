@@ -113,6 +113,11 @@ ingress:
   compressatorium:
     enabled: true
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Compressatorium"
+      gethomepage.dev/group: "Games"
+      gethomepage.dev/icon: "box"
+      gethomepage.dev/description: "ROM compression"
       cert-manager.io/cluster-issuer: vault-issuer
     hosts:
       - host: "compress.dc"

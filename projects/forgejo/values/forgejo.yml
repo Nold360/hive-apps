@@ -49,6 +49,11 @@ ingress:
   enabled: true
   className: ingress-external
   annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Forgejo"
+    gethomepage.dev/group: "Dev"
+    gethomepage.dev/icon: "forgejo"
+    gethomepage.dev/description: "Git forge"
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt
     external-dns.alpha.kubernetes.io/hostname: git.nold.me

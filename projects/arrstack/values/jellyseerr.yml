@@ -13,6 +13,11 @@ ingress:
   enabled: true
   ingressClassName: "ingress-internal"
   annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Jellyseerr"
+    gethomepage.dev/group: "Media"
+    gethomepage.dev/icon: "jellyseerr"
+    gethomepage.dev/description: "Media requests"
     cert-manager.io/cluster-issuer: vault-issuer
   hosts:
     - host: media.dc

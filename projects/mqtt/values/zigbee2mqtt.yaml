@@ -14,6 +14,11 @@ ingress:
   main:
     enabled: true
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Zigbee2MQTT"
+      gethomepage.dev/group: "Smart Home"
+      gethomepage.dev/icon: "zigbee2mqtt"
+      gethomepage.dev/description: "Zigbee bridge"
       cert-manager.io/cluster-issuer: vault-issuer
     hosts:
     - host: zigbee.dc

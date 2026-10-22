@@ -2,6 +2,11 @@ ingress:
   main:
     enabled: true
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Paperless"
+      gethomepage.dev/group: "Documents"
+      gethomepage.dev/icon: "paperless"
+      gethomepage.dev/description: "Document management"
       cert-manager.io/cluster-issuer: vault-issuer
       nginx.ingress.kubernetes.io/proxy-body-size: 100m
     hosts:

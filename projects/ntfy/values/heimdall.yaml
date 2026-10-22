@@ -23,6 +23,11 @@ ingress:
     enabled: true
     enableFixedMiddlewares: false
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Heimdall"
+      gethomepage.dev/group: "Tools"
+      gethomepage.dev/icon: "heimdall"
+      gethomepage.dev/description: "App dashboard"
       cert-manager.io/cluster-issuer: vault-issuer
       traefik.ingress.kubernetes.io/router.tls: 'true'
     hosts:

@@ -52,6 +52,11 @@ ingress:
   main:
     className: ingress-internal
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "CrowdSec"
+      gethomepage.dev/group: "Security"
+      gethomepage.dev/icon: "crowdsec"
+      gethomepage.dev/description: "Security monitoring"
       cert-manager.io/cluster-issuer: "vault-issuer"
     hosts:
       - host: crowdsec.dc
