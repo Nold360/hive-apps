@@ -69,3 +69,9 @@ apps:
     keys:
     - RADARR_API_KEY
     - SONARR_API_KEY
+
+- name: bitmagnet
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 5.0.1
+  namespace: bitmagnet
