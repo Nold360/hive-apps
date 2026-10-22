@@ -35,6 +35,11 @@ controllers:
 ingress:
   main:
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "AnythingLLM"
+      gethomepage.dev/group: "AI"
+      gethomepage.dev/icon: "anything-llm"
+      gethomepage.dev/description: "AI chat & docs"
       cert-manager.io/cluster-issuer: vault-issuer
     enabled: true
     hosts:

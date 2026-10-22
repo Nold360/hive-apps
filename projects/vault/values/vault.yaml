@@ -36,6 +36,11 @@ server:
   ingress:
     ingressClassName: ingress-internal
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Vault"
+      gethomepage.dev/group: "Security"
+      gethomepage.dev/icon: "vault"
+      gethomepage.dev/description: "Secrets management"
       cert-manager.io/cluster-issuer: vault-issuer
       traefik.ingress.kubernetes.io/router.tls: 'true'
     enabled: true

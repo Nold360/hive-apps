@@ -43,6 +43,11 @@ controllers:
 ingress:
   main:
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Flowise"
+      gethomepage.dev/group: "AI"
+      gethomepage.dev/icon: "flowise"
+      gethomepage.dev/description: "LLM flow builder"
       cert-manager.io/cluster-issuer: vault-issuer
     enabled: true
     hosts:

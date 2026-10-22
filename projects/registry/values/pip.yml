@@ -14,6 +14,11 @@ controllers:
 ingress:
   main:
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "PyPI Mirror"
+      gethomepage.dev/group: "Dev"
+      gethomepage.dev/icon: "pypi"
+      gethomepage.dev/description: "Python package mirror"
       cert-manager.io/cluster-issuer: vault-issuer
     enabled: true
     hosts:

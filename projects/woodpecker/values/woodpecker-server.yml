@@ -55,6 +55,11 @@ ingress:
   labels:
     environment: external
   annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Woodpecker CI"
+    gethomepage.dev/group: "Dev"
+    gethomepage.dev/icon: "woodpecker-ci"
+    gethomepage.dev/description: "CI server"
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt
     external-dns.alpha.kubernetes.io/hostname: ci.nold.me

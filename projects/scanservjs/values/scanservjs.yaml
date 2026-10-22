@@ -87,6 +87,11 @@ ingress:
     enabled: true
     className: ingress-internal
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "ScanServJS"
+      gethomepage.dev/group: "Documents"
+      gethomepage.dev/icon: "scanservjs"
+      gethomepage.dev/description: "Scanner server"
       cert-manager.io/cluster-issuer: vault-issuer
       traefik.ingress.kubernetes.io/router.tls: "true"
     hosts:

@@ -26,6 +26,11 @@ ingress:
     enabled: true
     ingressClassName: ingress-internal
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Prowlarr"
+      gethomepage.dev/group: "Media"
+      gethomepage.dev/icon: "prowlarr"
+      gethomepage.dev/description: "Indexer manager"
       cert-manager.io/cluster-issuer: vault-issuer
     hosts:
     - host: prowlarr.dc

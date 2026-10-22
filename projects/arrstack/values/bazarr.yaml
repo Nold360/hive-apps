@@ -6,6 +6,11 @@ ingress:
   main:
     enabled: true
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Bazarr"
+      gethomepage.dev/group: "Media"
+      gethomepage.dev/icon: "bazarr"
+      gethomepage.dev/description: "Subtitle manager"
       cert-manager.io/cluster-issuer: vault-issuer
       traefik.ingress.kubernetes.io/router.tls: 'true'
     hosts:

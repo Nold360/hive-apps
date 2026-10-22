@@ -35,6 +35,11 @@ ingress:
   main:
     className: ingress-internal
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Music Assistant"
+      gethomepage.dev/group: "Music"
+      gethomepage.dev/icon: "music-assistant"
+      gethomepage.dev/description: "Music server"
       cert-manager.io/cluster-issuer: "vault-issuer"
     hosts:
       - host: music.dc

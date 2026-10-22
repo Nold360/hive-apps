@@ -142,6 +142,11 @@ ingress:
   enabled: true
   className: "ingress-internal"
   annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "LocalAI"
+    gethomepage.dev/group: "AI"
+    gethomepage.dev/icon: "localai"
+    gethomepage.dev/description: "Local LLM inference"
     cert-manager.io/cluster-issuer: vault-issuer
     nginx.ingress.kubernetes.io/proxy-buffering: "off"
     nginx.ingress.kubernetes.io/proxy-http-version: "1.1"

@@ -12,6 +12,11 @@ controllers:
 ingress:
   main:
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Home Assistant"
+      gethomepage.dev/group: "Smart Home"
+      gethomepage.dev/icon: "home-assistant"
+      gethomepage.dev/description: "Smart home hub"
       cert-manager.io/cluster-issuer: vault-issuer
       nginx.ingress.kubernetes.io/enable-cors: "false"
       nginx.ingress.kubernetes.io/proxy-buffering: "off"

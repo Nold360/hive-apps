@@ -27,6 +27,11 @@ service:
 ingress:
   enabled: true
   annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Trow"
+    gethomepage.dev/group: "Dev"
+    gethomepage.dev/icon: "box"
+    gethomepage.dev/description: "Container registry"
     cert-manager.io/cluster-issuer: vault-issuer
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
     nginx.ingress.kubernetes.io/proxy-read-timeout: '4200'

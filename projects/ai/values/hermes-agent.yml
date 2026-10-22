@@ -169,6 +169,11 @@ ingress:
   hermes-agent:
     enabled: true
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Hermes Agent"
+      gethomepage.dev/group: "AI"
+      gethomepage.dev/icon: "hermes"
+      gethomepage.dev/description: "Autonomous agent"
       cert-manager.io/cluster-issuer: vault-issuer
     hosts:
       - host: "hermes.dc"
@@ -185,6 +190,11 @@ ingress:
   hermes-agent-webhooks:
     enabled: true
     annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Hermes Webhooks"
+      gethomepage.dev/group: "AI"
+      gethomepage.dev/icon: "hermes"
+      gethomepage.dev/description: "Agent webhooks"
       cert-manager.io/cluster-issuer: vault-issuer
     hosts:
       - host:  hermes-webhook.dc
