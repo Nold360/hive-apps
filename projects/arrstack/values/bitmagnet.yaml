@@ -14,12 +14,33 @@ controllers:
         env:
           TZ: Europe/Berlin
           XDG_CONFIG_HOME: /config
-          ## DB name; the cnpg per-user secret (bitmagnet-db-bitmagnet) supplies
-          ## POSTGRES_HOST / POSTGRES_USER / POSTGRES_PASSWORD / POSTGRES_PORT.
-          POSTGRES_NAME: bitmagnet
-        envFrom:
-          - secretRef:
-              name: bitmagnet-db-bitmagnet
+          ## Postgres: all connection details come from the cnpg per-user secret
+          ## (cluster is bootstrapped with user/db "app" — repo convention).
+          POSTGRES_NAME:
+            valueFrom:
+              secretKeyRef:
+                name: bitmagnet-db-app
+                key: dbname
+          POSTGRES_HOST:
+            valueFrom:
+              secretKeyRef:
+                name: bitmagnet-db-app
+                key: host
+          POSTGRES_PORT:
+            valueFrom:
+              secretKeyRef:
+                name: bitmagnet-db-app
+                key: port
+          POSTGRES_USER:
+            valueFrom:
+              secretKeyRef:
+                name: bitmagnet-db-app
+                key: username
+          POSTGRES_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: bitmagnet-db-app
+                key: password
         probes:
           liveness: &probes
             enabled: true

@@ -25,17 +25,6 @@ spec:
       barmanObjectName: garage-store
 ---
 apiVersion: postgresql.cnpg.io/v1
-kind: Database
-metadata:
-  name: bitmagnet
-  namespace: bitmagnet
-spec:
-  name: bitmagnet
-  owner: bitmagnet
-  cluster:
-    name: bitmagnet-db
----
-apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
   name: bitmagnet-db-backup
