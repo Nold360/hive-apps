@@ -44,7 +44,7 @@ metadata:
   name: garage-store
   namespace: bitmagnet
 spec:
-  retentionPolicy: "90d"
+  retentionPolicy: "14d"
   configuration:
     destinationPath: s3://bitmagnet/
     endpointURL: http://garage.garage.svc.cluster.local:3900

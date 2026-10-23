@@ -49,7 +49,7 @@ metadata:
   name: garage-store
   namespace: nextcloud
 spec:
-  retentionPolicy: "90d"
+  retentionPolicy: "14d"
   configuration:
     destinationPath: s3://nextcloud/
     endpointURL: http://garage.garage.svc.cluster.local:3900
