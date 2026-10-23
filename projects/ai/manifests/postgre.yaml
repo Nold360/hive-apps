@@ -71,7 +71,7 @@ metadata:
   name: garage-store
   namespace: hindsight
 spec:
-  retentionPolicy: "90d"
+  retentionPolicy: "14d"
   configuration:
     destinationPath: s3://hindsight/
     endpointURL: http://garage.garage.svc.cluster.local:3900

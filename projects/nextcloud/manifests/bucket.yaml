@@ -9,7 +9,7 @@ spec:
     name: garage
     namespace: garage
   quotas:
-    maxSize: 100Gi
+    maxSize: 200Gi
 ---
 apiVersion: garage.rajsingh.info/v1beta1
 kind: GarageKey
