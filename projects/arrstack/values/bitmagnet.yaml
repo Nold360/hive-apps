@@ -6,7 +6,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/bitmagnet-io/bitmagnet
-          tag: "v0.10.0"
+          tag: "v0.10.1"
         args:
           - worker
           - run
