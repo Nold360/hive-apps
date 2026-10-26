@@ -18,7 +18,7 @@ controllers:
           ## parallel (default 1); dht_crawler.scaling_factor multiplies DHT
           ## crawler concurrency/buffer sizes (default 10).
           DHT_CRAWLER_SCALING_FACTOR: "12"
-          PROCESSOR_CONCURRENCY: "3"
+          PROCESSOR_CONCURRENCY: "10"
           ## Postgres: all connection details come from the cnpg per-user secret
           ## (cluster is bootstrapped with user/db "app" — repo convention).
           POSTGRES_NAME:
