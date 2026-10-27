@@ -1,0 +1,99 @@
+# authentik Helm chart 2026.8.5 values (heqet app -> namespace `auth`).
+#
+# Note on schema: 2026.x split the chart into shared `global.*` config plus
+# per-component `server.*` / `worker.*` blocks. All AUTHENTIK_* configuration
+# is supplied via `global.env` (rendered into both the server and worker
+# deployments). The chart's own config Secret is disabled
+# (`authentik.enabled: false`) so it does not collide with the heqet-managed
+# `authentik` Secret (which carries the Vault-backed `secret_key`).
+
+global:
+  image:
+    repository: ghcr.io/goauthentik/server
+    tag: 2026.8.5
+
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+
+  env:
+    - name: AUTHENTIK_LOG_LEVEL
+      value: "info"
+    - name: AUTHENTIK_AVATARS
+      value: "none"
+    - name: AUTHENTIK_OUTPOSTS__CONTAINER_IMAGE_BASE
+      value: "ghcr.io/goauthentik/%(type)s:%(version)s"
+    - name: AUTHENTIK_ERROR_REPORTING__ENABLED
+      value: "false"
+    # -- PostgreSQL (external CloudNativePG cluster in the `auth` namespace)
+    - name: AUTHENTIK_POSTGRESQL__HOST
+      value: authentik-db-rw.auth.svc.cluster.local
+    - name: AUTHENTIK_POSTGRESQL__NAME
+      value: "app"
+    - name: AUTHENTIK_POSTGRESQL__USER
+      value: "app"
+    - name: AUTHENTIK_POSTGRESQL__PORT
+      value: "5432"
+    - name: AUTHENTIK_POSTGRESQL__PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: authentik-db-app
+          key: password
+    # -- Cookie signing / unique user IDs (Vault-backed via heqet `authentik` secret)
+    - name: AUTHENTIK_SECRET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: authentik
+          key: secret_key
+    # -- Valkey (bjw-s app-template; see values/valkey.yaml). Internal
+    # cache/session store, ClusterIP-only, no auth.
+    - name: AUTHENTIK_REDIS__HOST
+      value: redis://valkey.auth.svc.cluster.local:6379/0
+
+# -- Disable the chart-managed config Secret. All AUTHENTIK_* config is
+# provided via global.env above, and this avoids a name collision with the
+# heqet-managed `authentik` Secret.
+authentik:
+  enabled: false
+
+# -- List of config maps to mount blueprints from. Only keys in the
+# configmap ending with ".yaml" will be discovered and applied.
+blueprints:
+  configMaps:
+    - blueprints
+
+## authentik server
+server:
+  replicas: 1
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+  ingress:
+    # -- Internal ingress for the authentik admin/login UI.
+    enabled: true
+    ingressClassName: ingress-internal
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    hosts:
+      - auth.dc
+    paths:
+      - "/"
+    pathType: Prefix
+    tls:
+      - secretName: auth.dc-tls
+        hosts:
+          - auth.dc
+
+## authentik worker
+worker:
+  replicas: 1
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+
+## Use the external CloudNativePG cluster (see manifests/postgre.yaml).
+postgresql:
+  enabled: false
