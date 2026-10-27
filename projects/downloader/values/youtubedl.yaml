@@ -37,6 +37,7 @@ ingress:
       gethomepage.dev/icon: "youtube-dl"
       gethomepage.dev/description: "Video downloader"
       cert-manager.io/cluster-issuer: vault-issuer
+      traefik.ingress.kubernetes.io/router.middlewares: authentik-forwardauth@kubernetescrd
     enabled: true
     hosts:
       - host: youtubedl.dc
