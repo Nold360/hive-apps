@@ -53,6 +53,9 @@
     },
     {
       "customType": "regex",
+      "managerFilePatterns": [
+        ".+"
+      ],
       "matchStrings": [
         "# renovate: datasource=(?<datasource>[a-z-.]+?) depName=(?<depName>.+?)\\s+(?:registryUrl=(?<registryUrl>.+?)\\s+)?[A-Za-z0-9_-]*?: [\"']?(?<currentValue>.+?)[\"']?($|\\s)"
       ]
