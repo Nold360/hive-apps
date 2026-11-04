@@ -4,8 +4,8 @@ controllers:
       main:
         image:
           repository: ghcr.io/marcopiovanello/yt-dlp-web-ui
-          tag: latest
-          pullPolicy: Always
+          tag: v3.0.0
+          pullPolicy: IfNotPresent
 
 persistence:
   config:

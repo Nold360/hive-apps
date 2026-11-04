@@ -12,8 +12,8 @@ controllers:
       api:
         image:
           repository: ghcr.io/vectorize-io/hindsight-api
-          tag: latest
-          pullPolicy: Always
+          tag: 1.2.0
+          pullPolicy: IfNotPresent
         env:
           TZ: Europe/Berlin
           # LLM
@@ -67,8 +67,8 @@ controllers:
       controlplane:
         image:
           repository: ghcr.io/vectorize-io/hindsight-control-plane
-          tag: latest
-          pullPolicy: Always
+          tag: 1.2.0
+          pullPolicy: IfNotPresent
         env:
           TZ: Europe/Berlin
           NODE_ENV: "production"
