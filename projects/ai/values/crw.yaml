@@ -18,8 +18,8 @@ controllers:
       main:
         image:
           repository: ghcr.io/us/crw
-          tag: latest
-          pullPolicy: Always
+          tag: 0.40.0
+          pullPolicy: IfNotPresent
         env:
           CRW_EXTRACTION__LLM__PROVIDER: openai
           CRW_EXTRACTION__LLM__MODEL: default

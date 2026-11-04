@@ -72,8 +72,8 @@ controllers:
       hermes-agent:
         image: &image
           repository: docker.io/nousresearch/hermes-agent
-          tag: latest
-          pullPolicy: Always
+          tag: v0.22.7
+          pullPolicy: IfNotPresent
         command: /opt/hermes/bin/hermes 
         args: ["gateway", "run", "-vv"]
         env: &env
