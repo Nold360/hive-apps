@@ -1,26 +1,66 @@
-env:
-  TZ: UTC
-  OCTOPRINT_PORT: 5000
+defaultPodOptions:
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 20 # dialout
+    fsGroup: 20
 
-image:
-  pullPolicy: IfNotPresent
-  repository: ghcr.io/home-operations/octoprint
-  tag: "1.11.8"
+controllers:
+  octoprint:
+    containers:
+      app:
+        image:
+          repository: ghcr.io/home-operations/octoprint
+          tag: "1.11.8"
+          pullPolicy: IfNotPresent
+        env:
+          TZ: UTC
+        probes:
+          liveness:
+            enabled: true
+            type: TCP
+            port: 5000
+          readiness:
+            enabled: true
+            type: TCP
+            port: 5000
+        securityContext:
+          privileged: true # /dev/prusa serial access
 
-# Explicit entrypoint (matches the home-operations image ENTRYPOINT).
-# Set explicitly so ArgoCD overwrites the stale manual `command`
-# (/octoprint/.local/bin/octoprint) that was kubectl-patched onto the
-# old nold360/octoprint deployment.
-command:
-- /usr/bin/catatonit
-- --
-- octoprint
-- serve
-- --basedir
-- /config
+service:
+  octoprint:
+    controller: octoprint
+    ports:
+      http:
+        port: 80
+        targetPort: 5000
+  octoprint-stream:
+    controller: octoprint
+    ports:
+      http-stream:
+        port: 80
+        targetPort: 8080
+
+persistence:
+  config:
+    type: persistentVolumeClaim
+    size: 1Gi
+    accessMode: ReadWriteOnce
+    storageClass: local-path
+    advancedMounts:
+      octoprint:
+        app:
+          - path: /config
+  printer:
+    type: hostPath
+    hostPath: /dev/prusa
+    advancedMounts:
+      octoprint:
+        app:
+          - path: /dev/prusa
 
 ingress:
-  main:
+  octoprint:
+    enabled: true
     annotations:
       gethomepage.dev/enabled: "true"
       gethomepage.dev/name: "OctoPrint"
@@ -30,93 +70,18 @@ ingress:
       cert-manager.io/cluster-issuer: vault-issuer
       nginx.ingress.kubernetes.io/proxy-body-size: 100m
       traefik.ingress.kubernetes.io/router.tls: "true"
-    enabled: true
     hosts:
-    - host: octo.dc
-      paths:
-      - path: /
-        pathType: Prefix
-      - path: /stream
-        pathType: Prefix
-        service:
-          name: octoprint-octoprint-stream
-          port: 80
+      - host: octo.dc
+        paths:
+          - path: /
+            service:
+              identifier: octoprint
+              port: http
+          - path: /stream
+            service:
+              identifier: octoprint-stream
+              port: http-stream
     tls:
-    - hosts:
-      - octo.dc
-      secretName: octo-tls
-
-octoprint:
-  plugins:
-    install: true
-    plugins:
-    - https://github.com/LazeMSS/OctoPrint-UICustomizer/archive/main.zip
-    - https://github.com/NilsRo/OctoPrint-SlicerEstimator/archive/master.zip
-    upgrade: true
-
-persistence:
-  camera:
-    enabled: false
-    hostPath: /dev/video0
-    type: hostPath
-
-  data:
-    accessMode: ReadWriteOnce
-    enabled: true
-    mountPath: /config
-    size: 1Gi
-    storageClass: local-path
-
-  printer:
-    enabled: true
-    hostPath: /dev/prusa
-    type: hostPath
-
-  #podAnnotations:
-      #prometheus.io/path: /plugin/prometheus_exporter/metrics
-      #prometheus.io/port: "5000"
-      #prometheus.io/scrape: "true"
-podSecurityContext:
-  runAsUser: 1000
-  runAsGroup: 20 #dialout
-  fsGroup: 20
-
-securityContext:
-  privileged: true
-
-service:
-  main:
-    enabled: true
-    ports:
-      http:
-        port: 80
-        targetPort: 5000
-
-  stream:
-    enabled: true
-    ports:
-      http-stream:
-        enabled: true
-        port: 80
-        targetPort: 8080
-
-streamer:
-  device: /dev/video0
-  encoder: CPU
-  format: YUYV
-  framerate: 15
-  port: 8080
-  quality: 70
-  resolution: 640x480
-
-ustreamer:
-  enabled: false
-  image: lib42/ustreamer
-  imagePullPolicy: IfNotPresent
-  tag: latest
-
-mjpg_streamer:
-  enabled: false
-  image: badsmoke/mjpg-streamer
-  imagePullPolicy: IfNotPresent
-  tag: latest
+      - hosts:
+          - octo.dc
+        secretName: octo-tls
