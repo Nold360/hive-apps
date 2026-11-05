@@ -3,9 +3,21 @@ env:
   OCTOPRINT_PORT: 5000
 
 image:
-  pullPolicy: Always
-  repository: nold360/octoprint
-  tag: "latest"
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/home-operations/octoprint
+  tag: "1.11.8"
+
+# Explicit entrypoint (matches the home-operations image ENTRYPOINT).
+# Set explicitly so ArgoCD overwrites the stale manual `command`
+# (/octoprint/.local/bin/octoprint) that was kubectl-patched onto the
+# old nold360/octoprint deployment.
+command:
+- /usr/bin/catatonit
+- --
+- octoprint
+- serve
+- --basedir
+- /config
 
 ingress:
   main:
@@ -51,7 +63,7 @@ persistence:
   data:
     accessMode: ReadWriteOnce
     enabled: true
-    mountPath: /octoprint
+    mountPath: /config
     size: 1Gi
     storageClass: local-path
 

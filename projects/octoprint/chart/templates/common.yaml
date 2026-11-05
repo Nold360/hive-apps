@@ -18,7 +18,7 @@ image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
 imagePullPolicy: {{ .Values.image.pullPolicy }}
 volumeMounts:
 - name: data
-  mountPath: /octoprint
+  mountPath: {{ .Values.persistence.data.mountPath }}
 - name: octoprint-init
   mountPath: /init.sh
   subPath: init.sh

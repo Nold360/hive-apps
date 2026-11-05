@@ -7,9 +7,6 @@ metadata:
 data:
   init.sh: |
     #!/bin/bash
-    if ! octoprint --version 2>/dev/null ; then
-      mkdir -p /octoprint/tmp ; wget -O- https://github.com/OctoPrint/OctoPrint/archive/refs/tags/1.8.1.tar.gz | tar -xz --strip-components 1 -C /octoprint/tmp ; cd /octoprint/tmp; pip install .
-    fi
 {{- if .Values.octoprint.plugins.install }}
   {{- range .Values.octoprint.plugins.plugins }}
     pip install{{if $.Values.octoprint.plugins.upgrade }} --upgrade{{ end }} {{.}}
