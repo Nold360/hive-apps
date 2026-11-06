@@ -1,0 +1,38 @@
+# Valkey for authentik (cache / session store) via bjw-s app-template.
+# Internal-only: ClusterIP service, no ingress, no auth.
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: valkey/valkey
+          tag: 8.1.11
+        args:
+          - --appendonly
+          - "yes"
+          - --dir
+          - /data
+        probes:
+          liveness:
+            enabled: true
+            type: TCP
+            port: valkey
+          readiness:
+            enabled: true
+            type: TCP
+            port: valkey
+
+service:
+  main:
+    ports:
+      valkey:
+        port: 6379
+
+persistence:
+  data:
+    enabled: true
+    accessMode: ReadWriteOnce
+    size: 1Gi
+    type: persistentVolumeClaim
+    globalMounts:
+      - path: /data

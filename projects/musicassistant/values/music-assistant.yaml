@@ -41,6 +41,7 @@ ingress:
       gethomepage.dev/icon: "music-assistant"
       gethomepage.dev/description: "Music server"
       cert-manager.io/cluster-issuer: "vault-issuer"
+      traefik.ingress.kubernetes.io/router.middlewares: authentik-forwardauth@kubernetescrd
     hosts:
       - host: music.dc
         paths:

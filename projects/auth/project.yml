@@ -5,18 +5,15 @@ apps:
 - name: authentik
   repoURL: https://charts.goauthentik.io/
   chart: authentik
-  targetRevision: 2023.10.7
+  targetRevision: 2026.8.5
   secrets:
     - name: authentik
       keys:
         - secret_key
-    - name: bucket
-      keys:
-        - secretkey
-        - accesskey
-    - name: redis
-      keys:
-        - password
     - name: terraform
       keys:
         - AUTHENTIK_TOKEN
+- name: valkey
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 5.0.1
