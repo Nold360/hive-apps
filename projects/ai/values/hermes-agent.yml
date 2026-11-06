@@ -72,7 +72,7 @@ controllers:
       hermes-agent:
         image: &image
           repository: docker.io/nousresearch/hermes-agent
-          tag: v0.22.7
+          tag: v0.23.0
           pullPolicy: IfNotPresent
         command: /opt/hermes/bin/hermes 
         args: ["gateway", "run", "-vv"]
