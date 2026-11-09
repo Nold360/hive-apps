@@ -15,7 +15,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/theduffman85/crowdsec-web-ui
-          tag: 2026.11.5
+          tag: 2026.11.6
           pullPolicy: IfNotPresent
       
         securityContext:
