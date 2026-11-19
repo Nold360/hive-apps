@@ -139,6 +139,13 @@ persistence:
     size: 100Gi
     globalMount: /backends
 
+  data:
+    enabled: true
+    accessModes:
+      - ReadWriteOnce
+    size: 100Gi
+    globalMount: /data
+
   output:
     enabled: false
 
