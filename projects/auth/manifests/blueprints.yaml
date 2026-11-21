@@ -1,0 +1,27 @@
+# ConfigMap consumed by the authentik worker for blueprint import.
+# Referenced from values/authentik.yaml via `blueprints.configMaps: [blueprints]`.
+# The worker discovers every key in this ConfigMap that ends with ".yaml"
+# and applies it as a blueprint.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: blueprints
+  namespace: authentik
+data:
+  proxy-providers.yaml: |
+    version: 1
+    metadata:
+      name: ForwardAuth Proxy Providers
+    entries:
+      - id: forward-auth-internal
+        model: authentik_providers_proxy.proxyprovider
+        identifiers:
+          name: forward-auth-internal
+        attrs:
+          authentication_flow: !Find [authentik_flows.flow, [slug, default-authentication-flow]]
+          authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-implicit-consent]]
+          external_host: https://auth.dc
+          mode: forward_domain
+          cookie_domain: dc
+          cookie_secret: 6386fdb33402485097967f79855a806ae94de8a4b1d74879
+          intercept_header_auth: true

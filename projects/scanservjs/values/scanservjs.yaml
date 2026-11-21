@@ -93,6 +93,7 @@ ingress:
       gethomepage.dev/icon: "scanservjs"
       gethomepage.dev/description: "Scanner server"
       cert-manager.io/cluster-issuer: vault-issuer
+      traefik.ingress.kubernetes.io/router.middlewares: authentik-forwardauth@kubernetescrd
       traefik.ingress.kubernetes.io/router.tls: "true"
     hosts:
       - host: scan.dc

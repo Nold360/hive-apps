@@ -32,6 +32,7 @@ ingress:
     enabled: true
     annotations:
       cert-manager.io/cluster-issuer: vault-issuer
+      traefik.ingress.kubernetes.io/router.middlewares: authentik-forwardauth@kubernetescrd
       traefik.ingress.kubernetes.io/router.tls: "true"
     ingressClassName: ingress-internal
     hosts:

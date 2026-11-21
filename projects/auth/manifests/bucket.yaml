@@ -1,0 +1,43 @@
+---
+apiVersion: garage.rajsingh.info/v1beta1
+kind: GarageBucket
+metadata:
+  name: authentik
+  namespace: auth
+spec:
+  clusterRef:
+    name: garage
+    namespace: garage
+  quotas:
+    maxSize: 200Gi
+---
+apiVersion: garage.rajsingh.info/v1beta1
+kind: GarageKey
+metadata:
+  name: authentik-bucket-key
+  namespace: auth
+spec:
+  clusterRef:
+    name: garage
+    namespace: garage
+  bucketPermissions:
+    - bucketRef:
+        name: authentik
+        namespace: auth
+      read: true
+      write: true
+---
+apiVersion: garage.rajsingh.info/v1beta1
+kind: GarageReferenceGrant
+metadata:
+  name: allow-authentik
+  namespace: garage
+spec:
+  from:
+    - kind: GarageKey
+      namespace: auth
+    - kind: GarageBucket
+      namespace: auth
+  to:
+    - kind: GarageCluster
+      name: garage
