@@ -67,7 +67,7 @@ controllers:
       controlplane:
         image:
           repository: ghcr.io/vectorize-io/hindsight-control-plane
-          tag: 1.2.1
+          tag: 1.2.3
           pullPolicy: IfNotPresent
         env:
           TZ: Europe/Berlin
