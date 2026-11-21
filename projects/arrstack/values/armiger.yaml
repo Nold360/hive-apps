@@ -1,0 +1,130 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/common-5.0.1/charts/library/common/values.schema.json
+## Armiger Ultra — torrent classification sidecar for bitmagnet.
+##
+## Runs the turnkey bitmagnet connector (spencernorton/Armiger-Connectors):
+##   1. polls bitmagnet GraphQL for newly indexed torrents (every 10s, batch 100)
+##   2. classifies each via the 8.1M-param 9-head ONNX transformer (category,
+##      adult, junk/malware, anime, lang, title language, swarm viability, ...)
+##   3. deletes disguised-exec lures / honeypot traps / CSAM-gate failures
+##   4. tags survivors with armiger-* kebab-case tags (searchable in UI + Prowlarr)
+##   5. serves a Torznab pre-grab filter proxy on :8097 for Prowlarr/*Arr
+##
+## First boot builds a venv (torch-cpu + onnxruntime, ~1.5 GB) and downloads
+## the model suite (~75 MB) from Hugging Face into the /data PVC — allow ~5-10 min.
+
+controllers:
+  armiger:
+    type: deployment
+    replicas: 1
+    containers:
+      app:
+        image:
+          repository: docker.io/library/python
+          tag: "3.12-slim"
+        command:
+          - /bin/sh
+          - -ec
+        args:
+          - |
+            set -e
+            if [ ! -f /data/.venv/.armiger_ready ]; then
+              echo "[armiger] first boot: building venv (onnxruntime + torch-cpu)..."
+              python3 -m venv /data/.venv
+              /data/.venv/bin/pip install --no-cache-dir --upgrade pip
+              /data/.venv/bin/pip install --no-cache-dir numpy onnxruntime cryptography huggingface_hub
+              /data/.venv/bin/pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
+              touch /data/.venv/.armiger_ready
+            fi
+            if [ ! -f /data/bitmagnet_connector.py ]; then
+              echo "[armiger] fetching bitmagnet_connector.py..."
+              /data/.venv/bin/python3 -c "import urllib.request; urllib.request.urlretrieve('https://raw.githubusercontent.com/spencernorton/Armiger-Connectors/main/bitmagnet/bitmagnet_connector.py', '/data/bitmagnet_connector.py')"
+            fi
+            exec /data/.venv/bin/python3 /data/bitmagnet_connector.py
+        env:
+          TZ: Europe/Berlin
+          ARMIGER_MODEL_DIR: /data/model
+          ARMIGER_HF_REPO: NorviTech/armiger-ultra
+          ARMIGER_AUTO_DOWNLOAD: "true"
+          ARMIGER_VARIANT: ultra
+          ARMIGER_USE_ZERO_CUE_CATALOG: "true"
+          ## BEP-44/46 DHT sync stays opt-in: pull-only, no sharing (default off).
+          ARMIGER_DHT_RSI_MODE: pull_only
+          ARMIGER_CONNECTOR_MODE: both
+          ARMIGER_CONNECTOR_HOST: 0.0.0.0
+          ARMIGER_CONNECTOR_PORT: "8096"
+          ARMIGER_PROXY_PORT: "8097"
+          ## Same namespace as bitmagnet -> short service name.
+          BITMAGNET_GRAPHQL_URL: http://bitmagnet:3333/graphql
+          UPSTREAM_TORZNAB_URL: http://bitmagnet:3333/torznab
+          BITMAGNET_POLL_SECONDS: "10"
+          BITMAGNET_BATCH_SIZE: "100"
+          ## Safety: prune malware lures + honeypots from the index.
+          ARMIGER_PRUNE_MALWARE: "true"
+          ## DHT swarm counts are noisy; tag viability but don't delete on it.
+          ARMIGER_PRUNE_DEAD_SWARMS: "false"
+          ## German stack: keep foreign-audio releases, allow English subs.
+          ARMIGER_REQUIRE_ENGLISH_AUDIO: "false"
+          ARMIGER_ALLOW_ENGLISH_SUBS: "true"
+          ARMIGER_REJECT_DEAD_SWARMS: "true"
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              tcpSocket:
+                port: 8096
+              initialDelaySeconds: 600
+              periodSeconds: 60
+              timeoutSeconds: 5
+              failureThreshold: 5
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /healthz
+                port: 8096
+              initialDelaySeconds: 600
+              periodSeconds: 30
+              timeoutSeconds: 5
+              failureThreshold: 5
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          capabilities:
+            drop:
+            - ALL
+        resources:
+          requests:
+            cpu: 200m
+            memory: 512Mi
+          limits:
+            memory: 2Gi
+
+defaultPodOptions:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+
+service:
+  app:
+    controller: armiger
+    ports:
+      bridge:
+        port: 8096
+      torznab:
+        port: 8097
+
+persistence:
+  data:
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 4Gi
+    storageClass: local-path
+    advancedMounts:
+      armiger:
+        app:
+          - path: /data

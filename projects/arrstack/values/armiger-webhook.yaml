@@ -1,0 +1,87 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/common-5.0.1/charts/library/common/values.schema.json
+## armiger-webhook — Armiger Ultra classifier webhook for bitmagnet.
+##
+## Implements bitmagnet's classifier webhook contract:
+##   POST /classify  -> {type, confidence, tags}
+##   GET  /healthz   -> 200 when the model pipeline is ready, 503 otherwise
+##
+## The Armiger Ultra model suite is baked into the image (built by Woodpecker
+## CI from noldslop/armiger-webhook), so no PVC is needed. bitmagnet's custom
+## classifier workflow calls /classify when its built-in heuristics can't
+## determine a content type.
+##
+## In-cluster address for bitmagnet's `webhook.url`:
+##   http://armiger-webhook.bitmagnet.svc.cluster.local:8096/classify
+
+controllers:
+  armiger-webhook:
+    type: deployment
+    replicas: 1
+    containers:
+      app:
+        image:
+          repository: reg.dc/noldslop/armiger-webhook
+          tag: latest
+        env:
+          TZ: Europe/Berlin
+          LOG_LEVEL: INFO
+          ARMIGER_MODEL_DIR: /app/armiger
+          PORT: "8096"
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /healthz
+                port: 8096
+              initialDelaySeconds: 180
+              periodSeconds: 30
+              timeoutSeconds: 5
+              failureThreshold: 5
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /healthz
+                port: 8096
+              initialDelaySeconds: 60
+              periodSeconds: 15
+              timeoutSeconds: 5
+              failureThreshold: 3
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        resources:
+          requests:
+            cpu: 200m
+            memory: 512Mi
+          limits:
+            memory: 2Gi
+
+defaultPodOptions:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65532
+    runAsGroup: 65532
+    fsGroup: 65532
+    fsGroupChangePolicy: OnRootMismatch
+
+service:
+  app:
+    controller: armiger-webhook
+    ports:
+      classify:
+        port: 8096
+
+persistence:
+  tmp:
+    type: emptyDir
+    advancedMounts:
+      armiger-webhook:
+        app:
+          - path: /tmp

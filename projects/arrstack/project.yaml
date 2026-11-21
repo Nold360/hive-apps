@@ -75,3 +75,15 @@ apps:
   chart: app-template
   targetRevision: 5.0.1
   namespace: bitmagnet
+
+- name: armiger
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 5.0.1
+  namespace: bitmagnet
+
+- name: armiger-webhook
+  repo: bjw-s
+  chart: app-template
+  targetRevision: 5.0.1
+  namespace: bitmagnet
