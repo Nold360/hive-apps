@@ -1,0 +1,24 @@
+# Persistent storage for the AppSec hub content (L7 virtual-patching rules).
+#
+# Why: the crowdsec image bakes the hub at build time (cscli hub update
+# --with-content runs in the Dockerfile build stage), and the official
+# entrypoint only re-runs the hub update when /etc/crowdsec/hub lives on a
+# volume (is_mounted check). Without a volume the vpatch-CVE-* rules are
+# frozen at image build time and never pick up new CVE mitigations.
+#
+# Mounting this PVC at /etc/crowdsec/hub (see values/crowdsec.yaml
+# appsec.extraVolumeMounts) makes the built-in `run_hub_update` run on every
+# pod start, and the daily crowdsec-appsec-restart CronJob (appsec-hub-sync.yml)
+# recycles the pod so the AppSec binary reloads the freshly downloaded rules.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: crowdsec-appsec-hub
+  namespace: crowdsec
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 1Gi
