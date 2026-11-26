@@ -77,6 +77,21 @@ appsec:
     - name: COLLECTIONS
       value: "crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-crs crowdsecurity/appsec-generic-rules crowdsecurity/appsec-crs-exclusion-plugin-nextcloud"
 
+  # Persist the hub on a PVC so the entrypoint's built-in `run_hub_update`
+  # (cscli hub update --with-content) runs on every pod start instead of being
+  # skipped ("index file is not in a volume"). This is what keeps the L7
+  # virtual-patching (vpatch-CVE-*) rules current. Mounted at /etc/crowdsec/hub
+  # (not /etc/crowdsec) so it does not shadow the acquis/appsec-configs/rules
+  # subPath mounts. The daily crowdsec-appsec-restart CronJob recycles the pod
+  # so the AppSec binary reloads the new rules (no hot-reload in v1.8.2).
+  extraVolumes:
+    - name: appsec-hub
+      persistentVolumeClaim:
+        claimName: crowdsec-appsec-hub
+  extraVolumeMounts:
+    - name: appsec-hub
+      mountPath: /etc/crowdsec/hub
+
 lapi:
   env:
     - name: TRUSTED_IPS
